@@ -28,7 +28,7 @@ export const routerOptions = {
     component: _3ccae594,
     name: "index___de",
     children: [{
-      path: "start",
+      path: "anfang",
       component: _fb5db26e,
       name: "index-start___de"
     }]
@@ -42,11 +42,11 @@ export const routerOptions = {
       name: "index-start___en"
     }]
   }, {
-    path: "/pl",
+    path: "/",
     component: _3ccae594,
     name: "index___pl",
     children: [{
-      path: "start",
+      path: "wjazd",
       component: _fb5db26e,
       name: "index-start___pl"
     }]

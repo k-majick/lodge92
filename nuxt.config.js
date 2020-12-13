@@ -83,6 +83,16 @@ export default {
     "nuxt-i18n",
   ],
   i18n: {
+    strategy: 'prefix_except_default',
+    defaultLocale: 'pl',
+    parsePages: false,
+    pages: {
+      'index/start': {
+        en: 'start',
+        de: 'anfang',
+        pl: 'wjazd'
+      }
+    },
     locales: [{
         code: 'en',
         name: 'English',

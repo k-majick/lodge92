@@ -1,7 +1,7 @@
 export const vueI18n = {}
 export const vueI18nLoader = false
 export const locales = [{"code":"en","name":"English"},{"code":"pl","name":"Polski"},{"code":"de","name":"Deutsch"}]
-export const defaultLocale = ''
+export const defaultLocale = 'pl'
 export const routesNameSeparator = '___'
 export const defaultLocaleRouteNameSuffix = 'default'
 export const strategy = 'prefix_except_default'
@@ -13,8 +13,8 @@ export const differentDomains = false
 export const seo = false
 export const baseUrl = ''
 export const vuex = {"moduleName":"i18n","syncLocale":false,"syncMessages":false,"syncRouteParams":true}
-export const parsePages = true
-export const pages = {}
+export const parsePages = false
+export const pages = {"index/start":{"en":"start","de":"anfang","pl":"wjazd"}}
 export const beforeLanguageSwitch = () => null
 export const onLanguageSwitched = () => null
 export const IS_UNIVERSAL_MODE = true

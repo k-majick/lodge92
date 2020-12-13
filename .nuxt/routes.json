@@ -7,7 +7,7 @@
     "children": [
       {
         "name": "index-start___de",
-        "path": "start",
+        "path": "anfang",
         "component": "/home/k-majick/Documents/lodge92/pages/index/start.vue",
         "chunkName": "pages/index/start",
         "_name": "_fb5db26e"
@@ -33,13 +33,13 @@
   },
   {
     "name": "index___pl",
-    "path": "/pl",
+    "path": "/",
     "component": "/home/k-majick/Documents/lodge92/pages/index.vue",
     "chunkName": "pages/index",
     "children": [
       {
         "name": "index-start___pl",
-        "path": "start",
+        "path": "wjazd",
         "component": "/home/k-majick/Documents/lodge92/pages/index/start.vue",
         "chunkName": "pages/index/start",
         "_name": "_fb5db26e"
