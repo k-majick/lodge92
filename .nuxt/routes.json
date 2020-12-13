@@ -1,0 +1,50 @@
+[
+  {
+    "name": "index___de",
+    "path": "/de",
+    "component": "/home/k-majick/Documents/lodge92/pages/index.vue",
+    "chunkName": "pages/index",
+    "children": [
+      {
+        "name": "index-start___de",
+        "path": "start",
+        "component": "/home/k-majick/Documents/lodge92/pages/index/start.vue",
+        "chunkName": "pages/index/start",
+        "_name": "_fb5db26e"
+      }
+    ],
+    "_name": "_3ccae594"
+  },
+  {
+    "name": "index___en",
+    "path": "/en",
+    "component": "/home/k-majick/Documents/lodge92/pages/index.vue",
+    "chunkName": "pages/index",
+    "children": [
+      {
+        "name": "index-start___en",
+        "path": "start",
+        "component": "/home/k-majick/Documents/lodge92/pages/index/start.vue",
+        "chunkName": "pages/index/start",
+        "_name": "_fb5db26e"
+      }
+    ],
+    "_name": "_3ccae594"
+  },
+  {
+    "name": "index___pl",
+    "path": "/pl",
+    "component": "/home/k-majick/Documents/lodge92/pages/index.vue",
+    "chunkName": "pages/index",
+    "children": [
+      {
+        "name": "index-start___pl",
+        "path": "start",
+        "component": "/home/k-majick/Documents/lodge92/pages/index/start.vue",
+        "chunkName": "pages/index/start",
+        "_name": "_fb5db26e"
+      }
+    ],
+    "_name": "_3ccae594"
+  }
+]

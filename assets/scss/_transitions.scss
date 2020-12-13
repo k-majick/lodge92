@@ -1,0 +1,18 @@
+.modal {
+  //$self: &;
+
+  &-enter,
+  &-leave-active {
+    opacity: 0;
+  }
+
+  &-enter-active,
+  &-leave-active {
+    transition: all .5s ease;
+  }
+
+  &-enter &__container,
+  &-leave-active &__container {
+    transform: scale(1.1);
+  }
+}

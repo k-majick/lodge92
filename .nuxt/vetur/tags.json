@@ -1,0 +1,20 @@
+{
+  "Header": {
+    "description": "Auto imported from components/header.vue"
+  },
+  "LazyHeader": {
+    "description": "Auto imported from components/header.vue"
+  },
+  "Loading": {
+    "description": "Auto imported from components/loading.vue"
+  },
+  "LazyLoading": {
+    "description": "Auto imported from components/loading.vue"
+  },
+  "Nav": {
+    "description": "Auto imported from components/nav.vue"
+  },
+  "LazyNav": {
+    "description": "Auto imported from components/nav.vue"
+  }
+}

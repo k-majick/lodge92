@@ -1,0 +1,43 @@
+body {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  font-family: $font-stack;
+  font-size: 100%;
+  background-color: $color-teal;
+  color: $color-white;
+  @include mobile {
+    font-size: 90%;
+  }
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+:root {
+  --scroll: -100%;
+}
+
+.main {
+  &__container {
+    @include mk-container;
+  }
+
+  &__logo {
+    background-image: url("~@/assets/gfx/lodge92-logo.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 270px;
+    height: 90px;
+    filter: drop-shadow(0 0 5px white);
+  }
+}
