@@ -6,6 +6,7 @@ import scrollBehavior from './router.scrollBehavior.js'
 
 const _3ccae594 = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
 const _fb5db26e = () => interopDefault(import('../pages/index/start.vue' /* webpackChunkName: "pages/index/start" */))
+const _397b0072 = () => interopDefault(import('../pages/index/contact.vue' /* webpackChunkName: "pages/index/contact" */))
 
 // TODO: remove in Nuxt 3
 const emptyFn = () => {}
@@ -31,12 +32,20 @@ export const routerOptions = {
       path: "anfang",
       component: _fb5db26e,
       name: "index-start___de"
+    }, {
+      path: "kontakt",
+      component: _397b0072,
+      name: "index-contact___de"
     }]
   }, {
     path: "/en",
     component: _3ccae594,
     name: "index___en",
     children: [{
+      path: "contact-us",
+      component: _397b0072,
+      name: "index-contact___en"
+    }, {
       path: "start",
       component: _fb5db26e,
       name: "index-start___en"
@@ -46,6 +55,10 @@ export const routerOptions = {
     component: _3ccae594,
     name: "index___pl",
     children: [{
+      path: "kontakt",
+      component: _397b0072,
+      name: "index-contact___pl"
+    }, {
       path: "wjazd",
       component: _fb5db26e,
       name: "index-start___pl"

@@ -11,6 +11,13 @@
         "component": "/home/k-majick/Documents/lodge92/pages/index/start.vue",
         "chunkName": "pages/index/start",
         "_name": "_fb5db26e"
+      },
+      {
+        "name": "index-contact___de",
+        "path": "kontakt",
+        "component": "/home/k-majick/Documents/lodge92/pages/index/contact.vue",
+        "chunkName": "pages/index/contact",
+        "_name": "_397b0072"
       }
     ],
     "_name": "_3ccae594"
@@ -21,6 +28,13 @@
     "component": "/home/k-majick/Documents/lodge92/pages/index.vue",
     "chunkName": "pages/index",
     "children": [
+      {
+        "name": "index-contact___en",
+        "path": "contact-us",
+        "component": "/home/k-majick/Documents/lodge92/pages/index/contact.vue",
+        "chunkName": "pages/index/contact",
+        "_name": "_397b0072"
+      },
       {
         "name": "index-start___en",
         "path": "start",
@@ -37,6 +51,13 @@
     "component": "/home/k-majick/Documents/lodge92/pages/index.vue",
     "chunkName": "pages/index",
     "children": [
+      {
+        "name": "index-contact___pl",
+        "path": "kontakt",
+        "component": "/home/k-majick/Documents/lodge92/pages/index/contact.vue",
+        "chunkName": "pages/index/contact",
+        "_name": "_397b0072"
+      },
       {
         "name": "index-start___pl",
         "path": "wjazd",

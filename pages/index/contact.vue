@@ -1,6 +1,6 @@
 <template>
 <section class="main__section">
-  <h2>{{ start.hero[`title_${currentLocale}`] }}</h2>
+  <h2>Kontakt</h2>
 </section>
 </template>
 

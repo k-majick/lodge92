@@ -1,6 +1,6 @@
 <template>
 <nav class="nav" ref="nav">
-  <a class="nav__link" v-for="navItem in navItems" :key="navItem.NavItemNames[0].id">{{ navItem.NavItemNames[0][`name_${currentLocale}`] }}</a>
+  <nuxt-link v-for="navItem in navItems" class="nav__link" :key="navItem.id" :to="navItem.NavItemRoutes[0][`route_${currentLocale}`]">{{ navItem.NavItemNames[0][`name_${currentLocale}`] }}</nuxt-link>
   <nuxt-link v-for="locale in locales" class="nav__link nav__link--lang" :key="locale.code" :to="switchLocalePath(locale.code)">{{ locale.code }}</nuxt-link>
 </nav>
 </template>
@@ -12,19 +12,21 @@ import {
   Watch,
   Vue,
 } from 'nuxt-property-decorator';
+import NavItem from '@/types/NavItem';
 
 @Component
 export default class Nav extends Vue {
   currentLocale = this.$i18n.locale;
   langs = ['en', 'pl'];
-  // availableLocales = this.$i18n.locales!.filter(i => ( < any > i).code !== this.$i18n.locale);
   locales = this.$i18n.locales;
 
   @Prop() navItems: any;
 
-  @Watch("$i18n.locale")
-  getCurrentLocale() {
-    console.dir(this.$i18n.locale);
+  created() {
+    console.dir(this.navItems)
+    this.navItems.sort((a: NavItem, b: NavItem) => {
+      return a.order - b.order;
+    });
   }
 
 }

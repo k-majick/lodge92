@@ -1,6 +1,6 @@
 export const vueI18n = {}
 export const vueI18nLoader = false
-export const locales = [{"code":"en","name":"English"},{"code":"pl","name":"Polski"},{"code":"de","name":"Deutsch"}]
+export const locales = [{"code":"en","name":"English"},{"code":"de","name":"Deutsch"},{"code":"pl","name":"Polski"}]
 export const defaultLocale = 'pl'
 export const routesNameSeparator = '___'
 export const defaultLocaleRouteNameSuffix = 'default'
@@ -14,7 +14,7 @@ export const seo = false
 export const baseUrl = ''
 export const vuex = {"moduleName":"i18n","syncLocale":false,"syncMessages":false,"syncRouteParams":true}
 export const parsePages = false
-export const pages = {"index/start":{"en":"start","de":"anfang","pl":"wjazd"}}
+export const pages = {"index/start":{"en":"start","de":"anfang","pl":"wjazd"},"index/contact":{"en":"contact-us","de":"kontakt","pl":"kontakt"}}
 export const beforeLanguageSwitch = () => null
 export const onLanguageSwitched = () => null
 export const IS_UNIVERSAL_MODE = true
@@ -25,5 +25,5 @@ export const LOCALE_DOMAIN_KEY = 'domain'
 export const LOCALE_FILE_KEY = 'file'
 export const STRATEGIES = {"PREFIX":"prefix","PREFIX_EXCEPT_DEFAULT":"prefix_except_default","PREFIX_AND_DEFAULT":"prefix_and_default","NO_PREFIX":"no_prefix"}
 export const COMPONENT_OPTIONS_KEY = 'nuxtI18n'
-export const localeCodes = ["en","pl","de"]
+export const localeCodes = ["en","de","pl"]
 export const trailingSlash = undefined

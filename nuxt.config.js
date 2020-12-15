@@ -91,6 +91,11 @@ export default {
         en: 'start',
         de: 'anfang',
         pl: 'wjazd'
+      },
+      'index/contact': {
+        en: 'contact-us',
+        de: 'kontakt',
+        pl: 'kontakt'
       }
     },
     locales: [{
@@ -98,12 +103,12 @@ export default {
         name: 'English',
       },
       {
-        code: 'pl',
-        name: 'Polski',
-      },
-      {
         code: 'de',
         name: 'Deutsch',
+      },
+      {
+        code: 'pl',
+        name: 'Polski',
       }
     ]
   },
