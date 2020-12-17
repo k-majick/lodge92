@@ -1,4 +1,16 @@
 {
+  "Calendar": {
+    "description": "Auto imported from components/calendar.vue"
+  },
+  "LazyCalendar": {
+    "description": "Auto imported from components/calendar.vue"
+  },
+  "Footer": {
+    "description": "Auto imported from components/footer.vue"
+  },
+  "LazyFooter": {
+    "description": "Auto imported from components/footer.vue"
+  },
   "Header": {
     "description": "Auto imported from components/header.vue"
   },
@@ -16,5 +28,11 @@
   },
   "LazyNav": {
     "description": "Auto imported from components/nav.vue"
+  },
+  "Slider": {
+    "description": "Auto imported from components/slider.vue"
+  },
+  "LazySlider": {
+    "description": "Auto imported from components/slider.vue"
   }
 }

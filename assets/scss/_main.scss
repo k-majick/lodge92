@@ -1,3 +1,8 @@
+body,
+html {
+  height: 100%;
+}
+
 body {
   overflow-x: hidden;
   overflow-y: scroll;
@@ -5,6 +10,14 @@ body {
   font-size: 100%;
   background-color: $color-teal;
   color: $color-white;
+
+  > div {
+    height: 100%;
+
+    > div {
+      height: 100%;
+    }
+  }
   @include mobile {
     font-size: 90%;
   }
@@ -20,6 +33,12 @@ body {
   * {
     box-sizing: border-box;
   }
+
+  #app {
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
 }
 
 :root {
@@ -27,17 +46,111 @@ body {
 }
 
 .main {
-  &__container {
-    @include mk-container;
+  $self: &;
+  padding: 60px 0;
+  position: relative;
+  height: 100%;
+
+  &__bg {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-image: url("~@/assets/gfx/lodge92_bg_s.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 0;
+    @include tablet {
+      background-image: url("~@/assets/gfx/lodge92_bg_hd.jpg");
+    }
+    @include desktop {
+      background-image: url("~@/assets/gfx/lodge92_bg_fhd.jpg");
+    }
+    @include desktop-lg {
+      background-image: url("~@/assets/gfx/lodge92_bg_4k.jpg");
+    }
+  }
+
+  &__section {
+    position: relative;
+    z-index: 1;
+
+    &--start {
+      .container {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+      }
+    }
+  }
+
+  &__button {
+    @include trans(0.25);
+
+    &s {
+      display: flex;
+      margin: 60px 0 0;
+    }
+
+    & + & {
+      margin-left: 7.5px;
+    }
+
+    &:hover {
+      box-shadow: 0 0 10px $color-white;
+    }
+    background: transparent;
+    display: block;
+    padding: 10px 20px;
+    border: 1px solid $color-white;
+    border-radius: 10px;
+    color: $color-white;
+    font-size: 1.15em;
+
+    &--icon {
+      display: flex;
+      align-items: center;
+
+      &:before {
+        display: block;
+        font-family: "Material Icons";
+        font-size: 1.5em;
+        margin-right: 7.5px;
+      }
+    }
+
+    &--gallery {
+      &:before {
+        content: "photo";
+      }
+    }
+
+    &--booking {
+      &:before {
+        content: "calendar_today";
+      }
+    }
+  }
+
+  &__title {
+    text-align: center;
   }
 
   &__logo {
-    background-image: url("~@/assets/gfx/lodge92-logo.svg");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 270px;
-    height: 90px;
-    filter: drop-shadow(0 0 5px white);
+    max-width: 320px;
+    // filter: drop-shadow(0 0 5px white);
+    svg {
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+
+.text {
+  &--right {
+    text-align: right;
+    @include mobile {
+      text-align: center;
+    }
   }
 }

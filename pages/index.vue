@@ -1,13 +1,13 @@
 <template>
 <div id="app">
+  <div class="main__bg"></div>
   <Header ref="headerComponent" :navItems="this.navItems" />
   <main class="main" ref="main">
-    <div class="main__container">
-      <transition name="fade">
-        <router-view></router-view>
-      </transition>
-    </div>
+    <transition name="fade">
+      <router-view></router-view>
+    </transition>
   </main>
+  <Footer ref="headerComponent" :navItems="this.navItems" />
 </div>
 </template>
 
@@ -17,10 +17,12 @@ import {
   Vue
 } from 'vue-property-decorator';
 import Header from '@/components/header.vue';
+import Footer from '@/components/footer.vue';
 
 @Component({
   components: {
-    Header
+    Header,
+    Footer
   }
 })
 export default class App extends Vue {
@@ -41,10 +43,6 @@ export default class App extends Vue {
     window.addEventListener('scroll', () => {
       document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
     });
-  }
-
-  created() {
-    // console.dir((this as any).navItems)
   }
 
 }

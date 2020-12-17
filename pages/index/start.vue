@@ -1,6 +1,12 @@
 <template>
-<section class="main__section">
-  <h2>{{ start.hero[`title_${currentLocale}`] }}</h2>
+<section class="main__section main__section--start">
+  <div class="container">
+    <div class="main__logo" v-html="logo"></div>
+    <h2 class="main__title">{{ start.hero[`title_${currentLocale}`] }}</h2>
+    <div class="main__buttons">
+      <nuxt-link v-for="navItem in navButtons" class="main__button main__button--icon" :class="`main__button--${navItem.NavButtonClassName}`" :key="navItem.id" :to="navItem.NavButtonRoutes[0][`route_${currentLocale}`]">{{ navItem.NavButtonNames[0][`name_${currentLocale}`] }}</nuxt-link>
+    </div>
+  </div>
 </section>
 </template>
 
@@ -10,10 +16,13 @@ import {
   Watch,
   Vue
 } from 'nuxt-property-decorator';
+import rawLogo from '@/assets/gfx/lodge92-logo.svg?raw';
 
 @Component
 export default class Start extends Vue {
   currentLocale = this.$i18n.locale;
+  logo = rawLogo;
+  navButtons = [];
 
   async asyncData({
     $strapi,
@@ -29,14 +38,9 @@ export default class Start extends Vue {
     };
   }
 
-  // @Watch("$i18n.locale")
-  // getCurrentLocale() {
-  //   console.dir(this.$i18n.locale);
-  // }
-
-  // mounted() {
-  //   console.dir(this)
-  // }
+  created() {
+    this.navButtons = (this as any).start.NavButtons;
+  }
 
 }
 </script>

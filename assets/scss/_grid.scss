@@ -1,0 +1,16 @@
+.container {
+  @include mk-container;
+}
+
+.row {
+  @include mk-row;
+}
+
+.col {
+  @include mk-col;
+
+  &-50 {
+    flex-basis: 50%;
+    max-width: 50%;
+  }
+}

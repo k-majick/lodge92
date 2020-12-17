@@ -1,7 +1,15 @@
 <template>
 <section class="main__section">
   <div class="container">
-    <h2>Kontakt</h2>
+    <h2>Reservations</h2>
+    <div class="row">
+      <div class="col col-50">
+        <h3>Wybierz termin</h3>
+      </div>
+      <div class="col col-50">
+        <h3>Wybierz pokoje</h3>
+      </div>
+    </div>
   </div>
 </section>
 </template>
@@ -14,7 +22,7 @@ import {
 } from 'nuxt-property-decorator';
 
 @Component
-export default class Start extends Vue {
+export default class Reservations extends Vue {
   currentLocale = this.$i18n.locale;
 
   async asyncData({

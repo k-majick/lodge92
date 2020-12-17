@@ -10,7 +10,12 @@
   }
 }
 @mixin desktop {
-  @media (min-width: $desktop-min) {
+  @media (min-width: $desktop-min) and (max-width: $desktop-max) {
+    @content;
+  }
+}
+@mixin desktop-lg {
+  @media (min-width: $desktop-lg-min) {
     @content;
   }
 }
@@ -31,6 +36,22 @@
   }
   @include desktop {
     max-width: 970px;
+  }
+}
+@mixin mk-row() {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+@mixin mk-col() {
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+  padding: 0 15px;
+  @include mobile {
+    flex-basis: 100%;
+    max-width: 100%;
   }
 }
 /* effects */

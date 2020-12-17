@@ -23,7 +23,6 @@ export default class Nav extends Vue {
   @Prop() navItems: any;
 
   created() {
-    console.dir(this.navItems)
     this.navItems.sort((a: NavItem, b: NavItem) => {
       return a.order - b.order;
     });

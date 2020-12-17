@@ -1,7 +1,7 @@
 <template>
 <section class="main__section">
   <div class="container">
-    <h2>Kontakt</h2>
+    <h2>Galeria</h2>
   </div>
 </section>
 </template>
@@ -14,7 +14,7 @@ import {
 } from 'nuxt-property-decorator';
 
 @Component
-export default class Start extends Vue {
+export default class Gallery extends Vue {
   currentLocale = this.$i18n.locale;
 
   async asyncData({

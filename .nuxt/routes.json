@@ -6,11 +6,11 @@
     "chunkName": "pages/index",
     "children": [
       {
-        "name": "index-start___de",
-        "path": "anfang",
-        "component": "/home/k-majick/Documents/lodge92/pages/index/start.vue",
-        "chunkName": "pages/index/start",
-        "_name": "_fb5db26e"
+        "name": "index-gallery___de",
+        "path": "galerie",
+        "component": "/home/k-majick/Documents/lodge92/pages/index/gallery.vue",
+        "chunkName": "pages/index/gallery",
+        "_name": "_60b6e9f9"
       },
       {
         "name": "index-contact___de",
@@ -18,6 +18,20 @@
         "component": "/home/k-majick/Documents/lodge92/pages/index/contact.vue",
         "chunkName": "pages/index/contact",
         "_name": "_397b0072"
+      },
+      {
+        "name": "index-reservations___de",
+        "path": "reservieren",
+        "component": "/home/k-majick/Documents/lodge92/pages/index/reservations.vue",
+        "chunkName": "pages/index/reservations",
+        "_name": "_deb5d4e0"
+      },
+      {
+        "name": "index-start___de",
+        "path": "start",
+        "component": "/home/k-majick/Documents/lodge92/pages/index/start.vue",
+        "chunkName": "pages/index/start",
+        "_name": "_fb5db26e"
       }
     ],
     "_name": "_3ccae594"
@@ -36,6 +50,20 @@
         "_name": "_397b0072"
       },
       {
+        "name": "index-gallery___en",
+        "path": "gallery",
+        "component": "/home/k-majick/Documents/lodge92/pages/index/gallery.vue",
+        "chunkName": "pages/index/gallery",
+        "_name": "_60b6e9f9"
+      },
+      {
+        "name": "index-reservations___en",
+        "path": "reservations",
+        "component": "/home/k-majick/Documents/lodge92/pages/index/reservations.vue",
+        "chunkName": "pages/index/reservations",
+        "_name": "_deb5d4e0"
+      },
+      {
         "name": "index-start___en",
         "path": "start",
         "component": "/home/k-majick/Documents/lodge92/pages/index/start.vue",
@@ -52,6 +80,13 @@
     "chunkName": "pages/index",
     "children": [
       {
+        "name": "index-gallery___pl",
+        "path": "galeria",
+        "component": "/home/k-majick/Documents/lodge92/pages/index/gallery.vue",
+        "chunkName": "pages/index/gallery",
+        "_name": "_60b6e9f9"
+      },
+      {
         "name": "index-contact___pl",
         "path": "kontakt",
         "component": "/home/k-majick/Documents/lodge92/pages/index/contact.vue",
@@ -59,8 +94,15 @@
         "_name": "_397b0072"
       },
       {
+        "name": "index-reservations___pl",
+        "path": "rezerwacja",
+        "component": "/home/k-majick/Documents/lodge92/pages/index/reservations.vue",
+        "chunkName": "pages/index/reservations",
+        "_name": "_deb5d4e0"
+      },
+      {
         "name": "index-start___pl",
-        "path": "wjazd",
+        "path": "start",
         "component": "/home/k-majick/Documents/lodge92/pages/index/start.vue",
         "chunkName": "pages/index/start",
         "_name": "_fb5db26e"

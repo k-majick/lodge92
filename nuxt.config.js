@@ -59,10 +59,11 @@ export default {
   styleResources: {
     scss: [
       "@/assets/scss/_variables.scss",
-      "@/assets/scss/_mixins.scss",
       "@/assets/scss/_fonts.scss",
       "@/assets/scss/_animations.scss",
+      "@/assets/scss/_mixins.scss",
       "@/assets/scss/_transitions.scss",
+      "@/assets/scss/_grid.scss",
     ]
   },
   loading: "@/components/loading.vue",
@@ -89,13 +90,23 @@ export default {
     pages: {
       'index/start': {
         en: 'start',
-        de: 'anfang',
-        pl: 'wjazd'
+        de: 'start',
+        pl: 'start'
       },
       'index/contact': {
         en: 'contact-us',
         de: 'kontakt',
         pl: 'kontakt'
+      },
+      'index/reservations': {
+        en: 'reservations',
+        de: 'reservieren',
+        pl: 'rezerwacja'
+      },
+      'index/gallery': {
+        en: 'gallery',
+        de: 'galerie',
+        pl: 'galeria'
       }
     },
     locales: [{

@@ -5,8 +5,10 @@ import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
 const _3ccae594 = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
-const _fb5db26e = () => interopDefault(import('../pages/index/start.vue' /* webpackChunkName: "pages/index/start" */))
+const _60b6e9f9 = () => interopDefault(import('../pages/index/gallery.vue' /* webpackChunkName: "pages/index/gallery" */))
 const _397b0072 = () => interopDefault(import('../pages/index/contact.vue' /* webpackChunkName: "pages/index/contact" */))
+const _deb5d4e0 = () => interopDefault(import('../pages/index/reservations.vue' /* webpackChunkName: "pages/index/reservations" */))
+const _fb5db26e = () => interopDefault(import('../pages/index/start.vue' /* webpackChunkName: "pages/index/start" */))
 
 // TODO: remove in Nuxt 3
 const emptyFn = () => {}
@@ -29,13 +31,21 @@ export const routerOptions = {
     component: _3ccae594,
     name: "index___de",
     children: [{
-      path: "anfang",
-      component: _fb5db26e,
-      name: "index-start___de"
+      path: "galerie",
+      component: _60b6e9f9,
+      name: "index-gallery___de"
     }, {
       path: "kontakt",
       component: _397b0072,
       name: "index-contact___de"
+    }, {
+      path: "reservieren",
+      component: _deb5d4e0,
+      name: "index-reservations___de"
+    }, {
+      path: "start",
+      component: _fb5db26e,
+      name: "index-start___de"
     }]
   }, {
     path: "/en",
@@ -46,6 +56,14 @@ export const routerOptions = {
       component: _397b0072,
       name: "index-contact___en"
     }, {
+      path: "gallery",
+      component: _60b6e9f9,
+      name: "index-gallery___en"
+    }, {
+      path: "reservations",
+      component: _deb5d4e0,
+      name: "index-reservations___en"
+    }, {
       path: "start",
       component: _fb5db26e,
       name: "index-start___en"
@@ -55,11 +73,19 @@ export const routerOptions = {
     component: _3ccae594,
     name: "index___pl",
     children: [{
+      path: "galeria",
+      component: _60b6e9f9,
+      name: "index-gallery___pl"
+    }, {
       path: "kontakt",
       component: _397b0072,
       name: "index-contact___pl"
     }, {
-      path: "wjazd",
+      path: "rezerwacja",
+      component: _deb5d4e0,
+      name: "index-reservations___pl"
+    }, {
+      path: "start",
       component: _fb5db26e,
       name: "index-start___pl"
     }]

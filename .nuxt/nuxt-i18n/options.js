@@ -14,7 +14,7 @@ export const seo = false
 export const baseUrl = ''
 export const vuex = {"moduleName":"i18n","syncLocale":false,"syncMessages":false,"syncRouteParams":true}
 export const parsePages = false
-export const pages = {"index/start":{"en":"start","de":"anfang","pl":"wjazd"},"index/contact":{"en":"contact-us","de":"kontakt","pl":"kontakt"}}
+export const pages = {"index/start":{"en":"start","de":"start","pl":"start"},"index/contact":{"en":"contact-us","de":"kontakt","pl":"kontakt"},"index/reservations":{"en":"reservations","de":"reservieren","pl":"rezerwacja"},"index/gallery":{"en":"gallery","de":"galerie","pl":"galeria"}}
 export const beforeLanguageSwitch = () => null
 export const onLanguageSwitched = () => null
 export const IS_UNIVERSAL_MODE = true
