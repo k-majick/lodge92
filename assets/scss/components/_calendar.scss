@@ -1,3 +1,54 @@
 .calendar {
-  
+  background-color: transparentize($color-teal, 0.5);
+  display: flex;
+  flex-flow: row wrap;
+
+  &__btn {
+    @include trans(0.25);
+    cursor: pointer;
+    padding: 5px;
+    border: 1px solid $color-white;
+    border-radius: 10px;
+    height: 45px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & + & {
+      margin-left: 7.5px;
+    }
+
+    &:hover {
+      box-shadow: 0 0 10px $color-white;
+    }
+
+    &.material-icons {
+      padding: 10px;
+    }
+  }
+
+  &__indicator {
+    writing-mode: tb-rl;
+    transform: rotate(-180deg);
+    text-align: center;
+    text-transform: uppercase;
+    padding: 10px 0;
+    width: 30px;
+    min-height: 300px;
+  }
+
+  &__body {
+    border: 1px solid $color-white;
+    width: calc(100% - 30px);
+  }
+
+  &__selector {
+    padding: 5px 0;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }

@@ -16,6 +16,7 @@
     "@nuxt/typescript-runtime": "^2.0.0",
     "@nuxtjs/markdownit": "^1.2.7",
     "@nuxtjs/strapi": "^0.1.6",
+    "dayjs": "^1.9.7",
     "graphql": "^14.5.8",
     "nuxt": "^2.14.11",
     "nuxt-i18n": "^6.16.0"

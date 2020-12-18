@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 import { getMatchedComponentsInstances, getChildrenComponentInstancesUsingFetch, promisify, globalHandleError, urlJoin, sanitizeComponent } from './utils'
 import NuxtError from './components/nuxt-error.vue'
-import NuxtLoading from '@/components/loading.vue'
+import NuxtLoading from '@/components/Loading.vue'
 import NuxtBuildIndicator from './components/nuxt-build-indicator'
 
 import _6f6c098b from './layouts/default.vue'

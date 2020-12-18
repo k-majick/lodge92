@@ -18,7 +18,7 @@ import {
   Prop,
   Vue,
 } from 'nuxt-property-decorator';
-import nav from "@/components/nav.vue";
+import Nav from "@/components/Nav.vue";
 
 @Component
 export default class Header extends Vue {

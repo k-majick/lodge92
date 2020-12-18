@@ -5,6 +5,9 @@
     <div class="row">
       <div class="col col-50">
         <h3>Wybierz termin</h3>
+
+        <Calendar />
+
       </div>
       <div class="col col-50">
         <h3>Wybierz pokoje</h3>
@@ -19,9 +22,14 @@ import {
   Component,
   Watch,
   Vue
-} from 'nuxt-property-decorator';
+} from "nuxt-property-decorator";
+import Calendar from "@/components/Calendar.vue";
 
-@Component
+@Component({
+  components: {
+    Calendar
+  },
+})
 export default class Reservations extends Vue {
   currentLocale = this.$i18n.locale;
 
@@ -32,7 +40,6 @@ export default class Reservations extends Vue {
     $strapi: any,
     app: any
   }) {
-
     return {
       start: await $strapi.find("start"),
       currentLocale: app.i18n.locale
