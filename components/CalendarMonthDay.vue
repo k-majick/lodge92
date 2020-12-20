@@ -1,5 +1,5 @@
 <template>
-<li class="calendar__day" :class="{ 'calendar__day--not-current': !isCurrentMonth, 'calendar__day--today': isToday }">
+<li class="calendar__day" :class="{ 'calendar__day--not-current': !isCurrentMonth, 'calendar__day--today': isToday, 'calendar__day--selected': isSelected }" @click="selectDay">
   <span>{{ label }}</span>
 </li>
 </template>
@@ -8,15 +8,16 @@
 import {
   Component,
   Vue,
-  Prop
+  Prop,
 } from 'nuxt-property-decorator';
 import dayjs from "dayjs";
+import Day from "@/types/Day"
 
 @Component
-export default class CalendaMonthDay extends Vue {
+export default class CalendarMonthDay extends Vue {
 
   @Prop()
-  day!: any;
+  day!: Day;
 
   @Prop()
   isToday!: boolean;
@@ -24,8 +25,15 @@ export default class CalendaMonthDay extends Vue {
   @Prop()
   isCurrentMonth!: boolean;
 
+  @Prop()
+  isSelected!: boolean;
+
   get label() {
     return dayjs(this.day.date).format("D");
+  }
+
+  selectDay() {
+    this.$emit('select', this.day);
   }
 
 }

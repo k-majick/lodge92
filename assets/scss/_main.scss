@@ -11,12 +11,10 @@ body {
   background-color: $color-teal;
   color: $color-white;
 
-  > div {
+  #__layout,
+  #__nuxt,
+  #app {
     height: 100%;
-
-    > div {
-      height: 100%;
-    }
   }
   @include mobile {
     font-size: 90%;

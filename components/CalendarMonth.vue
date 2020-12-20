@@ -4,7 +4,7 @@
   <div class="calendar__body">
     <CalendarWeekdays />
     <ol class="calendar__days calendar__days--main">
-      <CalendarMonthDay v-for="day in days" :key="day.date" :day="day" :is-today="day.date === today" :is-current-month="day.isCurrentMonth" />
+      <CalendarMonthDay v-for="day in allDays" :key="day.date" :day="day" :is-today="day.date === today" :is-current-month="day.isCurrentMonth" :is-selected="day.isSelected" @select="updateSelectedDays" />
     </ol>
   </div>
   <CalendarDateSelector :current-date="today" :selected-date="selectedDate" @dateSelected="selectDate" />
@@ -18,6 +18,7 @@ import {
   Provide,
   Watch
 } from 'nuxt-property-decorator';
+import Day from "@/types/Day";
 import dayjs from "dayjs";
 import weekday from "dayjs/plugin/weekday";
 import weekOfYear from "dayjs/plugin/weekOfYear";
@@ -35,12 +36,51 @@ export default class CalendarMonth extends Vue {
   @Provide() selectedDate = dayjs();
   @Provide() today = dayjs().format("YYYY-MM-DD");
 
+  allDays: Array < Day > = [];
+  selectedDays: Array < Day > = [];
+  selectedDay: Day = {
+    date: '',
+    isCurrentMonth: false,
+    isSelected: false
+  };
+
+  created() {
+    this.allDays = [...this.days];
+  }
+
   selectDate(newSelectedDate: any) {
     this.selectedDate = newSelectedDate;
   }
 
+  updateSelectedDays(selectedDay: Day) {
+    const index = this.selectedDays.indexOf(selectedDay);
+    const allDaysIndex = this.allDays.indexOf(selectedDay);
+
+    if (this.selectedDays.filter(day => day.date === selectedDay.date).length > 0) {
+      this.selectedDays = this.selectedDays.filter(day => {
+        return day.date !== selectedDay.date;
+      });
+      this.allDays[allDaysIndex].isSelected = false;
+    } else {
+      this.selectedDays.push(selectedDay);
+      this.allDays[allDaysIndex].isSelected = true;
+    }
+  }
+
   getWeekday(date: any) {
     return dayjs(date).weekday();
+  }
+
+  @Watch('days')
+  updateDays() {
+    this.allDays = this.days;
+
+    const result = this.allDays.filter(d1 => {
+      if (this.selectedDays.some(d2 => d1.date === d2.date) === true) {
+        d1.isSelected = true;
+      }
+      return this.selectedDays.some(d2 => d1.date === d2.date);
+    });
   }
 
   get days() {
@@ -67,7 +107,8 @@ export default class CalendarMonth extends Vue {
     return [...Array(this.numberOfDaysInMonth)].map((day, index) => {
       return {
         date: dayjs(`${this.year}-${this.month}-${index + 1}`).format("YYYY-MM-DD"),
-        isCurrentMonth: true
+        isCurrentMonth: true,
+        isSelected: false
       };
     });
   }
@@ -81,7 +122,8 @@ export default class CalendarMonth extends Vue {
     return [...Array(visibleNumberOfDaysFromPreviousMonth)].map((day, index) => {
       return {
         date: dayjs(`${previousMonth.year()}-${previousMonth.month() + 1}-${previousMonthLastMondayDayOfMonth + index}`).format("YYYY-MM-DD"),
-        isCurrentMonth: false
+        isCurrentMonth: false,
+        isSelected: false
       };
     });
   }
@@ -94,7 +136,8 @@ export default class CalendarMonth extends Vue {
     return [...Array(visibleNumberOfDaysFromNextMonth)].map((day, index) => {
       return {
         date: dayjs(`${nextMonth.year()}-${nextMonth.month() + 1}-${index + 1}`).format("YYYY-MM-DD"),
-        isCurrentMonth: false
+        isCurrentMonth: false,
+        isSelected: false
       };
     });
   }
