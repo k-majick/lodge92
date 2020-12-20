@@ -14,7 +14,7 @@ import {
 } from 'nuxt-property-decorator';
 
 @Component
-export default class Start extends Vue {
+export default class Contact extends Vue {
   currentLocale = this.$i18n.locale;
 
   async asyncData({

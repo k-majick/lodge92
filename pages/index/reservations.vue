@@ -5,9 +5,7 @@
     <div class="row">
       <div class="col col-50">
         <h3>Wybierz termin</h3>
-
-        <Calendar />
-
+        <CalendarMonth />
       </div>
       <div class="col col-50">
         <h3>Wybierz pokoje</h3>
@@ -23,11 +21,11 @@ import {
   Watch,
   Vue
 } from "nuxt-property-decorator";
-import Calendar from "@/components/Calendar.vue";
+import CalendarMonth from "@/components/CalendarMonth.vue";
 
 @Component({
   components: {
-    Calendar
+    CalendarMonth
   },
 })
 export default class Reservations extends Vue {

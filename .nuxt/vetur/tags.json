@@ -1,10 +1,4 @@
 {
-  "Calendar": {
-    "description": "Auto imported from components/Calendar.vue"
-  },
-  "LazyCalendar": {
-    "description": "Auto imported from components/Calendar.vue"
-  },
   "CalendarDateIndicator": {
     "description": "Auto imported from components/CalendarDateIndicator.vue"
   },
@@ -16,6 +10,24 @@
   },
   "LazyCalendarDateSelector": {
     "description": "Auto imported from components/CalendarDateSelector.vue"
+  },
+  "CalendarMonth": {
+    "description": "Auto imported from components/CalendarMonth.vue"
+  },
+  "LazyCalendarMonth": {
+    "description": "Auto imported from components/CalendarMonth.vue"
+  },
+  "CalendarMonthDay": {
+    "description": "Auto imported from components/CalendarMonthDay.vue"
+  },
+  "LazyCalendarMonthDay": {
+    "description": "Auto imported from components/CalendarMonthDay.vue"
+  },
+  "CalendarWeekdays": {
+    "description": "Auto imported from components/CalendarWeekdays.vue"
+  },
+  "LazyCalendarWeekdays": {
+    "description": "Auto imported from components/CalendarWeekdays.vue"
   },
   "Footer": {
     "description": "Auto imported from components/Footer.vue"

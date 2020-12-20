@@ -21,11 +21,6 @@ export default class Calendar extends Vue {
     return this.selectedDate.format("MMMM YYYY");
   }
 
-  created() {
-    // console.dir(this);
-    // console.dir(this.selectedMonth);
-  }
-
 }
 </script>
 

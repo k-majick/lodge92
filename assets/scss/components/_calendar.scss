@@ -1,5 +1,6 @@
 .calendar {
-  background-color: transparentize($color-teal, 0.5);
+  $self: &;
+  background-color: transparentize($color-teal, 0.25);
   display: flex;
   flex-flow: row wrap;
 
@@ -33,22 +34,74 @@
     transform: rotate(-180deg);
     text-align: center;
     text-transform: uppercase;
-    padding: 10px 0;
     width: 30px;
     min-height: 300px;
-  }
-
-  &__body {
-    border: 1px solid $color-white;
-    width: calc(100% - 30px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
   }
 
   &__selector {
-    padding: 5px 0;
+    padding: 15px 0;
     width: 100%;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  &__body {
+    width: calc(100% - 30px);
+    display: flex;
+    flex-flow: column;
+  }
+
+  &__days {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    grid-column-gap: 1px;
+    grid-row-gap: 1px;
+    border-top: 1px solid transparent;
+
+    &--head {
+      height: auto;
+
+      #{$self}__day {
+        padding: 5px 0;
+      }
+    }
+
+    &--main {
+      #{$self}__day {
+        box-shadow: inset 0 0 7.5px $color-white;
+        border: 1px solid transparentize($color-white, 0.5);
+        cursor: pointer;
+
+        &--not-current {
+          opacity: 0.5;
+        }
+
+        &--today {
+          border-color: $color-yellow;
+        }
+
+        &:hover {
+          border-color: $color-white;
+        }
+      }
+    }
+  }
+
+  &__day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

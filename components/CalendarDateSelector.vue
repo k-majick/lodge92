@@ -39,10 +39,5 @@ export default class Calendar extends Vue {
     this.$emit("dateSelected", newSelectedDate);
   }
 
-  created() {
-    console.dir(this.currentDate);
-    console.dir(this.selectedDate);
-  }
-
 }
 </script>
