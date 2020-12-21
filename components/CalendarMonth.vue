@@ -4,7 +4,8 @@
   <div class="calendar__body">
     <CalendarWeekdays />
     <ol class="calendar__days calendar__days--main">
-      <CalendarMonthDay v-for="day in allDays" :key="day.date" :day="day" :is-today="day.date === today" :is-current-month="day.isCurrentMonth" :is-selected="day.isSelected" :is-disabled="day.isDisabled" @select="updateSelectedDays" />
+      <CalendarMonthDay v-for="day in allDays" :key="day.date" :day="day" :is-today="day.date === today" :is-current-month="day.isCurrentMonth" :is-selected="day.isSelected" :is-disabled="day.isDisabled" :is-blocked="day.isBlocked"
+        @select="updateSelectedDays" />
     </ol>
   </div>
   <CalendarDateSelector :current-date="today" :selected-date="selectedDate" @dateSelected="selectDate" />
@@ -36,17 +37,31 @@ export default class CalendarMonth extends Vue {
   @Provide() today = dayjs().format("YYYY-MM-DD");
 
   allDays: Array < Day > = [];
-  selectedDays: Array < Day > = [];
   selectedDay: Day = {
     date: '',
     isCurrentMonth: false,
     isSelected: false,
     isDisabled: false,
+    isBlocked: false,
     bookings: []
   };
 
   created() {
     this.allDays = [...this.days];
+
+    // (this as any).unsubscribe = this.$store.subscribe((mutation, state) => {
+    //   if (mutation.type === '_bookings/addDay') {
+    //     console.log(`Add day`);
+    //     this.updateDays();
+    //   }
+    //   if (mutation.type === '_bookings/removeDay') {
+    //     console.log(`RemoveDay day`);
+    //   }
+    // });
+  }
+
+  beforeDestroy() {
+    // (this as any).unsubscribe();
   }
 
   selectDate(newSelectedDate: any) {
@@ -69,7 +84,29 @@ export default class CalendarMonth extends Vue {
       this.$store.commit('_bookings/addDay', selectedDayClone);
     }
 
-    console.dir(this.$store.getters['_bookings/daysSelected']);
+    this.setBlockedDays(selectedDay);
+  }
+
+  setBlockedDays(selectedDay: Day) {
+    const selectedDaysArray = this.$store.getters['_bookings/daysSelected'];
+    const sortedSelectedDaysArray = [...selectedDaysArray].sort((a: Day, b: Day) => (dayjs(a.date).isAfter(dayjs(b.date)) ? 1 : -1));
+    const firstSelectedDay = sortedSelectedDaysArray[0];
+    const lastSelectedDay = sortedSelectedDaysArray[selectedDaysArray.length - 1];
+
+    this.allDays.map((day: Day) => {
+      if (!firstSelectedDay || !lastSelectedDay) {
+        day.isBlocked = false;
+      } else if (
+        day.date === dayjs(firstSelectedDay.date).subtract(1, 'day').format("YYYY-MM-DD") ||
+        day.date === dayjs(lastSelectedDay.date).add(1, 'day').format("YYYY-MM-DD") ||
+        day.date === dayjs(lastSelectedDay.date).format("YYYY-MM-DD") ||
+        day.date === dayjs(firstSelectedDay.date).format("YYYY-MM-DD")
+      ) {
+        day.isBlocked = false;
+      } else {
+        day.isBlocked = true;
+      }
+    });
   }
 
   getWeekday(date: any) {
@@ -87,7 +124,7 @@ export default class CalendarMonth extends Vue {
       return this.$store.getters['_bookings/daysSelected'].some((d2: Day) => d1.date === d2.date);
     });
 
-    console.dir(this.$store.getters['_bookings/daysSelected']);
+    // console.dir(this.$store.getters['_bookings/daysSelected']);
   }
 
   get days() {
@@ -117,6 +154,7 @@ export default class CalendarMonth extends Vue {
         isCurrentMonth: true,
         isSelected: false,
         isDisabled: dayjs(`${this.year}-${this.month}-${index + 1}`).isBefore(dayjs().add(3, 'day').format("YYYY-MM-DD")),
+        isBlocked: false,
         bookings: []
       };
     });
@@ -134,6 +172,7 @@ export default class CalendarMonth extends Vue {
         isCurrentMonth: false,
         isSelected: false,
         isDisabled: dayjs(`${previousMonth.year()}-${previousMonth.month() + 1}-${previousMonthLastMondayDayOfMonth + index}`).isBefore(dayjs().format("YYYY-MM-DD")),
+        isBlocked: false,
         bookings: []
       };
     });
@@ -150,6 +189,7 @@ export default class CalendarMonth extends Vue {
         isCurrentMonth: false,
         isSelected: false,
         isDisabled: dayjs(`${nextMonth.year()}-${nextMonth.month() + 1}-${index + 1}`).isBefore(dayjs().format("YYYY-MM-DD")),
+        isBlocked: false,
         bookings: []
       };
     });

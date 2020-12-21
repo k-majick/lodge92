@@ -3,5 +3,6 @@ export default interface Day {
   isCurrentMonth: boolean,
   isSelected: boolean,
   isDisabled: boolean,
+  isBlocked: boolean,
   bookings: Array<number>
 }
