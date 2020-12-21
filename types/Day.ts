@@ -1,5 +1,6 @@
 export default interface Day {
   date: string,
   isCurrentMonth: boolean,
-  isSelected: boolean
+  isSelected: boolean,
+  bookings: Array<number>
 }

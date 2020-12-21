@@ -41,7 +41,8 @@ export default class CalendarMonth extends Vue {
   selectedDay: Day = {
     date: '',
     isCurrentMonth: false,
-    isSelected: false
+    isSelected: false,
+    bookings: []
   };
 
   created() {
@@ -53,18 +54,22 @@ export default class CalendarMonth extends Vue {
   }
 
   updateSelectedDays(selectedDay: Day) {
-    const index = this.selectedDays.indexOf(selectedDay);
     const allDaysIndex = this.allDays.indexOf(selectedDay);
 
-    if (this.selectedDays.filter(day => day.date === selectedDay.date).length > 0) {
-      this.selectedDays = this.selectedDays.filter(day => {
-        return day.date !== selectedDay.date;
-      });
+    if (this.$store.getters['_bookings/daysSelected'].filter((day: Day) => day.date === selectedDay.date).length > 0) {
       this.allDays[allDaysIndex].isSelected = false;
+      this.$store.commit('_bookings/removeDay', selectedDay.date);
     } else {
-      this.selectedDays.push(selectedDay);
+      const selectedDayClone = {
+        ...selectedDay,
+        isSelected: true
+      };
+
       this.allDays[allDaysIndex].isSelected = true;
+      this.$store.commit('_bookings/addDay', selectedDayClone);
     }
+
+    console.dir(this.$store.getters['_bookings/daysSelected']);
   }
 
   getWeekday(date: any) {
@@ -75,12 +80,14 @@ export default class CalendarMonth extends Vue {
   updateDays() {
     this.allDays = this.days;
 
-    const result = this.allDays.filter(d1 => {
-      if (this.selectedDays.some(d2 => d1.date === d2.date) === true) {
+    const result = this.allDays.filter((d1: Day) => {
+      if (this.$store.getters['_bookings/daysSelected'].some((d2: Day) => d1.date === d2.date) === true) {
         d1.isSelected = true;
       }
-      return this.selectedDays.some(d2 => d1.date === d2.date);
+      return this.$store.getters['_bookings/daysSelected'].some((d2: Day) => d1.date === d2.date);
     });
+
+    console.dir(this.$store.getters['_bookings/daysSelected']);
   }
 
   get days() {
@@ -108,7 +115,8 @@ export default class CalendarMonth extends Vue {
       return {
         date: dayjs(`${this.year}-${this.month}-${index + 1}`).format("YYYY-MM-DD"),
         isCurrentMonth: true,
-        isSelected: false
+        isSelected: false,
+        bookings: []
       };
     });
   }
@@ -123,7 +131,8 @@ export default class CalendarMonth extends Vue {
       return {
         date: dayjs(`${previousMonth.year()}-${previousMonth.month() + 1}-${previousMonthLastMondayDayOfMonth + index}`).format("YYYY-MM-DD"),
         isCurrentMonth: false,
-        isSelected: false
+        isSelected: false,
+        bookings: []
       };
     });
   }
@@ -137,7 +146,8 @@ export default class CalendarMonth extends Vue {
       return {
         date: dayjs(`${nextMonth.year()}-${nextMonth.month() + 1}-${index + 1}`).format("YYYY-MM-DD"),
         isCurrentMonth: false,
-        isSelected: false
+        isSelected: false,
+        bookings: []
       };
     });
   }
