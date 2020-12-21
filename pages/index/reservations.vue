@@ -9,6 +9,7 @@
       </div>
       <div class="col col-50">
         <h3>Wybierz pokoje</h3>
+        <Rooms />
       </div>
     </div>
   </div>

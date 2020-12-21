@@ -142,6 +142,25 @@ body {
       height: auto;
     }
   }
+
+  &__panel {
+    @include trans(0.25);
+    position: relative;
+
+    &:before {
+      @include trans(0.25);
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: transparentize($color-teal, 0.5);
+      backdrop-filter: blur(5px);
+      z-index: -1;
+    }
+  }
 }
 
 .text {

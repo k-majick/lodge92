@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   id="svg1173"
+   version="1.1"
+   viewBox="0 0 58.208355 66.145836"
+   height="66.145836mm"
+   width="58.208355mm">
+  <defs
+     id="defs1167" />
+  <metadata
+     id="metadata1170">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(12.473225,-26.558037)"
+     id="layer1">
+    <rect
+       y="47.724724"
+       x="-12.473225"
+       height="34.395832"
+       width="21.166666"
+       id="rect992-36"
+       ref="room-01"
+       style="fill:#ffff00;fill-opacity:1;stroke:none;stroke-width:0.2712011;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       y="82.120537"
+       x="-12.473225"
+       height="10.583333"
+       width="21.166666"
+       id="rect992-9-75"
+       ref="bathroom-01"
+       style="fill:#f5f5f5;fill-opacity:1;stroke:none;stroke-width:0.15043531;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       y="82.120537"
+       x="8.6934624"
+       height="10.583333"
+       width="37.041668"
+       id="rect992-9-1-3"
+       ref="porch"
+       style="fill:#e1e1e1;fill-opacity:1;stroke:none;stroke-width:0.19900723;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       y="47.724724"
+       x="8.6328564"
+       height="34.395832"
+       width="37.041668"
+       id="rect992-9-1-2-5"
+       ref="living-room"
+       style="fill:#ebebeb;fill-opacity:1;stroke:none;stroke-width:0.35876536;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       y="26.558098"
+       x="-12.473225"
+       height="21.166666"
+       width="21.166666"
+       id="rect992-9-7-6"
+       ref="dining-room"
+       style="fill:#e1e1e1;fill-opacity:1;stroke:none;stroke-width:0.21274766;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       y="26.558037"
+       x="8.6934624"
+       height="21.166666"
+       width="18.520834"
+       id="rect992-9-7-0-2"
+       ref="kitchen"
+       style="fill:#e1e1e1;fill-opacity:1;stroke:none;stroke-width:0.19900724;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       y="26.558037"
+       x="27.153728"
+       height="21.166666"
+       width="18.520834"
+       id="bathroom-02"
+       style="fill:#f5f5f5;fill-opacity:1;stroke:none;stroke-width:0.19900724;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  </g>
+</svg>

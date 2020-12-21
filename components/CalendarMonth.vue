@@ -1,5 +1,5 @@
 <template>
-<div class="calendar">
+<div class="calendar main__panel">
   <CalendarDateIndicator :selected-date="selectedDate" />
   <div class="calendar__body">
     <CalendarWeekdays />
@@ -48,24 +48,24 @@ export default class CalendarMonth extends Vue {
 
   created() {
     this.allDays = [...this.days];
-
-    // (this as any).unsubscribe = this.$store.subscribe((mutation, state) => {
-    //   if (mutation.type === '_bookings/addDay') {
-    //     console.log(`Add day`);
-    //     this.updateDays();
-    //   }
-    //   if (mutation.type === '_bookings/removeDay') {
-    //     console.log(`RemoveDay day`);
-    //   }
-    // });
-  }
-
-  beforeDestroy() {
-    // (this as any).unsubscribe();
   }
 
   selectDate(newSelectedDate: any) {
     this.selectedDate = newSelectedDate;
+  }
+
+  @Watch('days')
+  updateDays() {
+    this.allDays = this.days;
+
+    this.allDays.filter((d1: Day) => {
+      if (this.$store.getters['_bookings/daysSelected'].some((d2: Day) => d1.date === d2.date) === true) {
+        d1.isSelected = true;
+      }
+      return this.$store.getters['_bookings/daysSelected'].some((d2: Day) => d1.date === d2.date);
+    });
+
+    this.setBlockedDays();
   }
 
   updateSelectedDays(selectedDay: Day) {
@@ -84,14 +84,13 @@ export default class CalendarMonth extends Vue {
       this.$store.commit('_bookings/addDay', selectedDayClone);
     }
 
-    this.setBlockedDays(selectedDay);
+    this.setBlockedDays();
   }
 
-  setBlockedDays(selectedDay: Day) {
-    const selectedDaysArray = this.$store.getters['_bookings/daysSelected'];
-    const sortedSelectedDaysArray = [...selectedDaysArray].sort((a: Day, b: Day) => (dayjs(a.date).isAfter(dayjs(b.date)) ? 1 : -1));
-    const firstSelectedDay = sortedSelectedDaysArray[0];
-    const lastSelectedDay = sortedSelectedDaysArray[selectedDaysArray.length - 1];
+  setBlockedDays() {
+    const sortedSelectedDays = this.sortedSelectedDays;
+    const firstSelectedDay = sortedSelectedDays[0];
+    const lastSelectedDay = sortedSelectedDays[sortedSelectedDays.length - 1];
 
     this.allDays.map((day: Day) => {
       if (!firstSelectedDay || !lastSelectedDay) {
@@ -113,18 +112,8 @@ export default class CalendarMonth extends Vue {
     return dayjs(date).weekday();
   }
 
-  @Watch('days')
-  updateDays() {
-    this.allDays = this.days;
-
-    const result = this.allDays.filter((d1: Day) => {
-      if (this.$store.getters['_bookings/daysSelected'].some((d2: Day) => d1.date === d2.date) === true) {
-        d1.isSelected = true;
-      }
-      return this.$store.getters['_bookings/daysSelected'].some((d2: Day) => d1.date === d2.date);
-    });
-
-    // console.dir(this.$store.getters['_bookings/daysSelected']);
+  get sortedSelectedDays() {
+    return [...this.$store.getters['_bookings/daysSelected']].sort((a: Day, b: Day) => (dayjs(a.date).isAfter(dayjs(b.date)) ? 1 : -1));
   }
 
   get days() {
