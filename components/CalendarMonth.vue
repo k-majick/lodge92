@@ -4,7 +4,7 @@
   <div class="calendar__body">
     <CalendarWeekdays />
     <ol class="calendar__days calendar__days--main">
-      <CalendarMonthDay v-for="day in allDays" :key="day.date" :day="day" :is-today="day.date === today" :is-current-month="day.isCurrentMonth" :is-selected="day.isSelected" @select="updateSelectedDays" />
+      <CalendarMonthDay v-for="day in allDays" :key="day.date" :day="day" :is-today="day.date === today" :is-current-month="day.isCurrentMonth" :is-selected="day.isSelected" :is-disabled="day.isDisabled" @select="updateSelectedDays" />
     </ol>
   </div>
   <CalendarDateSelector :current-date="today" :selected-date="selectedDate" @dateSelected="selectDate" />
@@ -32,7 +32,6 @@ dayjs.extend(weekOfYear);
 
 @Component
 export default class CalendarMonth extends Vue {
-
   @Provide() selectedDate = dayjs();
   @Provide() today = dayjs().format("YYYY-MM-DD");
 
@@ -42,6 +41,7 @@ export default class CalendarMonth extends Vue {
     date: '',
     isCurrentMonth: false,
     isSelected: false,
+    isDisabled: false,
     bookings: []
   };
 
@@ -116,6 +116,7 @@ export default class CalendarMonth extends Vue {
         date: dayjs(`${this.year}-${this.month}-${index + 1}`).format("YYYY-MM-DD"),
         isCurrentMonth: true,
         isSelected: false,
+        isDisabled: dayjs(`${this.year}-${this.month}-${index + 1}`).isBefore(dayjs().add(3, 'day').format("YYYY-MM-DD")),
         bookings: []
       };
     });
@@ -132,6 +133,7 @@ export default class CalendarMonth extends Vue {
         date: dayjs(`${previousMonth.year()}-${previousMonth.month() + 1}-${previousMonthLastMondayDayOfMonth + index}`).format("YYYY-MM-DD"),
         isCurrentMonth: false,
         isSelected: false,
+        isDisabled: dayjs(`${previousMonth.year()}-${previousMonth.month() + 1}-${previousMonthLastMondayDayOfMonth + index}`).isBefore(dayjs().format("YYYY-MM-DD")),
         bookings: []
       };
     });
@@ -147,6 +149,7 @@ export default class CalendarMonth extends Vue {
         date: dayjs(`${nextMonth.year()}-${nextMonth.month() + 1}-${index + 1}`).format("YYYY-MM-DD"),
         isCurrentMonth: false,
         isSelected: false,
+        isDisabled: dayjs(`${nextMonth.year()}-${nextMonth.month() + 1}-${index + 1}`).isBefore(dayjs().format("YYYY-MM-DD")),
         bookings: []
       };
     });

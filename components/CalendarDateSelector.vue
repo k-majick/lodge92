@@ -17,12 +17,8 @@ import dayjs from "dayjs";
 
 @Component
 export default class Calendar extends Vue {
-
-  @Prop()
-  currentDate!: string;
-
-  @Prop()
-  selectedDate!: any;
+  @Prop() currentDate!: string;
+  @Prop() selectedDate!: any;
 
   selectPrevious() {
     let newSelectedDate = dayjs(this.selectedDate).subtract(1, "month");

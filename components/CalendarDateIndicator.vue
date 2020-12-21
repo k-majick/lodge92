@@ -13,9 +13,7 @@ import {
 
 @Component
 export default class Calendar extends Vue {
-
-  @Prop()
-  selectedDate!: any;
+  @Prop() selectedDate!: any;
 
   get selectedMonth() {
     return this.selectedDate.format("MMMM YYYY");
