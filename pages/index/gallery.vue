@@ -26,7 +26,6 @@ export default class Gallery extends Vue {
   }) {
 
     return {
-      start: await $strapi.find("start"),
       currentLocale: app.i18n.locale
     };
   }

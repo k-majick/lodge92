@@ -46,7 +46,6 @@ body {
 .main {
   $self: &;
   padding: 60px 0;
-  position: relative;
   height: 100%;
 
   &__bg {
@@ -82,28 +81,15 @@ body {
     }
   }
 
-  &__button {
-    @include trans(0.25);
+  &__btn {
+    @include btn;
+    padding: 25px 20px;
+    font-size: 1.1em;
 
     &s {
       display: flex;
       margin: 60px 0 0;
     }
-
-    & + & {
-      margin-left: 7.5px;
-    }
-
-    &:hover {
-      box-shadow: 0 0 10px $color-white;
-    }
-    background: transparent;
-    display: block;
-    padding: 10px 20px;
-    border: 1px solid $color-white;
-    border-radius: 10px;
-    color: $color-white;
-    font-size: 1.15em;
 
     &--icon {
       display: flex;
@@ -142,32 +128,27 @@ body {
       height: auto;
     }
   }
-
-  &__panel {
-    @include trans(0.25);
-    position: relative;
-
-    &:before {
-      @include trans(0.25);
-      content: '';
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: transparentize($color-teal, 0.5);
-      backdrop-filter: blur(5px);
-      z-index: -1;
-    }
-  }
 }
 
 .text {
+  &--center {
+    text-align: center;
+  }
+
   &--right {
     text-align: right;
     @include mobile {
       text-align: center;
     }
+  }
+}
+
+.tooltip {
+  position: absolute;
+  background-color: $color-purple-deep;
+  white-space: nowrap;
+
+  &.show {
+    padding: 2.5px 5px;
   }
 }

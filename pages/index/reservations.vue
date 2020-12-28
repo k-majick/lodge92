@@ -8,8 +8,8 @@
         <CalendarMonth />
       </div>
       <div class="col col-50">
-        <h3>Wybierz pokoje</h3>
-        <Rooms />
+        <h3>Plan pokoi</h3>
+        <Floors :rooms="rooms" :locale="currentLocale" />
       </div>
     </div>
   </div>
@@ -23,6 +23,7 @@ import {
   Vue
 } from "nuxt-property-decorator";
 import CalendarMonth from "@/components/CalendarMonth.vue";
+import Floors from "@/components/Floors.vue";
 
 @Component({
   components: {
@@ -31,6 +32,8 @@ import CalendarMonth from "@/components/CalendarMonth.vue";
 })
 export default class Reservations extends Vue {
   currentLocale = this.$i18n.locale;
+  rooms = [];
+  reservations: any = '';
 
   async asyncData({
     $strapi,
@@ -40,9 +43,13 @@ export default class Reservations extends Vue {
     app: any
   }) {
     return {
-      start: await $strapi.find("start"),
-      currentLocale: app.i18n.locale
+      currentLocale: app.i18n.locale,
+      reservations: await $strapi.find("reservations")
     };
+  }
+
+  created() {
+    this.rooms = this.reservations.rooms;
   }
 
 }

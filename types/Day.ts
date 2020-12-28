@@ -4,5 +4,5 @@ export default interface Day {
   isSelected: boolean,
   isDisabled: boolean,
   isBlocked: boolean,
-  bookings: Array<number>
+  isBooked: boolean,
 }

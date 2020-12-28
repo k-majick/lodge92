@@ -3,8 +3,8 @@
   <div class="container">
     <div class="main__logo" v-html="logo"></div>
     <h2 class="main__title">{{ start.hero[`title_${currentLocale}`] }}</h2>
-    <div class="main__buttons">
-      <nuxt-link v-for="navItem in navButtons" class="main__button main__button--icon" :class="`main__button--${navItem.NavButtonClassName}`" :key="navItem.id" :to="navItem.NavButtonRoutes[0][`route_${currentLocale}`]">{{ navItem.NavButtonNames[0][`name_${currentLocale}`] }}</nuxt-link>
+    <div class="main__btns">
+      <nuxt-link v-for="navItem in navButtons" class="main__btn main__btn--icon" :class="`main__btn--${navItem.NavButtonClassName}`" :key="navItem.id" :to="navItem.NavButtonRoutes[0][`route_${currentLocale}`]">{{ navItem.NavButtonNames[0][`name_${currentLocale}`] }}</nuxt-link>
     </div>
   </div>
 </section>

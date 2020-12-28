@@ -1,8 +1,8 @@
 <template>
 <div class="calendar__selector">
-  <span class="calendar__btn material-icons" @click="selectPrevious">keyboard_arrow_left</span>
-  <span class="calendar__btn" @click="selectCurrent">Today</span>
-  <span class="calendar__btn material-icons" @click="selectNext">keyboard_arrow_right</span>
+  <button class="calendar__btn material-icons" @click="selectPrevious">keyboard_arrow_left</button>
+  <button class="calendar__btn" @click="selectCurrent">Today</button>
+  <button class="calendar__btn material-icons" @click="selectNext">keyboard_arrow_right</button>
 </div>
 </template>
 

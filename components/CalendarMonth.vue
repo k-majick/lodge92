@@ -4,7 +4,7 @@
   <div class="calendar__body">
     <CalendarWeekdays />
     <ol class="calendar__days calendar__days--main">
-      <CalendarMonthDay v-for="day in allDays" :key="day.date" :day="day" :is-today="day.date === today" :is-current-month="day.isCurrentMonth" :is-selected="day.isSelected" :is-disabled="day.isDisabled" :is-blocked="day.isBlocked"
+      <CalendarMonthDay v-for="day in allDays" :key="day.date" :day="day" :is-today="day.date === today" :is-current-month="day.isCurrentMonth" :is-selected="day.isSelected" :is-disabled="day.isDisabled" :is-blocked="day.isBlocked" :is-booked="day.isBooked"
         @select="updateSelectedDays" />
     </ol>
   </div>
@@ -43,7 +43,7 @@ export default class CalendarMonth extends Vue {
     isSelected: false,
     isDisabled: false,
     isBlocked: false,
-    bookings: []
+    isBooked: false,
   };
 
   created() {
@@ -144,7 +144,7 @@ export default class CalendarMonth extends Vue {
         isSelected: false,
         isDisabled: dayjs(`${this.year}-${this.month}-${index + 1}`).isBefore(dayjs().add(3, 'day').format("YYYY-MM-DD")),
         isBlocked: false,
-        bookings: []
+        isBooked: false
       };
     });
   }
@@ -162,7 +162,7 @@ export default class CalendarMonth extends Vue {
         isSelected: false,
         isDisabled: dayjs(`${previousMonth.year()}-${previousMonth.month() + 1}-${previousMonthLastMondayDayOfMonth + index}`).isBefore(dayjs().format("YYYY-MM-DD")),
         isBlocked: false,
-        bookings: []
+        isBooked: false
       };
     });
   }
@@ -179,7 +179,7 @@ export default class CalendarMonth extends Vue {
         isSelected: false,
         isDisabled: dayjs(`${nextMonth.year()}-${nextMonth.month() + 1}-${index + 1}`).isBefore(dayjs().format("YYYY-MM-DD")),
         isBlocked: false,
-        bookings: []
+        isBooked: false
       };
     });
   }

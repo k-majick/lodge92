@@ -1,0 +1,29 @@
+.floors {
+  $self: &;
+  @include panel;
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 45px;
+
+  &__plan {
+    display: flex;
+    padding: 0;
+    position: relative;
+
+    svg {
+      @include img;
+
+      path[data-id] {
+        @include trans(0.25);
+        cursor: pointer;
+
+        &.active {
+          fill: $color-pink !important;
+        }
+      }
+    }
+  }
+}
