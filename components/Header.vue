@@ -4,7 +4,7 @@
     <a class="header__logo">
       <h1 class="header__title">{{ name }}</h1>
     </a>
-    <Nav :navItems="this.navItems"></Nav>
+    <Nav :navItems="this.navItems" :global="this.global"></Nav>
   </div>
 </header>
 </template>
@@ -26,8 +26,7 @@ export default class Header extends Vue {
   name = this.store.$config.appTitle;
 
   @Prop() navItems: any;
-
-  mounted() {}
+  @Prop() global: any;
 
 }
 </script>

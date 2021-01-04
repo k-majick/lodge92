@@ -1,12 +1,12 @@
 <template>
 <div id="app">
   <div class="main__bg"></div>
-  <Header :navItems="this.navItems" />
+  <Header :navItems="this.navItems" :global="this.global"/>
   <main class="main" ref="main">
     <transition name="fade">
       <router-view></router-view>
     </transition>
-    <Cart :price="this.price"/>
+    <Status :price="this.price"/>
   </main>
   <Footer />
 </div>
@@ -19,13 +19,13 @@ import {
 } from 'vue-property-decorator';
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
-import Cart from '@/components/Cart.vue';
+import Status from '@/components/Status.vue';
 
 @Component({
   components: {
     Header,
     Footer,
-    Cart
+    Status
   }
 })
 export default class App extends Vue {

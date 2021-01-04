@@ -1,9 +1,64 @@
 .nav {
-  display: flex;
-  flex-direction: row;
+  $self: &;
+
+  &__items {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+  }
 
   &__item {
     list-style-type: none;
+    position: relative;
+    text-align: right;
+
+    &:hover {
+      #{$self}__link + #{$self}__submenu {
+        display: flex;
+      }
+    }
+
+    &--lang {
+      & + & {
+        #{$self}__link {
+          border-left-color: $color-white;
+        }
+      }
+    }
+
+    &--user {
+      margin-left: 15px;
+      margin-right: 15px;
+      padding: 7.5px 0;
+
+      > #{$self}__link {
+        background-image: url("~@/assets/gfx/icon-user.svg");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center center;
+        padding: 12.5px;
+        border: 0;
+        margin: 0;
+      }
+    }
+
+    &--cart {
+      padding: 7.5px 0;
+
+      > #{$self}__link {
+        border: 0;
+        padding: 0;
+        margin: 0;
+        height: 25px;
+        width: 25px;
+
+        &--status {
+          font-size: 0.85em;
+        }
+      }
+    }
   }
 
   &__link {
@@ -12,41 +67,137 @@
     padding: 15px;
     border: 1px solid transparent;
     color: $color-white;
+    background: none;
+
+    &:not(.material-icons) {
+      font-family: $font-stack;
+    }
+
+    &:focus {
+      outline: 0;
+    }
 
     &.active {
       color: $color-yellow;
       text-shadow: 0 0 5px transparentize($color-white, 0.5);
     }
 
-    &--lang {
-      background: none;
-      // border-color: $color-white;
-      padding: 15px 7.5px;
-      color: $color-white;
-      // text-transform: uppercase;
+    &--status {
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      background-color: $color-purple-deep;
+      border-radius: 15px;
+      font-size: 1.15em;
+      color: $color-yellow;
+      right: -7.5px;
+      bottom: 2.5px;
+      width: 15px;
+      height: 15px;
+    }
+  }
 
-      &.active {
-        // background-color: $color-white;
+  &__submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    padding: 0;
+    flex-flow: column;
+    z-index: 10;
+    background-color: $color-purple-deep;
+
+    #{$self}__link {
+      width: 100%;
+      text-align: left;
+      padding: 10px;
+      margin: 0;
+      font-size: 0.9em;
+
+      &:hover {
+        background-color: $color-pink;
       }
+    }
+
+    &--cart {
+      padding: 10px;
+    }
+
+    &--empty {
+      font-size: 0.85em;
+      padding: 7.5px;
+      white-space: nowrap;
+    }
+
+    &--total {
+      padding: 10px 0 20px;
+    }
+
+    &--btn {
+      @include btn;
+      align-self: center;
+      padding-right: 7.5px;
+
+      .material-icons {
+        margin-left: 5px;
+      }
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-flow: column;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    list-style-type: decimal;
+    counter-reset: list-item;
+
+    &--item {
+      border: 0;
+      padding: 0;
+      font-size: 0.85em;
+      white-space: nowrap;
+      display: inline-flex;
+      justify-content: flex-start;
+
+      & + & {
+        margin-top: 1px;
+      }
+
+      p {
+        margin: 2.5px 0;
+        text-align: left;
+      }
+
+      &:before {
+        counter-increment: list-item;
+        content: counter(list-item) ".";
+        display: flex;
+        font-weight: normal;
+        align-items: flex-start;
+        margin: 2.5px 10px 2.5px 0;
+      }
+    }
+
+    &--details {
+      width: 100%;
+    }
+
+    &--remove {
+      cursor: pointer;
+      background: none;
+      border: 0;
+      color: $color-white;
+      font-size: 1.75em;
+      padding: 0 0 0 15px;
+      line-height: 1;
+      border-radius: 10px;
 
       &:focus {
         outline: 0;
-      }
-
-      &:first-of-type {
-        padding-left: 15px;
-        // border-top-left-radius: 15px;
-        // border-bottom-left-radius: 15px;
-      }
-
-      &:last-of-type {
-        padding-right: 15px;
-        // border-top-right-radius: 15px;
-        // border-bottom-right-radius: 15px;
-      }
-
-      & + & {
-        border-left-color: $color-white;
       }
     }
   }

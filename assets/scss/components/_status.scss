@@ -1,4 +1,4 @@
-.cart {
+.status {
   @include trans(0.75);
   position: fixed !important;
   margin: 0;
@@ -47,5 +47,9 @@
     right: 15px;
     top: 50%;
     transform: translateY(-50%);
+
+    .material-icons {
+      margin-left: 7.5px;
+    }
   }
 }

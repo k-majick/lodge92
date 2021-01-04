@@ -26,8 +26,9 @@
     },
     "types": [
       "@types/node",
-      "@nuxt/types",
       "@types/jest",
+      "@nuxt/types",
+      "@nuxtjs/auth-next",
       "nuxt-i18n"
     ]
   },

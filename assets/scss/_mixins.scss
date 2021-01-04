@@ -86,10 +86,14 @@
   border: 1px solid $color-white;
   border-radius: 10px;
   height: 45px;
-  padding: 10px 20px;
+  padding: 10px 15px;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &:not(.material-icons) {
+    font-family: $font-stack;
+  }
 
   & + & {
     margin-left: 7.5px;

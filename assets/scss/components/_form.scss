@@ -1,0 +1,43 @@
+.form {
+  $self: &;
+
+  &__group {
+    display: flex;
+    flex-flow: column-reverse;
+
+    & + & {
+      margin-top: 15px;
+    }
+
+    &--submit {
+      align-items: flex-start;
+    }
+
+    &--txt {
+      #{$self}__input {
+        background: none;
+        border: 1px solid $color-white;
+        border-radius: 10px;
+        color: $color-white;
+        padding: 10px;
+        font-family: $font-stack;
+      }
+    }
+  }
+
+  &__input {
+    &:focus {
+      outline: 0;
+      box-shadow: inset 0 0 7.5px $color-white;
+    }
+  }
+
+  &__label {
+    font-size: 0.9em;
+    margin-bottom: 5px;
+  }
+
+  &__btn {
+    @include btn;
+  }
+}

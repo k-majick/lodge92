@@ -78,6 +78,8 @@ export default {
     "@nuxtjs/svg",
   ],
   modules: [
+    "@nuxtjs/auth",
+    "@nuxtjs/axios",
     "@nuxtjs/style-resources",
     "@nuxtjs/markdownit",
     "@nuxtjs/strapi",
@@ -122,6 +124,33 @@ export default {
         name: 'Polski',
       }
     ]
+  },
+  auth: {
+    watchLoggedIn: false,
+    // redirect: {
+    //   login: '/login',
+    //   logout: '/start',
+    //   callback: '/login',
+    //   home: '/start'
+    // },
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: 'auth/local',
+            method: 'post',
+            propertyName: 'jwt'
+          },
+          user: {
+            url: 'users/me',
+            method: 'get',
+            propertyName: false
+          },
+          logout: false
+        },
+        autoFetchUser: true
+      }
+    }
   },
   strapi: {
     url: apiUrl,

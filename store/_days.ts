@@ -1,4 +1,4 @@
-import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators';
+import { Module, VuexModule, Mutation } from 'vuex-module-decorators';
 import { store } from "@/store";
 import Day from '@/types/Day';
 
@@ -9,7 +9,7 @@ import Day from '@/types/Day';
   stateFactory: true,
   store
 })
-export default class PageModule extends VuexModule {
+export default class BookingsModule extends VuexModule {
   selectedDays: Array<Day> = [];
 
   @Mutation
@@ -19,9 +19,12 @@ export default class PageModule extends VuexModule {
 
   @Mutation
   removeDay(date: string) {
-    this.selectedDays = this.selectedDays.filter(day => {
-      return day.date !== date;
-    });
+    this.selectedDays = this.selectedDays.filter(day => day.date !== date);
+  }
+
+  @Mutation
+  resetSelected() {
+    this.selectedDays = [];
   }
 
   get daysSelected(): Array<Day> {
