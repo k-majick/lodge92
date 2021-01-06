@@ -1,8 +1,7 @@
 <template>
 <section class="main__section">
   <div class="container">
-    <h2>Checkout</h2>
-
+    <h2>{{ $t('checkout') }}</h2>
   </div>
 </section>
 </template>
@@ -10,16 +9,32 @@
 <script lang="ts">
 import {
   Component,
-  Vue,
-  Watch
+  Watch,
+  Vue
 } from 'nuxt-property-decorator';
 
-@Component
+@Component({
+  middleware: 'auth'
+})
 export default class Checkout extends Vue {
+  currentLocale = this.$i18n.locale;
+
+  async asyncData({
+    $strapi,
+    app
+  }: {
+    $strapi: any,
+    app: any
+  }) {
+
+    return {
+      currentLocale: app.i18n.locale
+    };
+  }
 
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 
 </style>

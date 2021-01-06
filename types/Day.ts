@@ -5,4 +5,5 @@ export default interface Day {
   isDisabled: boolean,
   isBlocked: boolean,
   isBooked: boolean,
+  inCart: boolean,
 }

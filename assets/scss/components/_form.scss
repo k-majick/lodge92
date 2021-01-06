@@ -13,6 +13,12 @@
       align-items: flex-start;
     }
 
+    &--alert {
+      #{$self}__alert {
+        color: $color-yellow;
+      }
+    }
+
     &--txt {
       #{$self}__input {
         background: none;

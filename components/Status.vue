@@ -1,11 +1,11 @@
 <template>
 <div class="status container" :class="{ 'status--active': isActive }">
   <div class="status__panel">
-    <h3 class="status__title">Twoja rezerwacja</h3>
-    <p><b>Termin:</b> <span class="status__date" v-for="bookingDate in bookingDates" v-html="bookingDate"></span></p>
-    <p><b>Liczba dni:</b> <span v-html="totalDays"></span></p>
-    <p><b>Koszt rezerwacji:</b> <span v-html="totalDays * price + '&nbsp;zł'"></span></p>
-    <button class="status__btn" @click="addToCart"><span v-html="this.strings.add2cart[`${currentLocale}`]"></span><span class="material-icons">add_shopping_cart</span></button>
+    <h3 class="status__title">{{ $t('statusDateSelected') }}</h3>
+    <p><b>{{ $t('statusDate') }}:</b> <span class="status__date" v-for="bookingDate in bookingDates">{{ bookingDate }}</span></p>
+    <p><b>{{ $t('statusDaysNumber') }}:</b> {{ totalDays }}</p>
+    <p><b>{{ $t('statusCost') }}:</b> <span v-html="totalDays * price + '&nbsp;zł'"></span></p>
+    <button class="status__btn" :class="{ 'status__btn--disabled' : !isActive }" @click="addToCart">{{ $t('cartAdd') }}<span class="material-icons">add_shopping_cart</span></button>
   </div>
 </div>
 </template>
@@ -21,16 +21,12 @@ import Modal from "@/components/Modal.vue";
 import dayjs from "dayjs";
 import Day from "@/types/Day";
 import Booking from '@/types/Booking';
-import {
-  STRINGS
-} from '@/assets/data/i18n.js';
 
 @Component
 export default class Status extends Vue {
   @Prop() price!: number;
 
   public currentLocale = this.$i18n.locale;
-  public strings = STRINGS;
   private isActive = false;
   private isLogged = this.$store.getters['_user/isLogged'];
   private isModalOpen = this.$store.getters['_modals/isLoginModalActive'];
@@ -40,16 +36,20 @@ export default class Status extends Vue {
   private booking: Booking = {
     id: null,
     bookingDates: null,
+    bookingDays: null,
     totalDays: null,
     cost: null,
   }
 
   created() {
-    (this as any).unsubscribe = this.$store.subscribe((mutation, state) => {
-      if (mutation.type === '_days/addDay' || mutation.type === '_days/removeDay') {
-        this.totalDays = this.$store.getters['_days/daysSelected'].length;
-        this.totalDays > 0 ? this.isActive = true : this.isActive = false;
+    this.totalDays = this.$store.getters['_days/selected'].length;
+    this.totalDays > 0 ? this.isActive = true : this.isActive = false;
+    this.showBookingDates(this.sortedSelectedDays);
 
+    (this as any).unsubscribe = this.$store.subscribe((mutation, state) => {
+      if (mutation.type === '_days/addSelected' || mutation.type === '_days/removeSelected' || mutation.type === '_days/resetSelected') {
+        this.totalDays = this.$store.getters['_days/selected'].length;
+        this.totalDays > 0 ? this.isActive = true : this.isActive = false;
         this.showBookingDates(this.sortedSelectedDays);
       }
     });
@@ -68,13 +68,14 @@ export default class Status extends Vue {
     this.booking = {
       id: Math.round(Math.random() * 1000),
       bookingDates: this.bookingDates,
+      bookingDays: this.$store.getters['_days/selected'],
       totalDays: this.totalDays,
       cost: this.totalDays * this.price,
     }
   }
 
   get sortedSelectedDays() {
-    return [...this.$store.getters['_days/daysSelected']].sort((a: Day, b: Day) => (dayjs(a.date).isAfter(dayjs(b.date)) ? 1 : -1));
+    return [...this.$store.getters['_days/selected']].sort((a: Day, b: Day) => (dayjs(a.date).isAfter(dayjs(b.date)) ? 1 : -1));
   }
 
   showBookingDates(days: Day[]) {
@@ -87,7 +88,8 @@ export default class Status extends Vue {
 
   addToCart() {
     this.$store.commit('_cart/addBooking', this.booking);
-    this.$store.commit('_days/resetSelected', this.booking);
+    this.$store.commit('_days/selected2cart');
+    this.$store.commit('_days/resetSelected');
   }
 
   beforeDestroy() {

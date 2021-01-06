@@ -69,7 +69,6 @@ export default {
   loading: "@/components/Loading.vue",
   serverMiddleware: [
     "~/middleware/redirects",
-    // "~/server/index",
   ],
   plugins: [],
   components: true,
@@ -87,48 +86,68 @@ export default {
   ],
   i18n: {
     strategy: 'prefix_except_default',
+    // strategy: 'prefix',
     defaultLocale: 'pl',
+    seo: true,
     parsePages: false,
+    lazy: true,
+    langDir: 'assets/i18n/',
     pages: {
-      'index/start': {
-        en: 'start',
-        de: 'start',
-        pl: 'start'
+      'index/checkout': {
+        de: 'kasse',
+        en: 'checkout',
+        pl: 'kasa',
       },
       'index/contact': {
-        en: 'contact-us',
         de: 'kontakt',
-        pl: 'kontakt'
-      },
-      'index/reservations': {
-        en: 'reservations',
-        de: 'reservieren',
-        pl: 'rezerwacja'
+        en: 'contact-us',
+        pl: 'kontakt',
       },
       'index/gallery': {
-        en: 'gallery',
         de: 'galerie',
-        pl: 'galeria'
+        en: 'gallery',
+        pl: 'galeria',
+      },
+      'index/register': {
+        de: 'registrierung',
+        en: 'register',
+        pl: 'rejestracja',
+      },
+      'index/reservations': {
+        de: 'reservierung',
+        en: 'reservations',
+        pl: 'rezerwacja',
+      },
+      'index/start': {
+        de: 'start',
+        en: 'start',
+        pl: 'start',
       }
     },
     locales: [{
-        code: 'en',
-        name: 'English',
-      },
-      {
         code: 'de',
         name: 'Deutsch',
+        iso: 'de-DE',
+        file: 'de-DE.js',
+      },
+      {
+        code: 'en',
+        name: 'English',
+        iso: 'en-US',
+        file: 'en-US.js',
       },
       {
         code: 'pl',
         name: 'Polski',
+        iso: 'pl-PL',
+        file: 'pl-PL.js',
       }
     ]
   },
   auth: {
     watchLoggedIn: false,
     // redirect: {
-    //   login: '/login',
+    //   login: '/start',
     //   logout: '/start',
     //   callback: '/login',
     //   home: '/start'

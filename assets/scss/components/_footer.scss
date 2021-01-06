@@ -16,4 +16,16 @@
     z-index: 0;
   }
 
+  .col {
+    display: flex;
+    align-items: center;
+
+    &.text--right {
+      justify-content: flex-end;
+    }
+
+    .material-icons {
+      color: $color-white;
+    }
+  }
 }

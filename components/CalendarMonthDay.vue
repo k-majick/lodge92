@@ -1,5 +1,5 @@
 <template>
-<li class="calendar__day" :class="{ 'calendar__day--not-current': !isCurrentMonth, 'calendar__day--today': isToday, 'calendar__day--selected': isSelected, 'calendar__day--disabled': isDisabled, 'calendar__day--blocked': isBlocked, 'calendar__day--booked': isBooked }" @click="selectDay">
+<li class="calendar__day" :class="{ 'calendar__day--not-current': !isCurrentMonth, 'calendar__day--today': isToday, 'calendar__day--selected': isSelected, 'calendar__day--disabled': isDisabled, 'calendar__day--blocked': isBlocked, 'calendar__day--booked': isBooked, 'calendar__day--inCart': inCart }" @click="selectDay">
   <span>{{ label }}</span>
 </li>
 </template>
@@ -22,6 +22,7 @@ export default class CalendarMonthDay extends Vue {
   @Prop() isDisabled!: boolean;
   @Prop() isBlocked!: boolean;
   @Prop() isBooked!: boolean;
+  @Prop() inCart!: boolean;
 
   get label() {
     return dayjs(this.day.date).format("D");

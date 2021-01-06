@@ -11,15 +11,30 @@ import Day from '@/types/Day';
 })
 export default class BookingsModule extends VuexModule {
   selectedDays: Array<Day> = [];
+  cartDays: Array<Day> = [];
 
   @Mutation
-  addDay(selectedDay: Day) {
-    this.selectedDays.push(selectedDay);
+  addSelected(day: Day) {
+    this.selectedDays.push(day);
   }
 
   @Mutation
-  removeDay(date: string) {
+  removeSelected(date: string) {
     this.selectedDays = this.selectedDays.filter(day => day.date !== date);
+  }
+
+  @Mutation
+  selected2cart() {
+    this.cartDays.push(...this.selectedDays);
+  }
+
+  @Mutation
+  removeFromCart(days: Day[]) {
+    this.cartDays = this.cartDays.filter((d1: Day) => {
+      return !days.some((d2: Day) => {
+        return d1.date == d2.date;
+      });
+    });
   }
 
   @Mutation
@@ -27,8 +42,12 @@ export default class BookingsModule extends VuexModule {
     this.selectedDays = [];
   }
 
-  get daysSelected(): Array<Day> {
+  get selected(): Array<Day> {
     return this.selectedDays;
+  }
+
+  get inCart(): Array<Day> {
+    return this.cartDays;
   }
 
 }

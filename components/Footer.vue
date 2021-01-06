@@ -3,10 +3,10 @@
   <div class="container">
     <div class="row">
       <div class="col col-50">
-        &copy;{{ year }} Cyberleaf Studio
+        <a class="material-icons" href="https://www.google.pl/maps/place/Kasztanowa+19,+76-212+Rowy/@54.6526526,17.0487501,17z/" target="_blank">location_on</a>&nbsp;ul. Kasztanowa 19, 76-212 Rowy, {{ $t('globalPoland') }}
       </div>
       <div class="col col-50 text--right">
-        ul. Kasztanowa 19, 76-212 Rowy
+        &copy;{{ year }} Cyberleaf Studio
       </div>
     </div>
   </div>

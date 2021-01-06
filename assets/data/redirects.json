@@ -1,6 +1,36 @@
 [{
     "from": "/",
     "to": "/start",
+    "auth": true
+  },
+  {
+    "from": "/en/checkout",
+    "to": "/en/start",
     "auth": false
+  },
+  {
+    "from": "/de/kasse",
+    "to": "/de/start",
+    "auth": false
+  },
+  {
+    "from": "/kasa",
+    "to": "/start",
+    "auth": false
+  },
+  {
+    "from": "/en/register",
+    "to": "/en/start",
+    "auth": true
+  },
+  {
+    "from": "/de/registrierung",
+    "to": "/de/start",
+    "auth": true
+  },
+  {
+    "from": "/rejestracja",
+    "to": "/start",
+    "auth": true
   }
 ]
