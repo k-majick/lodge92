@@ -29,6 +29,46 @@
         font-family: $font-stack;
       }
     }
+
+    &--checkbox {
+      flex-flow: column-reverse;
+
+      #{$self}__input {
+        display: none;
+      }
+
+      #{$self}__label {
+        cursor: pointer;
+        position: relative;
+        padding-left: 30px;
+
+        &:after,
+        &:before {
+          display: block;
+          position: absolute;
+          top: 50%;
+          left: 0;
+          transform: translateY(-50%);
+          width: 15px;
+          height: 15px;
+        }
+
+        &:before {
+          content: '';
+          border: 1px solid $color-white;
+          border-radius: 5px;
+        }
+      }
+
+      #{$self}__input:checked + #{$self}__label {
+        &:after {
+          content: 'check';
+          display: block;
+          font-family: $icons;
+          padding: 1px;
+        }
+      }
+    }
   }
 
   &__input {
@@ -45,5 +85,25 @@
 
   &__btn {
     @include btn;
+  }
+
+  &__img {
+    margin: 15px auto;
+  }
+
+  &--checkout {
+    display: flex;
+    flex-flow: column;
+    align-items: stretch;
+    justify-content: center;
+
+    #{$self}__alert {
+      text-align: center;
+    }
+
+    #{$self}__group--alert,
+    #{$self}__group--submit {
+      align-self: center;
+    }
   }
 }

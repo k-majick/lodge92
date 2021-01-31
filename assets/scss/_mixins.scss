@@ -44,11 +44,15 @@
   margin-right: -15px;
   margin-left: -15px;
 }
-@mixin mk-col() {
-  flex-basis: 0;
-  flex-grow: 1;
-  max-width: 100%;
-  padding: 0 15px;
+@mixin mk-col($size: "") {
+  @if $size == "" {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+    padding: 0 15px;
+  } @else {
+    flex-basis: ($size * 1%);
+  }
   @include mobile {
     flex-basis: 100%;
     max-width: 100%;

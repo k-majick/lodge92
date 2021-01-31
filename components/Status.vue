@@ -87,6 +87,7 @@ export default class Status extends Vue {
   }
 
   addToCart() {
+    // console.dir(this.booking)
     this.$store.commit('_cart/addBooking', this.booking);
     this.$store.commit('_days/selected2cart');
     this.$store.commit('_days/resetSelected');

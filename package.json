@@ -21,7 +21,8 @@
     "dayjs": "^1.9.7",
     "graphql": "^14.5.8",
     "nuxt": "^2.14.11",
-    "nuxt-i18n": "^6.16.0"
+    "nuxt-i18n": "^6.16.0",
+    "nuxt-stripe-module": "^3.0.1"
   },
   "devDependencies": {
     "@nuxt/types": "^2.14.5",

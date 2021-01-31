@@ -10,7 +10,14 @@
   @include mk-col;
 
   &-50 {
-    flex-basis: 50%;
-    max-width: 50%;
+    @include mk-col(50);
+  }
+
+  &-60 {
+    @include mk-col(60);
+  }
+
+  &-40 {
+    @include mk-col(40);
   }
 }

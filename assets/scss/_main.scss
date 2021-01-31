@@ -22,10 +22,6 @@ body {
 
   a {
     text-decoration: none;
-
-    &:hover {
-      text-decoration: none;
-    }
   }
 
   * {
@@ -139,6 +135,19 @@ body {
     text-align: right;
     @include mobile {
       text-align: center;
+    }
+  }
+
+  &__link {
+    &:link {
+      color: $color-white;
+      display: inline;
+      text-decoration: none;
+      text-decoration: underline;
+
+      &:hover {
+        color: $color-yellow;
+      }
     }
   }
 }

@@ -45,7 +45,7 @@ export default {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Nunito:wght@200;400&display=swap",
       }
-    ]
+    ],
   },
   publicRuntimeConfig: {
     appTitle: process.env.APP_TITLE,
@@ -83,7 +83,11 @@ export default {
     "@nuxtjs/markdownit",
     "@nuxtjs/strapi",
     "nuxt-i18n",
+    'nuxt-stripe-module',
   ],
+  stripe: {
+    publishableKey: 'pk_test_51I8B4AIE5xAywf5DEmphvTL0ByRuXdUF4yh2ShW5gtJH6BgpQhGF4mbNgxfpzE4XBnl7HFeyVx301PCvgkWKj0DL00Rm0PowlV',
+  },
   i18n: {
     strategy: 'prefix_except_default',
     // strategy: 'prefix',

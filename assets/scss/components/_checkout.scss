@@ -1,0 +1,46 @@
+.checkout {
+  @include panel;
+  padding: 15px;
+
+  &__btn {
+    @include btn;
+
+    &--icon {
+      display: flex;
+      align-items: center;
+      padding-right: 10px;
+
+      &:after {
+        display: block;
+        font-family: "Material Icons";
+        margin-left: 5px;
+      }
+    }
+
+    &--next {
+      &:after {
+        content: "\e5cc";
+      }
+    }
+  }
+
+  &__btns {
+    display: flex;
+  }
+
+  &__p24 {
+    @include trans(0.25);
+    border: 1px solid $color-white;
+    border-radius: 5px;
+    padding: 5px;
+
+    &--focus {
+      box-shadow: 0 0 10px $color-white;
+    }
+  }
+
+  &__tabs {
+    @include panel;
+    padding: 15px;
+  }
+}

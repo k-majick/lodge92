@@ -90,8 +90,8 @@ import Booking from '@/types/Booking';
 export default class Nav extends Vue {
   public currentLocale = this.$i18n.locale;
   public activeModal = 0;
-  private locales = this.$i18n.locales;
-  private isLogged = this.$store.getters['_user/isLogged'];
+  public isLogged = this.$store.getters['_user/isLogged'];
+  public locales = this.$i18n.locales;
   private hasItems = false;
   private isOpenModal = false;
   private alert = '';
