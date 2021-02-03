@@ -105,5 +105,9 @@
     #{$self}__group--submit {
       align-self: center;
     }
+
+    #{$self}__group--submit {
+      margin-top: 30px;
+    }
   }
 }

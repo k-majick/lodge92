@@ -18,14 +18,14 @@ import {
 @Component
 export default class Tabs extends Vue {
   public selectedIndex = 0;
-  public tabs: [] = [];
+  public tabs: any[] = [];
 
   mounted() {
     this.tabs = this.$children;
     this.selectTab(0);
   }
 
-  selectTab(i) {
+  selectTab(i: number) {
     this.selectedIndex = i;
     this.tabs.forEach((tab, index) => {
       tab.isActive = (index === i)

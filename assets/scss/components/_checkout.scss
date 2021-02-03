@@ -28,6 +28,7 @@
     display: flex;
   }
 
+  &__card,
   &__p24 {
     @include trans(0.25);
     border: 1px solid $color-white;
@@ -42,5 +43,50 @@
   &__tabs {
     @include panel;
     padding: 15px;
+  }
+}
+
+.card {
+  &__icons {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0 20px;
+  }
+
+  &__icon {
+    width: 60px;
+    height: 37.5px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+
+    & + & {
+      margin-left: 5px;
+    }
+
+    &--generic {
+      background-image: url("~@/assets/gfx/card-generic-min.svg");
+    }
+
+    &--visa {
+      background-image: url("~@/assets/gfx/card-visa-min.svg");
+    }
+
+    &--mastercard {
+      background-image: url("~@/assets/gfx/card-mastercard-min.svg");
+    }
+
+    &--maestro {
+      background-image: url("~@/assets/gfx/card-maestro-min.svg");
+    }
+
+    &--discover {
+      background-image: url("~@/assets/gfx/card-discover-min.svg");
+    }
+
+    &--amex {
+      background-image: url("~@/assets/gfx/card-amex-min.svg");
+    }
   }
 }

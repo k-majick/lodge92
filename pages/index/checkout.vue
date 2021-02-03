@@ -7,7 +7,7 @@
         <h3>Wybór metody płatności</h3>
         <tabs class="checkout__tabs">
           <tab class="tab" title="Przelew online">
-            <form class="form form--checkout" @submit.prevent="handleSubmit" novalidate>
+            <form class="form form--checkout" @submit.prevent="submitTransfer" novalidate>
               <img class="form__img" src="@/assets/gfx/logo-p24-min.svg" width="120" height="40" alt="Przelewy24">
               <div class="form__group">
                 <div ref="p24"></div>
@@ -16,20 +16,29 @@
                 <input class="form__input" type="checkbox" id="p24-regulations" name="p24-regulations" ref="p24-regulations" v-model="regulationsAccepted">
                 <label class="form__label" for="p24-regulations">
                   *Oświadczam, że zapoznałem się z <a class="text__link" href="https://www.przelewy24.pl/regulamin" target="_blank">regulaminem</a> i <a class="text__link" href="https://www.przelewy24.pl/obowiazekinformacyjny"
-                    target="_blank">obowiązkiem
-                    informacyjnym</a> serwisu Przelewy24.
+                    target="_blank">obowiązkiem informacyjnym</a> serwisu Przelewy24.
                 </label>
               </div>
               <div class="form__group form__group--alert" v-if="alert">
                 <span class="form__alert">{{ alert }}</span>
               </div>
               <div class="form__group form__group--submit">
-                <button class="main__btn">Pay</button>
+                <button class="main__btn">Pay {{ totalAmount }}</button>
               </div>
             </form>
           </tab>
           <tab class="tab" title="Karta">
-            <div ref="card"></div>
+            <form class="form form--checkout" @submit.prevent="submitCard" novalidate>
+              <div class="card__icons">
+                <div v-for="icon in cardIcons" class="card__icon" :class="icon.img"></div>
+              </div>
+              <div class="form__group">
+                <div ref="card"></div>
+              </div>
+              <div class="form__group form__group--submit">
+                <button class="main__btn">Pay {{ totalAmount }}</button>
+              </div>
+            </form>
           </tab>
         </tabs>
 
@@ -79,7 +88,6 @@ interface Order {
 export default class Checkout extends Vue {
   public currentLocale = this.$i18n.locale;
   public isLogged = this.$store.getters['_user/isLogged'];
-  private totalAmount = 0;
   private bookings: Booking[] = [];
   private userEmail = '';
   private userName = '';
@@ -89,14 +97,38 @@ export default class Checkout extends Vue {
   private userCity = '';
   private user: User | null = null;
   private clientSecret = '';
+  private card: any = null;
   private p24bank: any = null;
   private p24selected: string = '';
   private alert: string | null = '';
   private regulationsAccepted: boolean = false;
+  private totalAmount: number = 0;
+  private token: any = null;
   private order: Order = {
     amount: 0,
     bookings: []
   };
+  private cardIcons = [{
+      img: 'card__icon--visa',
+      name: 'Visa',
+    },
+    {
+      img: 'card__icon--mastercard',
+      name: 'Visa',
+    },
+    {
+      img: 'card__icon--maestro',
+      name: 'Maestro',
+    },
+    {
+      img: 'card__icon--discover',
+      name: 'Discover',
+    },
+    {
+      img: 'card__icon--amex',
+      name: 'American Express',
+    }
+  ]
 
   async asyncData({
     $strapi,
@@ -136,26 +168,58 @@ export default class Checkout extends Vue {
           color: '#008080',
           fontFamily: 'Nunito, sans-serif',
           fontSize: '16px',
-          padding: '10px 15px'
+          padding: '10px 15px',
         },
         complete: {
-          color: '#008080'
+          color: '#008080',
         }
       }
     };
     this.p24bank = elements.create('p24Bank', p24options);
-    this.card = elements.create('card', {});
     this.p24bank.mount(this.$refs.p24);
-    this.card.mount(this.$refs.card);
     this.p24bank.on('change', (e: Event) => {
       this.p24selected = (e as any).value;
       this.validateForm();
     });
+
+    const cardOptions = {
+      classes: {
+        base: 'checkout__card',
+        empty: 'checkout__card--empty',
+        focus: 'checkout__card--focus',
+      },
+      style: {
+        base: {
+          iconColor: '#ffffff',
+          color: '#ffffff',
+          '::placeholder': {
+            color: '#ffffff',
+          },
+          fontFamily: 'Nunito, sans-serif',
+          fontSize: '16px',
+          padding: '10px 15px',
+          ':-webkit-autofill': {
+            backgroundColor: 'none',
+            color: '#ffffff',
+          },
+        },
+        complete: {
+          color: '#ffffff',
+        }
+      },
+      invalid: {
+        iconColor: '#ffffff',
+        color: '#ffffff',
+      },
+    }
+    this.card = elements.create('card', cardOptions);
+    this.card.mount(this.$refs.card);
   }
 
   setOrder() {
     this.bookings = this.$store.getters['_cart/bookings'];
     this.bookings.forEach(booking => {
+      this.totalAmount += booking.cost!;
       this.order.amount += booking.cost! * 100;
       this.order.bookings.push({
         bookingCost: booking.cost!,
@@ -163,6 +227,13 @@ export default class Checkout extends Vue {
         bookingDays: booking.bookingDays!.map(day => day.date),
       });
     });
+
+    const formatter = new Intl.NumberFormat('pl-PL', {
+      style: 'currency',
+      currency: 'PLN',
+      minimumFractionDigits: 0
+    });
+    (this.totalAmount as any) = formatter.format(this.totalAmount);
   }
 
   getUserData() {
@@ -187,7 +258,11 @@ export default class Checkout extends Vue {
     }
   }
 
-  async handleSubmit() {
+  async submitCard() {
+    console.dir(this.totalAmount)
+  }
+
+  async submitTransfer() {
     // let token = '';
     // try {
     //   const response = await createToken();
@@ -212,19 +287,17 @@ export default class Checkout extends Vue {
     if (this.validateForm() === false)
       return;
 
-
     try {
       (this as any).$strapi.create('bookings', this.order).then((res: any) => {
         this.clientSecret = res.client_secret;
-        console.dir(this.clientSecret);
-        this.confirmPayment();
+        this.confirmP24Payment();
       });
     } catch (err) {
       console.dir(err);
     }
   }
 
-  async confirmPayment() {
+  async confirmP24Payment() {
     const {
       error
     } = await (this as any).$stripe.confirmP24Payment(
