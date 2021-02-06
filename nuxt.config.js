@@ -66,9 +66,9 @@ export default {
       "@/assets/scss/_grid.scss",
     ]
   },
-  loading: "@/components/Loading.vue",
+  // loading: "@/components/Loading.vue",
   serverMiddleware: [
-    "~/middleware/redirects",
+    // "~/middleware/redirects",
   ],
   plugins: [],
   components: true,

@@ -28,7 +28,6 @@ export default class Status extends Vue {
 
   public currentLocale = this.$i18n.locale;
   private isActive = false;
-  private isLogged = this.$store.getters['_user/isLogged'];
   private isModalOpen = this.$store.getters['_modals/isLoginModalActive'];
   private isOpenModal = false;
   private bookingDates: string[] = [];
@@ -55,14 +54,6 @@ export default class Status extends Vue {
     });
   }
 
-  mounted() {
-    (this as any).unwatch = this.$store.watch(() =>
-      this.$store.getters['_user/isLogged'], isLogged => {
-        this.isLogged = isLogged;
-      }
-    );
-  }
-
   @Watch('bookingDates')
   setBooking() {
     this.booking = {
@@ -87,7 +78,6 @@ export default class Status extends Vue {
   }
 
   addToCart() {
-    // console.dir(this.booking)
     this.$store.commit('_cart/addBooking', this.booking);
     this.$store.commit('_days/selected2cart');
     this.$store.commit('_days/resetSelected');
@@ -95,7 +85,6 @@ export default class Status extends Vue {
 
   beforeDestroy() {
     (this as any).unsubscribe();
-    (this as any).unwatch();
   }
 
 }

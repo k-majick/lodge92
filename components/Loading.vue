@@ -1,7 +1,6 @@
 <template>
 <div v-if="loading" class="main__loader">
-<!-- <div class="main__loader"> -->
-  <p>Loading...</p>
+  <div class="main__spinner"></div>
 </div>
 </template>
 
@@ -11,6 +10,7 @@ import {
   Vue
 } from 'nuxt-property-decorator';
 
+@Component
 export default class Loading extends Vue {
   private loading = false;
 
@@ -21,6 +21,14 @@ export default class Loading extends Vue {
   finish() {
     this.loading = false;
   }
+
+  // fail(error: Error) {
+  //   console.log(error)
+  // }
+  //
+  // increase(num: number) {
+  //   console.log(num)
+  // }
 
 }
 </script>

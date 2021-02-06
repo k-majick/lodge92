@@ -5,7 +5,11 @@
     <div class="row">
       <div class="col col-60">
         <h3>Wybór metody płatności</h3>
+
+        <button class="main__btn" @click="loadMe">Load</button>
+
         <tabs class="checkout__tabs">
+          <p>Zalogowany jako Zenek</p>
           <tab class="tab" title="Przelew online">
             <form class="form form--checkout" @submit.prevent="submitTransfer" novalidate>
               <img class="form__img" src="@/assets/gfx/logo-p24-min.svg" width="120" height="40" alt="Przelewy24">
@@ -28,12 +32,15 @@
             </form>
           </tab>
           <tab class="tab" title="Karta">
-            <form class="form form--checkout" @submit.prevent="submitCard" novalidate>
+            <form class="form form--checkout form--card" @submit.prevent="submitCard" novalidate>
               <div class="card__icons">
                 <div v-for="icon in cardIcons" class="card__icon" :class="icon.img"></div>
               </div>
               <div class="form__group">
                 <div ref="card"></div>
+              </div>
+              <div class="form__group form__group--alert" v-if="alert">
+                <span class="form__alert">{{ alert }}</span>
               </div>
               <div class="form__group form__group--submit">
                 <button class="main__btn">Pay {{ totalAmount }}</button>
@@ -41,9 +48,6 @@
             </form>
           </tab>
         </tabs>
-
-        <!-- <Card ref="card-stripe" stripe="pk_test_51I8B4AIE5xAywf5DEmphvTL0ByRuXdUF4yh2ShW5gtJH6BgpQhGF4mbNgxfpzE4XBnl7HFeyVx301PCvgkWKj0DL00Rm0PowlV" @change='complete = $event.complete' /> -->
-
       </div>
       <div class="col col-40">
         <h3>Twoje zamówienie</h3>
@@ -62,25 +66,16 @@ import {
   Watch,
   Vue
 } from 'nuxt-property-decorator';
-// import {
-//   Card,
-//   createToken
-// } from 'vue-stripe-elements-plus';
 import Tab from '@/components/Tab.vue';
 import Tabs from '@/components/Tabs.vue';
 import Booking from '@/types/Booking';
 import Day from '@/types/Day';
+import Order from '@/types/Order';
 import User from '@/types/User';
 
-interface Order {
-  amount: number,
-    bookings: any[],
-}
-
 @Component({
-  middleware: 'auth',
+  // middleware: ['user', 'cart'],
   components: {
-    // Card,
     Tab,
     Tabs,
   }
@@ -88,7 +83,7 @@ interface Order {
 export default class Checkout extends Vue {
   public currentLocale = this.$i18n.locale;
   public isLogged = this.$store.getters['_user/isLogged'];
-  private bookings: Booking[] = [];
+  private bookings: Booking[] = this.$store.getters['_cart/bookings'];
   private userEmail = '';
   private userName = '';
   private userAddress = '';
@@ -102,11 +97,14 @@ export default class Checkout extends Vue {
   private p24selected: string = '';
   private alert: string | null = '';
   private regulationsAccepted: boolean = false;
-  private totalAmount: number = 0;
+  private totalAmount = this.$store.getters['_cart/totalPrice'];
   private token: any = null;
+  private cardValid: boolean = false;
   private order: Order = {
     amount: 0,
-    bookings: []
+    bookings: [],
+    method: '',
+    token: '',
   };
   private cardIcons = [{
       img: 'card__icon--visa',
@@ -150,10 +148,15 @@ export default class Checkout extends Vue {
     this.setOrder();
   }
 
+  loadMe() {
+    console.dir(this.bookings);
+    console.dir(this.totalAmount);
+    console.dir(this.$store.getters['_cart/totalPrice']);
+  }
+
   mounted() {
-    this.$store.watch(() => this.$store.getters['_user/isLogged'], isLogged => {
-      this.isLogged = isLogged;
-    });
+    (this as any).unwatch = this.$store.watch(() => this.$store.getters['_user/isLogged'], isLogged => this.isLogged = isLogged);
+    (this as any).unwatch2 = this.$store.watch(() => this.$store.getters['_cart/bookings'], bookings => this.bookings = bookings);
 
     const elements = (this as any).$stripe.elements();
     const p24options = {
@@ -179,7 +182,7 @@ export default class Checkout extends Vue {
     this.p24bank.mount(this.$refs.p24);
     this.p24bank.on('change', (e: Event) => {
       this.p24selected = (e as any).value;
-      this.validateForm();
+      this.validateP24form();
     });
 
     const cardOptions = {
@@ -208,18 +211,23 @@ export default class Checkout extends Vue {
         }
       },
       invalid: {
-        iconColor: '#ffffff',
+        iconColor: '#ff0000',
         color: '#ffffff',
       },
     }
     this.card = elements.create('card', cardOptions);
     this.card.mount(this.$refs.card);
+    this.card.on('change', (e: Event) => {
+      this.validateCard(e);
+    });
   }
 
+  @Watch('bookings')
   setOrder() {
-    this.bookings = this.$store.getters['_cart/bookings'];
+    // if (this.bookings.length < 1)
+    //   this.$router.push(this.localePath('index/reservations'));
+
     this.bookings.forEach(booking => {
-      this.totalAmount += booking.cost!;
       this.order.amount += booking.cost! * 100;
       this.order.bookings.push({
         bookingCost: booking.cost!,
@@ -233,7 +241,7 @@ export default class Checkout extends Vue {
       currency: 'PLN',
       minimumFractionDigits: 0
     });
-    (this.totalAmount as any) = formatter.format(this.totalAmount);
+    (this.totalAmount as any) = formatter.format(this.$store.getters['_cart/totalPrice']);
   }
 
   getUserData() {
@@ -242,8 +250,25 @@ export default class Checkout extends Vue {
     this.userName = this.user!.username;
   }
 
+  validateCard(e: any) {
+    console.dir(e);
+    if (e.error !== undefined) {
+      this.alert = e.error.message;
+    } else {
+      this.alert = '';
+    }
+
+    if (e.complete === true) {
+      this.cardValid = true;
+    } else {
+      this.cardValid = false;
+    }
+
+    return false;
+  }
+
   @Watch('regulationsAccepted')
-  validateForm() {
+  validateP24form() {
     switch (true) {
       case this.p24selected === '':
         this.alert = 'select bank';
@@ -258,74 +283,106 @@ export default class Checkout extends Vue {
     }
   }
 
-  async submitCard() {
-    console.dir(this.totalAmount)
-  }
-
   async submitTransfer() {
-    // let token = '';
-    // try {
-    //   const response = await createToken();
-    //   token = response.token.id;
-    // } catch (err) {
-    //   console.dir(err);
-    //   return;
-    // }
-    // console.dir(token);
-    // try {
-    //   await (this as any).$strapi.create('bookings', order);
-    //   this.emptyCart();
-    // } catch (err) {
-    //   console.dir(err);
-    // }
-    // let res = (this as any).$strapi.find('bookings');
-    // console.dir(res);
-
-    // console.dir(this.order);
-
-
-    if (this.validateForm() === false)
+    if (this.validateP24form() === false)
       return;
+
+    this.order.method = 'p24';
 
     try {
       (this as any).$strapi.create('bookings', this.order).then((res: any) => {
+        console.dir(res);
         this.clientSecret = res.client_secret;
         this.confirmP24Payment();
       });
     } catch (err) {
+      this.alert = err.message;
       console.dir(err);
     }
   }
 
-  async confirmP24Payment() {
-    const {
-      error
-    } = await (this as any).$stripe.confirmP24Payment(
-      this.clientSecret, {
-        payment_method: {
-          p24: this.p24bank,
-          billing_details: {
-            email: this.userEmail,
-            name: this.userName,
-          },
-        },
-        payment_method_options: {
-          p24: {
-            // In order to be able to pass the `tos_shown_and_accepted` parameter, you must
-            // ensure that the P24 regulations and information obligation consent
-            // text is clearly visible to the customer. See
-            // https://stripe.com/docs/payments/p24/accept-a-payment#requirements
-            // for directions.
-            tos_shown_and_accepted: true,
-          }
-        },
-        return_url: 'http://localhost:8888/kontakt',
+  async submitCard() {
+    if (this.cardValid === false) {
+      this.alert = 'Fill in all card details.';
+      return;
+    }
+
+    try {
+      const res = await (this as any).$stripe.createToken(this.card);
+
+      this.order.method = 'card';
+      this.order.token = res.token.id;
+
+      try {
+        (this as any).$strapi.create('bookings', this.order).then((res: any) => {
+          console.dir(res);
+          this.clientSecret = res.client_secret;
+          this.confirmCardPayment();
+        });
+      } catch (err) {
+        this.alert = err.message;
+        console.dir(err);
       }
-    );
+
+    } catch (err) {
+      this.alert = err.message;
+      console.dir(err);
+      return;
+    }
+  }
+
+  async confirmP24Payment() {
+    await (this as any).$stripe.confirmP24Payment(this.clientSecret, {
+      payment_method: {
+        p24: this.p24bank,
+        billing_details: {
+          email: this.userEmail,
+          name: this.userName,
+        },
+      },
+      payment_method_options: {
+        p24: {
+          tos_shown_and_accepted: true,
+        }
+      },
+      return_url: 'http://localhost:8888/kontakt',
+    });
+  }
+
+  async confirmCardPayment() {
+    await (this as any).$stripe.confirmCardPayment(this.clientSecret, {
+      payment_method: {
+        card: this.card,
+        billing_details: {
+          email: this.userEmail,
+          name: this.userName,
+        }
+      }
+    }).then((res: any) => {
+      if (res.error) {
+        console.dir(res.error.message);
+      } else {
+        console.dir('payment processed');
+        if (res.paymentIntent.status === 'succeeded') {
+          console.dir('success');
+          console.dir(res);
+          // Show a success message to your customer
+          // There's a risk of the customer closing the window before callback
+          // execution. Set up a webhook or plugin to listen for the
+          // payment_intent.succeeded event that handles any business critical
+          // post-payment actions.
+        }
+      }
+    });
   }
 
   emptyCart() {
     console.log('empty cart');
+  }
+
+  beforeDestroy() {
+    (this as any).unwatch();
+    (this as any).unwatch2();
   }
 
 }

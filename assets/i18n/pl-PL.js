@@ -13,6 +13,7 @@ export default {
   reservationDateSelect: 'Wybierz termin',
   reservationRoomPlan: 'Plan pokoi',
   reservationToday: 'Dzisiaj',
+  // reservationsPath: 'rezerwacja',
   globalPoland: 'Polska',
   statusDate: 'Termin',
   statusDaysNumber: 'Liczba dni',

@@ -13,6 +13,7 @@ export default {
   reservationDateSelect: 'Select date',
   reservationRoomPlan: 'Room plan',
   reservationToday: 'Today',
+  // reservationsPath: 'reservations',
   globalPoland: 'Poland',
   statusDate: 'Date',
   statusDaysNumber: 'Days count',

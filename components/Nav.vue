@@ -155,8 +155,8 @@ export default class Nav extends Vue {
 
     } catch (e) {
 
-      console.dir(e.response.data.message[0].messages[0].id);
-      console.dir(e.response.data.message[0].messages[0]);
+      // console.dir(e.response.data.message[0].messages[0].id);
+      // console.dir(e.response.data.message[0].messages[0]);
 
       switch (true) {
         case e.response.data.message[0].messages[0].id === 'Auth.form.error.email.provide':
