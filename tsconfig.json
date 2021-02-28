@@ -25,10 +25,11 @@
       ]
     },
     "types": [
-      "@types/node",
-      "@types/jest",
       "@nuxt/types",
       "@nuxtjs/auth-next",
+      "@nuxtjs/strapi",
+      "@types/node",
+      "@types/jest",
       "nuxt-i18n"
     ]
   },

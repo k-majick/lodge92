@@ -66,9 +66,9 @@ export default {
       "@/assets/scss/_grid.scss",
     ]
   },
-  // loading: "@/components/Loading.vue",
+  loading: "@/components/Loading.vue",
   serverMiddleware: [
-    // "~/middleware/redirects",
+    "~/middleware/redirects",
   ],
   plugins: [],
   components: true,
@@ -90,7 +90,6 @@ export default {
   },
   i18n: {
     strategy: 'prefix_except_default',
-    // strategy: 'prefix',
     defaultLocale: 'pl',
     seo: true,
     parsePages: false,
@@ -112,11 +111,6 @@ export default {
         en: 'gallery',
         pl: 'galeria',
       },
-      'index/register': {
-        de: 'registrierung',
-        en: 'register',
-        pl: 'rejestracja',
-      },
       'index/reservations': {
         de: 'reservierung',
         en: 'reservations',
@@ -126,7 +120,27 @@ export default {
         de: 'start',
         en: 'start',
         pl: 'start',
-      }
+      },
+      'index/account': {
+        de: 'konto',
+        en: 'account',
+        pl: 'konto',
+      },
+      'index/register': {
+        de: 'registrierung',
+        en: 'register',
+        pl: 'rejestracja',
+      },
+      'index/passwordLost': {
+        de: 'passwort-abrufen',
+        en: 'retrieve-password',
+        pl: 'odzyskaj-haslo',
+      },
+      'index/passwordReset': {
+        de: 'passwort-zuruecksetzen',
+        en: 'reset-password',
+        pl: 'zmien-haslo',
+      },
     },
     locales: [{
         code: 'de',
@@ -178,19 +192,23 @@ export default {
   strapi: {
     url: apiUrl,
     entities: [{
-        name: "articles",
+        name: "bookings",
         type: "collection",
       },
       {
-        name: "categories",
+        name: "nav-items",
         type: "collection",
       },
       {
-        name: "homepage",
-        type: "single",
+        name: "users",
+        type: "collection",
       },
       {
         name: "global",
+        type: "single",
+      },
+      {
+        name: "start",
         type: "single",
       },
     ],

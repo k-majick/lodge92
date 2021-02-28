@@ -17,7 +17,7 @@ import {
   Vue
 } from 'nuxt-property-decorator';
 
-@Component({})
+@Component
 export default class Modal extends Vue {
   @Prop() modalType!: string;
 

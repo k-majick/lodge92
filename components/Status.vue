@@ -1,11 +1,11 @@
 <template>
 <div class="status container" :class="{ 'status--active': isActive }">
   <div class="status__panel">
-    <h3 class="status__title">{{ $t('statusDateSelected') }}</h3>
-    <p><b>{{ $t('statusDate') }}:</b> <span class="status__date" v-for="bookingDate in bookingDates">{{ bookingDate }}</span></p>
-    <p><b>{{ $t('statusDaysNumber') }}:</b> {{ totalDays }}</p>
-    <p><b>{{ $t('statusCost') }}:</b> <span v-html="totalDays * price + '&nbsp;zł'"></span></p>
-    <button class="status__btn" :class="{ 'status__btn--disabled' : !isActive }" @click="addToCart">{{ $t('cartAdd') }}<span class="material-icons">add_shopping_cart</span></button>
+    <h3 class="status__title">{{ $tc('statusDateSelected') }}</h3>
+    <p><b>{{ $tc('statusDate') }}:</b> <span class="status__date" v-for="bookingDate in bookingDates">{{ bookingDate }}</span></p>
+    <p><b>{{ $tc('statusDaysNumber') }}:</b> {{ totalDays }}</p>
+    <p><b>{{ $tc('statusCost') }}:</b> <span v-html="totalDays * price + '&nbsp;zł'"></span></p>
+    <button class="status__btn" :class="{ 'status__btn--disabled' : !isActive }" @click="addToCart">{{ $tc('cartAdd') }}<span class="material-icons">add_shopping_cart</span></button>
   </div>
 </div>
 </template>
@@ -24,21 +24,21 @@ import Booking from '@/types/Booking';
 
 @Component
 export default class Status extends Vue {
-  @Prop() price!: number;
-
-  public currentLocale = this.$i18n.locale;
-  private isActive = false;
-  private isModalOpen = this.$store.getters['_modals/isLoginModalActive'];
-  private isOpenModal = false;
-  private bookingDates: string[] = [];
-  private totalDays = 0;
-  private booking: Booking = {
+  currentLocale = this.$i18n.locale;
+  isActive = false;
+  isModalOpen = this.$store.getters['_modals/isLoginModalActive'];
+  isOpenModal = false;
+  bookingDates: string[] = [];
+  totalDays = 0;
+  booking: Booking = {
     id: null,
     bookingDates: null,
     bookingDays: null,
     totalDays: null,
     cost: null,
   }
+
+  @Prop() price!: number;
 
   created() {
     this.totalDays = this.$store.getters['_days/selected'].length;

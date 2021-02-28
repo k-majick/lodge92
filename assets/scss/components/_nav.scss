@@ -31,16 +31,18 @@
     &--user {
       margin-left: 15px;
       margin-right: 15px;
-      padding: 7.5px 0;
+      padding: 5px 0;
 
       > #{$self}__link {
-        background-image: url("~@/assets/gfx/icon-user.svg");
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center center;
-        padding: 12.5px;
         border: 0;
         margin: 0;
+        // background-image: url("~@/assets/gfx/icon-user.svg");
+        // background-size: contain;
+        // background-repeat: no-repeat;
+        // background-position: center center;
+        // padding: 12.5px;
+        padding: 0;
+        font-size: 30px;
       }
     }
 
@@ -86,6 +88,11 @@
     }
 
     &.active {
+      color: $color-yellow !important;
+      text-shadow: 0 0 5px transparentize($color-white, 0.5);
+    }
+
+    &:hover {
       color: $color-yellow;
       text-shadow: 0 0 5px transparentize($color-white, 0.5);
     }
@@ -139,75 +146,14 @@
       white-space: nowrap;
     }
 
-    &--total {
-      padding: 10px 0 20px;
-    }
-
     &--btn {
       @include btn;
       align-self: center;
       padding-right: 7.5px;
+      margin-top: 15px;
 
       .material-icons {
         margin-left: 5px;
-      }
-    }
-  }
-
-  &__list {
-    display: flex;
-    flex-flow: column;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    list-style-type: decimal;
-    counter-reset: list-item;
-
-    &--item {
-      border: 0;
-      padding: 0;
-      font-size: 0.85em;
-      white-space: nowrap;
-      display: inline-flex;
-      justify-content: flex-start;
-
-      & + & {
-        margin-top: 5px;
-      }
-
-      p {
-        margin: 2.5px 0;
-        text-align: left;
-      }
-
-      &:before {
-        counter-increment: list-item;
-        content: counter(list-item) ".";
-        display: flex;
-        font-weight: normal;
-        align-items: flex-start;
-        margin: 2.5px 10px 2.5px 0;
-      }
-    }
-
-    &--details {
-      width: 100%;
-    }
-
-    &--remove {
-      cursor: pointer;
-      background: none;
-      border: 0;
-      color: $color-white;
-      font-size: 1.75em;
-      padding: 0 0 0 15px;
-      line-height: 1;
-      border-radius: 10px;
-      display: flex;
-      align-items: flex-start;
-
-      &:focus {
-        outline: 0;
       }
     }
   }

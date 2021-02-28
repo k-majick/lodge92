@@ -36,8 +36,8 @@ export default class CalendarMonth extends Vue {
   @Provide() selectedDate = dayjs();
   @Provide() today = dayjs().format("YYYY-MM-DD");
 
-  private allDays: Array < Day > = [];
-  private selectedDay: Day = {
+  allDays: Array < Day > = [];
+  selectedDay: Day = {
     date: '',
     isCurrentMonth: false,
     isSelected: false,

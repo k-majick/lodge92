@@ -1,14 +1,14 @@
 <template>
 <section class="main__section">
   <div class="container">
-    <h2>{{ $t('reservation') }}</h2>
+    <h2>{{ $tc('reservation') }}</h2>
     <div class="row">
       <div class="col col-50">
-        <h3>{{ $t('reservationDateSelect') }}</h3>
+        <h3>{{ $tc('reservationDateSelect') }}</h3>
         <CalendarMonth />
       </div>
       <div class="col col-50">
-        <h3>{{ $t('reservationRoomPlan') }}</h3>
+        <h3>{{ $tc('reservationRoomPlan') }}</h3>
         <Floors :rooms="rooms" :locale="currentLocale" />
       </div>
     </div>

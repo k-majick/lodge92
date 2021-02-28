@@ -17,11 +17,11 @@ import {
 
 @Component
 export default class Tabs extends Vue {
-  public selectedIndex = 0;
-  public tabs: any[] = [];
+  selectedIndex = 0;
+  tabs: any[] = [];
 
   mounted() {
-    this.tabs = this.$children;
+    this.tabs = this.$children.filter(el => (el as any).tag !== 'a');
     this.selectTab(0);
   }
 
@@ -30,6 +30,8 @@ export default class Tabs extends Vue {
     this.tabs.forEach((tab, index) => {
       tab.isActive = (index === i)
     });
+    
+    this.$emit('tabChanged');
   }
 }
 </script>

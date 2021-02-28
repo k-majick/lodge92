@@ -19,6 +19,21 @@
     "auth": false
   },
   {
+    "from": "/en/account",
+    "to": "/en/start",
+    "auth": false
+  },
+  {
+    "from": "/de/konto",
+    "to": "/de/start",
+    "auth": false
+  },
+  {
+    "from": "/konto",
+    "to": "/start",
+    "auth": false
+  },
+  {
     "from": "/en/register",
     "to": "/en/start",
     "auth": true
@@ -30,6 +45,36 @@
   },
   {
     "from": "/rejestracja",
+    "to": "/start",
+    "auth": true
+  },
+  {
+    "from": "/en/retrieve-password",
+    "to": "/en/start",
+    "auth": true
+  },
+  {
+    "from": "/de/passwort-abrufen",
+    "to": "/de/start",
+    "auth": true
+  },
+  {
+    "from": "/odzyskaj-haslo",
+    "to": "/start",
+    "auth": true
+  },
+  {
+    "from": "/en/reset-password",
+    "to": "/en/start",
+    "auth": true
+  },
+  {
+    "from": "/de/passwort-zuruecksetzen",
+    "to": "/de/start",
+    "auth": true
+  },
+  {
+    "from": "/zmien-haslo",
     "to": "/start",
     "auth": true
   }

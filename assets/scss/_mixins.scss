@@ -40,7 +40,6 @@
 }
 @mixin mk-row() {
   display: flex;
-  flex-wrap: wrap;
   margin-right: -15px;
   margin-left: -15px;
 }
@@ -94,6 +93,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: fit-content;
 
   &:not(.material-icons) {
     font-family: $font-stack;
@@ -113,5 +113,9 @@
 
   &.material-icons {
     padding: 10px;
+  }
+
+  &:disabled {
+    opacity: 0.5;
   }
 }

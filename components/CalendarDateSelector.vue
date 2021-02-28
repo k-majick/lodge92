@@ -1,7 +1,7 @@
 <template>
 <div class="calendar__selector">
   <button class="calendar__btn material-icons" @click="selectPrevious">keyboard_arrow_left</button>
-  <button class="calendar__btn" @click="selectCurrent">{{ $t('reservationToday') }}</button>
+  <button class="calendar__btn" @click="selectCurrent">{{ $tc('reservationToday') }}</button>
   <button class="calendar__btn material-icons" @click="selectNext">keyboard_arrow_right</button>
 </div>
 </template>

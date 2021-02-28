@@ -1,15 +1,12 @@
 <template>
 <section class="main__section">
   <div class="container">
-    <h2>{{ $t('checkout') }}</h2>
+    <h2>{{ $tc('checkout') }}</h2>
     <div class="row">
       <div class="col col-60">
         <h3>Wybór metody płatności</h3>
-
-        <button class="main__btn" @click="loadMe">Load</button>
-
-        <tabs class="checkout__tabs">
-          <p>Zalogowany jako Zenek</p>
+        <tabs class="checkout__tabs" @tabChanged="resetAlert">
+          <p>{{ $tc('userLoggedAs') }} <nuxt-link class="text__link" :to="$tc('userAccountPath')">{{ userName }}</nuxt-link>.</p>
           <tab class="tab" title="Przelew online">
             <form class="form form--checkout" @submit.prevent="submitTransfer" novalidate>
               <img class="form__img" src="@/assets/gfx/logo-p24-min.svg" width="120" height="40" alt="Przelewy24">
@@ -50,9 +47,9 @@
         </tabs>
       </div>
       <div class="col col-40">
-        <h3>Twoje zamówienie</h3>
+        <h3>Twoja rezerwacja</h3>
         <div class="checkout">
-          czek
+          <CartItems />
         </div>
       </div>
     </div>
@@ -68,13 +65,13 @@ import {
 } from 'nuxt-property-decorator';
 import Tab from '@/components/Tab.vue';
 import Tabs from '@/components/Tabs.vue';
+import CartItems from "@/components/CartItems.vue";
 import Booking from '@/types/Booking';
 import Day from '@/types/Day';
 import Order from '@/types/Order';
 import User from '@/types/User';
 
 @Component({
-  // middleware: ['user', 'cart'],
   components: {
     Tab,
     Tabs,
@@ -84,12 +81,12 @@ export default class Checkout extends Vue {
   public currentLocale = this.$i18n.locale;
   public isLogged = this.$store.getters['_user/isLogged'];
   private bookings: Booking[] = this.$store.getters['_cart/bookings'];
-  private userEmail = '';
-  private userName = '';
-  private userAddress = '';
-  private userAddressNo = '';
-  private userPostalCode = '';
-  private userCity = '';
+  private userEmail = this.$store.getters['_user/loggedUser'].email;
+  private userName = this.$store.getters['_user/loggedUser'].username;
+  // private userAddress = '';
+  // private userAddressNo = '';
+  // private userPostalCode = '';
+  // private userCity = '';
   private user: User | null = null;
   private clientSecret = '';
   private card: any = null;
@@ -135,23 +132,13 @@ export default class Checkout extends Vue {
     $strapi: any,
     app: any
   }) {
-
     return {
       currentLocale: app.i18n.locale
     };
   }
 
   created() {
-    if (this.isLogged)
-      this.getUserData();
-
     this.setOrder();
-  }
-
-  loadMe() {
-    console.dir(this.bookings);
-    console.dir(this.totalAmount);
-    console.dir(this.$store.getters['_cart/totalPrice']);
   }
 
   mounted() {
@@ -202,8 +189,7 @@ export default class Checkout extends Vue {
           fontSize: '16px',
           padding: '10px 15px',
           ':-webkit-autofill': {
-            backgroundColor: 'none',
-            color: '#ffffff',
+            color: '#441650',
           },
         },
         complete: {
@@ -222,11 +208,19 @@ export default class Checkout extends Vue {
     });
   }
 
+  resetAlert() {
+    this.alert = '';
+  }
+
+  @Watch('bookings')
+  @Watch('isLogged')
+  redirect() {
+    if (this.bookings.length < 1 || this.isLogged === false)
+      this.$router.push(this.$tc('reservationsPath'));
+  }
+
   @Watch('bookings')
   setOrder() {
-    // if (this.bookings.length < 1)
-    //   this.$router.push(this.localePath('index/reservations'));
-
     this.bookings.forEach(booking => {
       this.order.amount += booking.cost! * 100;
       this.order.bookings.push({
@@ -241,19 +235,38 @@ export default class Checkout extends Vue {
       currency: 'PLN',
       minimumFractionDigits: 0
     });
-    (this.totalAmount as any) = formatter.format(this.$store.getters['_cart/totalPrice']);
-  }
 
-  getUserData() {
-    this.user = this.$store.getters['_user/loggedUser'];
-    this.userEmail = this.user!.email;
-    this.userName = this.user!.username;
+    (this.totalAmount as any) = formatter.format(this.$store.getters['_cart/totalPrice']);
   }
 
   validateCard(e: any) {
     console.dir(e);
     if (e.error !== undefined) {
-      this.alert = e.error.message;
+
+      switch (true) {
+        case e.error.code === 'incomplete_number':
+          this.alert = this.$tc('checkoutCardNumberIncomplete');
+          break;
+        case e.error.code === 'invalid_number':
+          this.alert = this.$tc('checkoutCardNumberInvalid');
+          break;
+        case e.error.code === 'incomplete_expiry':
+          this.alert = this.$tc('checkoutExpiryIncomplete');
+          break;
+        case e.error.code === 'invalid_expiry_year_past':
+          this.alert = this.$tc('checkoutCardYearExpired');
+          break;
+        case e.error.code === 'invalid_expiry_month_past':
+          this.alert = this.$tc('checkoutCardMonthExpired');
+          break;
+        case e.error.code === 'incomplete_cvc':
+          this.alert = this.$tc('checkoutCardCVVincomplete');
+          break;
+        case e.error.code === 'incomplete_zip':
+          this.alert = this.$tc('checkoutZipIncomplete');
+          break;
+      }
+
     } else {
       this.alert = '';
     }
@@ -271,10 +284,11 @@ export default class Checkout extends Vue {
   validateP24form() {
     switch (true) {
       case this.p24selected === '':
-        this.alert = 'select bank';
+        this.alert = this.$tc('checkoutSelectBank');
+        return false;
         break;
       case this.regulationsAccepted == false:
-        this.alert = 'check it';
+        this.alert = this.$tc('checkoutAcceptRules');
         return false;
         break;
       default:
@@ -303,7 +317,7 @@ export default class Checkout extends Vue {
 
   async submitCard() {
     if (this.cardValid === false) {
-      this.alert = 'Fill in all card details.';
+      this.alert = this.$tc('checkoutCardDetails');
       return;
     }
 
@@ -388,7 +402,7 @@ export default class Checkout extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "../../assets/scss/components/_form";
 @import "../../assets/scss/components/_checkout";
 </style>

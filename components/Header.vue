@@ -22,8 +22,7 @@ import Nav from "@/components/Nav.vue";
 
 @Component
 export default class Header extends Vue {
-  store = this.$store as any;
-  name = this.store.$config.appTitle;
+  name = (this.$store as any).$config.appTitle;
 
   @Prop() navItems: any;
   @Prop() global: any;

@@ -1,7 +1,7 @@
 <template>
 <section class="main__section">
   <div class="container">
-    <h2>{{ $t('contact') }}</h2>
+    <h2>{{ $tc('contact') }}</h2>
   </div>
 </section>
 </template>

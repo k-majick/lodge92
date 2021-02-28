@@ -13,7 +13,7 @@ import {
 
 @Component
 export default class Tab extends Vue {
-  private isActive = true;
+  isActive = true;
 
   @Prop() title!: string;
 
