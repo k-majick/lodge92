@@ -53,7 +53,6 @@ export default class CalendarMonth extends Vue {
   created() {
     this.allDays = [...this.days];
     this.setBlockedDays();
-    this.getBookedDays();
 
     if (this.$store.getters['_days/selected'].length)
       this.setSelectedDays();
@@ -61,10 +60,8 @@ export default class CalendarMonth extends Vue {
     if (this.$store.getters['_days/inCart'].length)
       this.setCartDays();
 
-    // if (this.bookings.length)
-    //   this.setBookedDays();
-
-    // console.dir(this.allDays)
+    if (this.bookings.length)
+      this.getBookedDays();
 
     (this as any).unsubscribe = this.$store.subscribe((mutation, state) => {
       if (mutation.type === '_days/resetSelected') {
@@ -173,7 +170,7 @@ export default class CalendarMonth extends Vue {
   }
 
   getBookedDays() {
-    this.bookings.forEach(booking => this.bookedDays = [...(booking as any).bookingDays]);
+    this.bookings.forEach(booking => this.bookedDays = this.bookedDays.concat((booking as any).bookingDays));
     this.setBookedDays();
   }
 

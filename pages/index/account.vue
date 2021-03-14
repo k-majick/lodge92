@@ -3,6 +3,17 @@
   <div class="container">
     <h2>{{ $tc('userAccount') }}</h2>
     <button class="material-icons" @click="showUser">account_circle</button>
+    <div class="row">
+      <div class="col col-60">
+        <h3>{{ $tc('userAccountData') }}</h3>
+
+      </div>
+      <div class="col col-40">
+        <h3>{{ $tc('userAccountBookings') }}</h3>
+
+
+      </div>
+    </div>
   </div>
 </section>
 </template>
