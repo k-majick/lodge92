@@ -5,7 +5,7 @@
     <div class="row">
       <div class="col col-50">
         <h3>{{ $tc('reservationDateSelect') }}</h3>
-        <CalendarMonth />
+        <CalendarMonth :bookings="bookings" />
       </div>
       <div class="col col-50">
         <h3>{{ $tc('reservationRoomPlan') }}</h3>
@@ -33,7 +33,8 @@ import Floors from "@/components/Floors.vue";
 export default class Reservations extends Vue {
   currentLocale = this.$i18n.locale;
   rooms = [];
-  reservations: any = '';
+  bookings: any = '';
+  building: any = '';
 
   async asyncData({
     $strapi,
@@ -44,12 +45,13 @@ export default class Reservations extends Vue {
   }) {
     return {
       currentLocale: app.i18n.locale,
-      reservations: await $strapi.find("reservations")
+      building: await $strapi.find("building"),
+      bookings: await $strapi.find("bookings"),
     };
   }
 
   created() {
-    this.rooms = this.reservations.rooms;
+    this.rooms = this.building.rooms;
   }
 
 }

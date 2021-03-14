@@ -6,7 +6,9 @@
       <div class="col col-60">
         <h3>Wybór metody płatności</h3>
         <tabs class="checkout__tabs" @tabChanged="resetAlert">
-          <p>{{ $tc('userLoggedAs') }} <nuxt-link class="text__link" :to="$tc('userAccountPath')">{{ userName }}</nuxt-link>.</p>
+          <p>{{ $tc('userLoggedAs') }}
+            <nuxt-link class="text__link" :to="$tc('userAccountPath')">{{ userName }}</nuxt-link>.
+          </p>
           <tab class="tab" title="Przelew online">
             <form class="form form--checkout" @submit.prevent="submitTransfer" novalidate>
               <img class="form__img" src="@/assets/gfx/logo-p24-min.svg" width="120" height="40" alt="Przelewy24">
@@ -88,7 +90,6 @@ export default class Checkout extends Vue {
   // private userPostalCode = '';
   // private userCity = '';
   private user: User | null = null;
-  private clientSecret = '';
   private card: any = null;
   private p24bank: any = null;
   private p24selected: string = '';
@@ -227,6 +228,9 @@ export default class Checkout extends Vue {
         bookingCost: booking.cost!,
         bookingDates: booking.bookingDates as string[],
         bookingDays: booking.bookingDays!.map(day => day.date),
+        isPaid: false,
+        userEmail: this.userEmail,
+        userName: this.userName,
       });
     });
 
@@ -240,7 +244,6 @@ export default class Checkout extends Vue {
   }
 
   validateCard(e: any) {
-    console.dir(e);
     if (e.error !== undefined) {
 
       switch (true) {
@@ -298,28 +301,32 @@ export default class Checkout extends Vue {
   }
 
   async submitTransfer() {
-    if (this.validateP24form() === false)
+    if (!this.validateP24form())
       return;
 
+    this.$nuxt.$loading.start();
     this.order.method = 'p24';
 
     try {
       (this as any).$strapi.create('bookings', this.order).then((res: any) => {
         console.dir(res);
-        this.clientSecret = res.client_secret;
-        this.confirmP24Payment();
+        this.confirmP24Payment(res.client_secret);
       });
     } catch (err) {
       this.alert = err.message;
-      console.dir(err);
+      this.$nuxt.$loading.finish();
+      // console.dir(err);
+      return;
     }
   }
 
   async submitCard() {
-    if (this.cardValid === false) {
+    if (!this.cardValid) {
       this.alert = this.$tc('checkoutCardDetails');
       return;
     }
+
+    this.$nuxt.$loading.start();
 
     try {
       const res = await (this as any).$stripe.createToken(this.card);
@@ -330,23 +337,24 @@ export default class Checkout extends Vue {
       try {
         (this as any).$strapi.create('bookings', this.order).then((res: any) => {
           console.dir(res);
-          this.clientSecret = res.client_secret;
-          this.confirmCardPayment();
+          this.confirmCardPayment(res.client_secret);
         });
       } catch (err) {
         this.alert = err.message;
-        console.dir(err);
+        this.$nuxt.$loading.finish();
+        // console.dir(err);
       }
 
     } catch (err) {
       this.alert = err.message;
-      console.dir(err);
+      this.$nuxt.$loading.finish();
+      // console.dir(err);
       return;
     }
   }
 
-  async confirmP24Payment() {
-    await (this as any).$stripe.confirmP24Payment(this.clientSecret, {
+  async confirmP24Payment(clientSecret: string) {
+    await (this as any).$stripe.confirmP24Payment(clientSecret, {
       payment_method: {
         p24: this.p24bank,
         billing_details: {
@@ -359,12 +367,12 @@ export default class Checkout extends Vue {
           tos_shown_and_accepted: true,
         }
       },
-      return_url: 'http://localhost:8888/kontakt',
-    });
+      return_url: `${this.$config.appUrl}/${this.$tc('userAccountPath')}`,
+    }); // redirects away
   }
 
-  async confirmCardPayment() {
-    await (this as any).$stripe.confirmCardPayment(this.clientSecret, {
+  async confirmCardPayment(clientSecret: string) {
+    await (this as any).$stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: this.card,
         billing_details: {
@@ -373,8 +381,10 @@ export default class Checkout extends Vue {
         }
       }
     }).then((res: any) => {
+      this.$nuxt.$loading.finish();
+
       if (res.error) {
-        console.dir(res.error.message);
+        this.alert = res.error.message;
       } else {
         console.dir('payment processed');
         if (res.paymentIntent.status === 'succeeded') {

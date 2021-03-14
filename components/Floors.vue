@@ -31,11 +31,8 @@ export default class Floors extends Vue {
   @Watch('locale')
   getRoomName(e: any) {
     let room = this.rooms.find(room => (room as any).room_id === e.detail);
-    if (room) {
-      this.currentRoomName = room![`name_${this.locale}`];
-    } else {
-      this.currentRoomName = '';
-    }
+
+    room ? this.currentRoomName = room![`name_${this.locale}`] : this.currentRoomName = '';
   }
 
 }

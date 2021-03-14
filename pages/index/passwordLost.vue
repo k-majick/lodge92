@@ -42,8 +42,8 @@ export default class PasswordLost extends Vue {
     try {
       let res = await this.$strapi.forgotPassword(user);
 
-      this.$nuxt.$loading.finish();
       (res as any).ok === true ? this.alert = this.$tc('userPasswordResetConfirm') as string : this.alert = this.$tc('userErrorOther') as string;
+      this.$nuxt.$loading.finish();
     } catch (e) {
       switch (true) {
         case e.response.data.message[0].messages[0].id === 'Auth.form.error.email.format':

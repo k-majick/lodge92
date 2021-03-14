@@ -17,7 +17,8 @@ import {
   Component,
   Vue,
   Provide,
-  Watch
+  Watch,
+  Prop
 } from 'nuxt-property-decorator';
 import Day from "@/types/Day";
 import dayjs from "dayjs";
@@ -35,8 +36,10 @@ dayjs.extend(weekOfYear);
 export default class CalendarMonth extends Vue {
   @Provide() selectedDate = dayjs();
   @Provide() today = dayjs().format("YYYY-MM-DD");
+  @Prop() bookings!: [];
 
   allDays: Array < Day > = [];
+  bookedDays: string[] = [];
   selectedDay: Day = {
     date: '',
     isCurrentMonth: false,
@@ -50,14 +53,18 @@ export default class CalendarMonth extends Vue {
   created() {
     this.allDays = [...this.days];
     this.setBlockedDays();
+    this.getBookedDays();
 
-    if (this.$store.getters['_days/selected'].length > 0) {
+    if (this.$store.getters['_days/selected'].length)
       this.setSelectedDays();
-    }
 
-    if (this.$store.getters['_days/inCart'].length > 0) {
+    if (this.$store.getters['_days/inCart'].length)
       this.setCartDays();
-    }
+
+    // if (this.bookings.length)
+    //   this.setBookedDays();
+
+    // console.dir(this.allDays)
 
     (this as any).unsubscribe = this.$store.subscribe((mutation, state) => {
       if (mutation.type === '_days/resetSelected') {
@@ -65,13 +72,12 @@ export default class CalendarMonth extends Vue {
         this.setBlockedDays();
       }
 
-      if (mutation.type === '_days/selected2cart') {
+      if (mutation.type === '_days/selected2cart')
         this.setCartDays();
-      }
 
-      if (mutation.type === '_days/removeFromCart') {
+      if (mutation.type === '_days/removeFromCart')
         this.setCartDays();
-      }
+
     });
   }
 
@@ -82,7 +88,6 @@ export default class CalendarMonth extends Vue {
   @Watch('days')
   updateDays() {
     this.allDays = this.days;
-
     this.allDays.filter((d1: Day) => {
       if (this.$store.getters['_days/selected'].some((d2: Day) => d1.date === d2.date) === true) {
         d1.isSelected = true;
@@ -96,6 +101,7 @@ export default class CalendarMonth extends Vue {
     });
 
     this.setBlockedDays();
+    this.setBookedDays();
   }
 
   updateSelectedDays(selectedDay: Day) {
@@ -135,6 +141,16 @@ export default class CalendarMonth extends Vue {
     });
   }
 
+  setBookedDays() {
+    this.allDays.filter((d1: Day) => {
+      if (this.bookedDays.some((d2: string) => d1.date === d2) === true) {
+        d1.isBooked = true;
+      } else {
+        d1.isBooked = false;
+      }
+    });
+  }
+
   setBlockedDays() {
     const sortedSelectedDays = this.sortedSelectedDays;
     const firstSelectedDay = sortedSelectedDays[0];
@@ -154,6 +170,11 @@ export default class CalendarMonth extends Vue {
         day.isBlocked = true;
       }
     });
+  }
+
+  getBookedDays() {
+    this.bookings.forEach(booking => this.bookedDays = [...(booking as any).bookingDays]);
+    this.setBookedDays();
   }
 
   getWeekday(date: any) {
