@@ -39,6 +39,7 @@ export default {
   userEmailTaken: 'This e-mail address is already taken.',
   userEmailConfirm: 'This e-mail address hasn\'t been confirmed yet.',
   userErrorOther: 'An error occured, please try again.',
+  userName: 'Your name',
   userNameFirst: 'First name',
   userNameLast: 'Last name',
   userLogging: 'Log in',

@@ -79,12 +79,23 @@ export default {
   modules: [
     "@nuxtjs/auth",
     "@nuxtjs/axios",
-    "@nuxtjs/style-resources",
+    "@nuxtjs/dayjs",
     "@nuxtjs/markdownit",
     "@nuxtjs/strapi",
+    "@nuxtjs/style-resources",
     "nuxt-i18n",
-    'nuxt-stripe-module',
+    "nuxt-stripe-module",
   ],
+  dayjs: {
+    locales: ['de', 'en', 'pl'],
+    defaultLocale: 'pl',
+    defaultTimeZone: 'Europe/Berlin',
+    plugins: [
+      'weekday',
+      'weekOfYear',
+      'timezone',
+    ]
+  },
   stripe: {
     publishableKey: 'pk_test_51I8B4AIE5xAywf5DEmphvTL0ByRuXdUF4yh2ShW5gtJH6BgpQhGF4mbNgxfpzE4XBnl7HFeyVx301PCvgkWKj0DL00Rm0PowlV',
   },

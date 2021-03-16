@@ -39,6 +39,7 @@ export default {
   userEmailTaken: 'Ten adres e-mail jest już zajęty.',
   userEmailConfirm: 'Ten adres e-mail nie został jeszcze potwierdzony.',
   userErrorOther: 'Wystąpił błąd, proszę spróbować ponownie.',
+  userName: 'Twoje imię i nazwisko',
   userNameFirst: 'Imię',
   userNameLast: 'Nazwisko',
   userLogging: 'Logowanie',

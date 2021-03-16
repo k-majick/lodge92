@@ -39,6 +39,7 @@ export default {
   userEmailTaken: 'Diese E-Mail-Adresse ist bereits vergeben.',
   userEmailConfirm: 'Diese E-Mail-Adresse wurde noch nicht bestätigt.',
   userErrorOther: 'Fehler, bitte versuchen Sie es erneut.',
+  userName: 'Ihr vollständiger Name',
   userNameFirst: 'Name',
   userNameLast: 'Vorname',
   userLogging: 'Anmeldung',

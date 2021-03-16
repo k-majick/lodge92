@@ -1,12 +1,12 @@
 <template>
 <div id="app">
   <div class="main__bg"></div>
-  <Header :navItems="this.navItems" :global="this.global"/>
+  <Header :navItems="this.navItems" :global="this.global" />
   <main class="main" ref="main">
     <transition name="fade">
       <router-view></router-view>
     </transition>
-    <Status :price="this.price"/>
+    <Status :price="this.price" />
   </main>
   <Footer />
 </div>
@@ -29,8 +29,9 @@ import Status from '@/components/Status.vue';
   }
 })
 export default class App extends Vue {
-  private isActive = false;
-  public price = 0;
+  isActive = false;
+  price = 0;
+  currentLocale = this.$i18n.locale;
 
   async asyncData({
     $strapi
@@ -45,12 +46,31 @@ export default class App extends Vue {
 
   created() {
     this.price = (this as any).global.price;
+    this.setDaysLocale();
   }
 
   scrollListen() {
     window.addEventListener('scroll', () => {
       document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
     });
+  }
+
+  setDaysLocale() {
+    const l = this.currentLocale;
+
+    switch (true) {
+      case l === 'de':
+        this.$dayjs.locale('de');
+        break;
+      case l === 'en':
+        this.$dayjs.locale('en');
+        break;
+      case l === 'pl':
+        this.$dayjs.locale('pl');
+        break;
+      default:
+        break;
+    }
   }
 
 }

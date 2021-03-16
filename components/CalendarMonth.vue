@@ -21,21 +21,15 @@ import {
   Prop
 } from 'nuxt-property-decorator';
 import Day from "@/types/Day";
-import dayjs from "dayjs";
-import weekday from "dayjs/plugin/weekday";
-import weekOfYear from "dayjs/plugin/weekOfYear";
 import CalendarDateIndicator from "@/components/CalendarDateIndicator.vue";
 import CalendarDateSelector from "@/components/CalendarDateSelector.vue";
 import CalendarWeekdays from "@/components/CalendarWeekdays.vue";
 import CalendarMonthDay from "@/components/CalendarMonthDay.vue";
 
-dayjs.extend(weekday);
-dayjs.extend(weekOfYear);
-
 @Component
 export default class CalendarMonth extends Vue {
-  @Provide() selectedDate = dayjs();
-  @Provide() today = dayjs().format("YYYY-MM-DD");
+  @Provide() selectedDate = this.$dayjs();
+  @Provide() today = this.$dayjs().format("YYYY-MM-DD");
   @Prop() bookings!: [];
 
   allDays: Array < Day > = [];
@@ -49,6 +43,7 @@ export default class CalendarMonth extends Vue {
     isBooked: false,
     inCart: false,
   };
+  currentLocale = this.$i18n.locale;
 
   created() {
     this.allDays = [...this.days];
@@ -157,10 +152,10 @@ export default class CalendarMonth extends Vue {
       if (!firstSelectedDay || !lastSelectedDay) {
         day.isBlocked = false;
       } else if (
-        day.date === dayjs(firstSelectedDay.date).subtract(1, 'day').format("YYYY-MM-DD") ||
-        day.date === dayjs(lastSelectedDay.date).add(1, 'day').format("YYYY-MM-DD") ||
-        day.date === dayjs(lastSelectedDay.date).format("YYYY-MM-DD") ||
-        day.date === dayjs(firstSelectedDay.date).format("YYYY-MM-DD")
+        day.date === this.$dayjs(firstSelectedDay.date).subtract(1, 'day').format("YYYY-MM-DD") ||
+        day.date === this.$dayjs(lastSelectedDay.date).add(1, 'day').format("YYYY-MM-DD") ||
+        day.date === this.$dayjs(lastSelectedDay.date).format("YYYY-MM-DD") ||
+        day.date === this.$dayjs(firstSelectedDay.date).format("YYYY-MM-DD")
       ) {
         day.isBlocked = false;
       } else {
@@ -175,11 +170,11 @@ export default class CalendarMonth extends Vue {
   }
 
   getWeekday(date: any) {
-    return dayjs(date).weekday();
+    return (this.$dayjs(date) as any).weekday();
   }
 
   get sortedSelectedDays() {
-    return [...this.$store.getters['_days/selected']].sort((a: Day, b: Day) => (dayjs(a.date).isAfter(dayjs(b.date)) ? 1 : -1));
+    return [...this.$store.getters['_days/selected']].sort((a: Day, b: Day) => (this.$dayjs(a.date).isAfter(this.$dayjs(b.date)) ? 1 : -1));
   }
 
   get days() {
@@ -199,16 +194,16 @@ export default class CalendarMonth extends Vue {
   }
 
   get numberOfDaysInMonth() {
-    return dayjs(this.selectedDate).daysInMonth();
+    return this.$dayjs(this.selectedDate).daysInMonth();
   }
 
   get currentMonthDays() {
     return [...Array(this.numberOfDaysInMonth)].map((day, index) => {
       return {
-        date: dayjs(`${this.year}-${this.month}-${index + 1}`).format("YYYY-MM-DD"),
+        date: this.$dayjs(`${this.year}-${this.month}-${index + 1}`).format("YYYY-MM-DD"),
         isCurrentMonth: true,
         isSelected: false,
-        isDisabled: dayjs(`${this.year}-${this.month}-${index + 1}`).isBefore(dayjs().add(3, 'day').format("YYYY-MM-DD")),
+        isDisabled: this.$dayjs(`${this.year}-${this.month}-${index + 1}`).isBefore(this.$dayjs().add(3, 'day').format("YYYY-MM-DD")),
         isBlocked: false,
         isBooked: false,
         inCart: false
@@ -218,16 +213,16 @@ export default class CalendarMonth extends Vue {
 
   get previousMonthDays() {
     const firstDayOfTheMonthWeekday = this.getWeekday(this.currentMonthDays[0].date);
-    const previousMonth = dayjs(`${this.year}-${this.month}-01`).subtract(1, "month");
+    const previousMonth = this.$dayjs(`${this.year}-${this.month}-01`).subtract(1, "month");
     const visibleNumberOfDaysFromPreviousMonth = firstDayOfTheMonthWeekday ? firstDayOfTheMonthWeekday - 1 : 6;
-    const previousMonthLastMondayDayOfMonth = dayjs(this.currentMonthDays[0].date).subtract(visibleNumberOfDaysFromPreviousMonth, "day").date();
+    const previousMonthLastMondayDayOfMonth = this.$dayjs(this.currentMonthDays[0].date).subtract(visibleNumberOfDaysFromPreviousMonth, "day").date();
 
     return [...Array(visibleNumberOfDaysFromPreviousMonth)].map((day, index) => {
       return {
-        date: dayjs(`${previousMonth.year()}-${previousMonth.month() + 1}-${previousMonthLastMondayDayOfMonth + index}`).format("YYYY-MM-DD"),
+        date: this.$dayjs(`${previousMonth.year()}-${previousMonth.month() + 1}-${previousMonthLastMondayDayOfMonth + index}`).format("YYYY-MM-DD"),
         isCurrentMonth: false,
         isSelected: false,
-        isDisabled: dayjs(`${previousMonth.year()}-${previousMonth.month() + 1}-${previousMonthLastMondayDayOfMonth + index}`).isBefore(dayjs().format("YYYY-MM-DD")),
+        isDisabled: this.$dayjs(`${previousMonth.year()}-${previousMonth.month() + 1}-${previousMonthLastMondayDayOfMonth + index}`).isBefore(this.$dayjs().format("YYYY-MM-DD")),
         isBlocked: false,
         isBooked: false,
         inCart: false
@@ -237,15 +232,15 @@ export default class CalendarMonth extends Vue {
 
   get nextMonthDays() {
     const lastDayOfTheMonthWeekday = this.getWeekday(`${this.year}-${this.month}-${this.currentMonthDays.length}`);
-    const nextMonth = dayjs(`${this.year}-${this.month}-01`).add(1, "month");
+    const nextMonth = this.$dayjs(`${this.year}-${this.month}-01`).add(1, "month");
     const visibleNumberOfDaysFromNextMonth = lastDayOfTheMonthWeekday ? 7 - lastDayOfTheMonthWeekday : lastDayOfTheMonthWeekday;
 
     return [...Array(visibleNumberOfDaysFromNextMonth)].map((day, index) => {
       return {
-        date: dayjs(`${nextMonth.year()}-${nextMonth.month() + 1}-${index + 1}`).format("YYYY-MM-DD"),
+        date: this.$dayjs(`${nextMonth.year()}-${nextMonth.month() + 1}-${index + 1}`).format("YYYY-MM-DD"),
         isCurrentMonth: false,
         isSelected: false,
-        isDisabled: dayjs(`${nextMonth.year()}-${nextMonth.month() + 1}-${index + 1}`).isBefore(dayjs().format("YYYY-MM-DD")),
+        isDisabled: this.$dayjs(`${nextMonth.year()}-${nextMonth.month() + 1}-${index + 1}`).isBefore(this.$dayjs().format("YYYY-MM-DD")),
         isBlocked: false,
         isBooked: false,
         inCart: false

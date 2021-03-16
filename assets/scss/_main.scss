@@ -149,6 +149,20 @@ body {
     width: 90px;
     height: 90px;
   }
+
+  &__panel {
+    @include panel;
+    padding: 15px;
+  }
+
+  &__list {
+    margin: 0;
+    padding-left: 30px;
+  }
+
+  &__listItem {
+    padding-left: 15px;
+  }
 }
 
 .text {
