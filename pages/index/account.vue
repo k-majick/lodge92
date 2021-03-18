@@ -17,7 +17,6 @@
           <ul class="main__list">
             <li v-for="booking in userBookings">
               <span>{{ $dayjs(booking.bookingDays[booking.bookingDays.length - 1]).format('D MMMM YYYY') }} - {{ $dayjs(booking.bookingDays[0]).format('D MMMM YYYY') }}</span>
-              <!-- <span v-for="(date, i) in booking.bookingDays"><template v-if="i > 0"> - </template>{{ date }}</span> -->
             </li>
           </ul>
         </div>

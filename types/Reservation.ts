@@ -1,10 +1,9 @@
 type Nullable<T> = T | null;
 import Day from './Day';
 
-export default interface Booking {
+export default interface Reservation {
   id: Nullable<number>,
-  bookingDates: Nullable<string[]>,
-  bookingDays: Nullable<Day[]>,
+  reservationDays: Nullable<Day[]>,
   totalDays: Nullable<number>,
   cost: Nullable<number>,
 }

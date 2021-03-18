@@ -2,7 +2,7 @@
 <div class="status container" :class="{ 'status--active': isActive }">
   <div class="status__panel">
     <h3 class="status__title">{{ $tc('statusDateSelected') }}</h3>
-    <p><b>{{ $tc('statusDate') }}:</b> <span class="status__date" v-for="bookingDate in bookingDates">{{ bookingDate }}</span></p>
+    <p><b>{{ $tc('statusDate') }}:</b> <span v-if="sortedSelectedDays.length">{{ $dayjs(sortedSelectedDays[0].date).format('D MMMM YYYY') }}<span v-if="sortedSelectedDays.length > 1"> - {{ $dayjs(sortedSelectedDays[sortedSelectedDays.length - 1].date).format('D MMMM YYYY') }}</span></span>
     <p><b>{{ $tc('statusDaysNumber') }}:</b> {{ totalDays }}</p>
     <p><b>{{ $tc('statusCost') }}:</b> <span v-html="totalDays * price + '&nbsp;zł'"></span></p>
     <button class="status__btn" :class="{ 'status__btn--disabled' : !isActive }" @click="addToCart">{{ $tc('cartAdd') }}<span class="material-icons">add_shopping_cart</span></button>
@@ -20,20 +20,18 @@ import {
 import Modal from "@/components/Modal.vue";
 import dayjs from "dayjs";
 import Day from "@/types/Day";
-import Booking from '@/types/Booking';
+import Reservation from '@/types/Reservation';
 
 @Component
 export default class Status extends Vue {
-  currentLocale = this.$i18n.locale;
-  isActive = false;
-  isModalOpen = this.$store.getters['_modals/isLoginModalActive'];
-  isOpenModal = false;
-  bookingDates: string[] = [];
-  totalDays = 0;
-  booking: Booking = {
+  private currentLocale = this.$i18n.locale;
+  private isActive = false;
+  private isModalOpen = this.$store.getters['_modals/isLoginModalActive'];
+  private isOpenModal = false;
+  private totalDays = 0;
+  private reservation: Reservation = {
     id: null,
-    bookingDates: null,
-    bookingDays: null,
+    reservationDays: null,
     totalDays: null,
     cost: null,
   }
@@ -43,23 +41,20 @@ export default class Status extends Vue {
   created() {
     this.totalDays = this.$store.getters['_days/selected'].length;
     this.totalDays > 0 ? this.isActive = true : this.isActive = false;
-    this.showBookingDates(this.sortedSelectedDays);
 
     (this as any).unsubscribe = this.$store.subscribe((mutation, state) => {
       if (mutation.type === '_days/addSelected' || mutation.type === '_days/removeSelected' || mutation.type === '_days/resetSelected') {
         this.totalDays = this.$store.getters['_days/selected'].length;
         this.totalDays > 0 ? this.isActive = true : this.isActive = false;
-        this.showBookingDates(this.sortedSelectedDays);
       }
     });
   }
 
-  @Watch('bookingDates')
-  setBooking() {
-    this.booking = {
+  @Watch('sortedSelectedDays')
+  setReservation() {
+    this.reservation = {
       id: Math.round(Math.random() * 1000),
-      bookingDates: this.bookingDates,
-      bookingDays: this.$store.getters['_days/selected'],
+      reservationDays: this.$store.getters['_days/selected'],
       totalDays: this.totalDays,
       cost: this.totalDays * this.price,
     }
@@ -69,16 +64,8 @@ export default class Status extends Vue {
     return [...this.$store.getters['_days/selected']].sort((a: Day, b: Day) => (dayjs(a.date).isAfter(dayjs(b.date)) ? 1 : -1));
   }
 
-  showBookingDates(days: Day[]) {
-    if (days.length == 1) {
-      this.bookingDates = [...[dayjs(days[0].date).format('D MMMM YYYY')]];
-    } else if (days.length > 1) {
-      this.bookingDates = [...[dayjs(days[0].date).format('D MMMM YYYY')], ...[dayjs(days[days.length - 1].date).format('D MMMM YYYY')]];
-    }
-  }
-
   addToCart() {
-    this.$store.commit('_cart/addBooking', this.booking);
+    this.$store.commit('_cart/addReservation', this.reservation);
     this.$store.commit('_days/selected2cart');
     this.$store.commit('_days/resetSelected');
   }

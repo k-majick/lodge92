@@ -68,7 +68,7 @@ import {
 import Tab from '@/components/Tab.vue';
 import Tabs from '@/components/Tabs.vue';
 import CartItems from "@/components/CartItems.vue";
-import Booking from '@/types/Booking';
+import Reservation from '@/types/Reservation';
 import Day from '@/types/Day';
 import Order from '@/types/Order';
 import User from '@/types/User';
@@ -82,7 +82,7 @@ import User from '@/types/User';
 export default class Checkout extends Vue {
   public currentLocale = this.$i18n.locale;
   public isLogged = this.$store.getters['_user/isLogged'];
-  private bookings: Booking[] = this.$store.getters['_cart/bookings'];
+  private reservations: Reservation[] = this.$store.getters['_cart/reservations'];
   private userEmail = this.$store.getters['_user/loggedUser'].email;
   private userName = this.$store.getters['_user/loggedUser'].username;
   // private userAddress = '';
@@ -144,7 +144,7 @@ export default class Checkout extends Vue {
 
   mounted() {
     (this as any).unwatch = this.$store.watch(() => this.$store.getters['_user/isLogged'], isLogged => this.isLogged = isLogged);
-    (this as any).unwatch2 = this.$store.watch(() => this.$store.getters['_cart/bookings'], bookings => this.bookings = bookings);
+    (this as any).unwatch2 = this.$store.watch(() => this.$store.getters['_cart/reservations'], reservations => this.reservations = reservations);
 
     const elements = (this as any).$stripe.elements();
     const p24options = {
@@ -213,21 +213,20 @@ export default class Checkout extends Vue {
     this.alert = '';
   }
 
-  @Watch('bookings')
+  @Watch('reservations')
   @Watch('isLogged')
   redirect() {
-    if (this.bookings.length < 1 || this.isLogged === false)
+    if (this.reservations.length < 1 || this.isLogged === false)
       this.$router.push(this.$tc('reservationsPath'));
   }
 
-  @Watch('bookings')
+  @Watch('reservations')
   setOrder() {
-    this.bookings.forEach(booking => {
-      this.order.amount += booking.cost! * 100;
+    this.reservations.forEach(reservation => {
+      this.order.amount += reservation.cost! * 100;
       this.order.bookings.push({
-        bookingCost: booking.cost!,
-        bookingDates: booking.bookingDates as string[],
-        bookingDays: booking.bookingDays!.map(day => day.date),
+        bookingCost: reservation.cost!,
+        bookingDays: reservation.reservationDays!.map(day => day.date),
         isPaid: false,
         userEmail: this.userEmail,
         userName: this.userName,
@@ -354,6 +353,8 @@ export default class Checkout extends Vue {
   }
 
   async confirmP24Payment(clientSecret: string) {
+    this.resetCart();
+
     await (this as any).$stripe.confirmP24Payment(clientSecret, {
       payment_method: {
         p24: this.p24bank,
@@ -372,6 +373,8 @@ export default class Checkout extends Vue {
   }
 
   async confirmCardPayment(clientSecret: string) {
+    this.resetCart();
+
     await (this as any).$stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: this.card,
@@ -400,8 +403,9 @@ export default class Checkout extends Vue {
     });
   }
 
-  emptyCart() {
-    console.log('empty cart');
+  resetCart() {
+    this.$store.commit('_cart/reset');
+    this.$store.commit('_days/resetCartDays');
   }
 
   beforeDestroy() {

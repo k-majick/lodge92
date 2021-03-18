@@ -42,6 +42,11 @@ export default class BookingsModule extends VuexModule {
     this.selectedDays = [];
   }
 
+  @Mutation
+  resetCartDays() {
+    this.cartDays = [];
+  }
+
   get selected(): Array<Day> {
     return this.selectedDays;
   }

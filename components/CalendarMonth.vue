@@ -67,8 +67,9 @@ export default class CalendarMonth extends Vue {
       if (mutation.type === '_days/selected2cart')
         this.setCartDays();
 
-      if (mutation.type === '_days/removeFromCart')
+      if (mutation.type === '_days/removeFromCart' || mutation.type === '_days/resetCartDays') {
         this.setCartDays();
+      }
 
     });
   }
@@ -81,13 +82,11 @@ export default class CalendarMonth extends Vue {
   updateDays() {
     this.allDays = this.days;
     this.allDays.filter((d1: Day) => {
-      if (this.$store.getters['_days/selected'].some((d2: Day) => d1.date === d2.date) === true) {
+      if (this.$store.getters['_days/selected'].some((d2: Day) => d1.date === d2.date) === true)
         d1.isSelected = true;
-      }
 
-      if (this.$store.getters['_days/inCart'].some((d2: Day) => d1.date === d2.date) === true) {
+      if (this.$store.getters['_days/inCart'].some((d2: Day) => d1.date === d2.date) === true)
         d1.inCart = true;
-      }
 
       return this.$store.getters['_days/selected'].some((d2: Day) => d1.date === d2.date);
     });
@@ -117,29 +116,20 @@ export default class CalendarMonth extends Vue {
 
   setSelectedDays() {
     this.allDays.filter((d1: Day) => {
-      if (this.$store.getters['_days/selected'].some((d2: Day) => d1.date === d2.date) === true) {
+      if (this.$store.getters['_days/selected'].some((d2: Day) => d1.date === d2.date) === true)
         d1.isSelected = true;
-      }
     });
   }
 
   setCartDays() {
     this.allDays.filter((d1: Day) => {
-      if (this.$store.getters['_days/inCart'].some((d2: Day) => d1.date === d2.date) === true) {
-        d1.inCart = true;
-      } else {
-        d1.inCart = false;
-      }
+      this.$store.getters['_days/inCart'].some((d2: Day) => d1.date === d2.date) === true ? d1.inCart = true : d1.inCart = false;
     });
   }
 
   setBookedDays() {
     this.allDays.filter((d1: Day) => {
-      if (this.bookedDays.some((d2: string) => d1.date === d2) === true) {
-        d1.isBooked = true;
-      } else {
-        d1.isBooked = false;
-      }
+      this.bookedDays.some((d2: string) => d1.date === d2) === true ? d1.isBooked = true : d1.isBooked = false;
     });
   }
 

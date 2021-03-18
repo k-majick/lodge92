@@ -84,7 +84,7 @@ export default class Nav extends Vue {
   isLogged = this.$store.getters['_user/isLogged'];
   hasItems = false;
   isOpenModal = false;
-  cartItems = this.$store.getters['_cart/bookings'];
+  cartItems = this.$store.getters['_cart/reservations'];
   totalPrice = this.$store.getters['_cart/totalPrice'];
 
   @Prop() navItems: any;
@@ -104,8 +104,8 @@ export default class Nav extends Vue {
       this.isLogged = isLogged;
     });
 
-    (this as any).unwatch2 = this.$store.watch(() => this.$store.getters['_cart/bookings'], bookings => {
-      this.cartItems = bookings;
+    (this as any).unwatch2 = this.$store.watch(() => this.$store.getters['_cart/reservations'], reservations => {
+      this.cartItems = reservations;
       this.cartItems.length > 0 ? this.hasItems = true : this.hasItems = false;
     });
 

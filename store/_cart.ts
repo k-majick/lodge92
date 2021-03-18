@@ -1,6 +1,6 @@
 import { Module, VuexModule, Mutation } from 'vuex-module-decorators';
 import { store } from "@/store";
-import Booking from '@/types/Booking';
+import Reservation from '@/types/Reservation';
 
 @Module({
   dynamic: true,
@@ -10,25 +10,30 @@ import Booking from '@/types/Booking';
   store
 })
 export default class CartModule extends VuexModule {
-  cart: Array<Booking> = [];
+  cart: Array<Reservation> = [];
 
   @Mutation
-  addBooking(selectedBooking: Booking) {
-    this.cart.push(selectedBooking);
+  addReservation(selectedReservation: Reservation) {
+    this.cart.push(selectedReservation);
   }
 
   @Mutation
-  removeBooking(id: number) {
-    this.cart = this.cart.filter(booking => booking.id !== id);
+  removeReservation(id: number) {
+    this.cart = this.cart.filter(reservation => reservation.id !== id);
   }
 
-  get bookings(): Array<Booking> {
+  @Mutation
+  reset() {
+    this.cart = [];
+  }
+
+  get reservations(): Array<Reservation> {
     return this.cart;
   }
 
   get totalPrice(): number {
     let totalPrice = 0;
-    this.cart.forEach(booking => totalPrice += (booking as any).cost);
+    this.cart.forEach(reservation => totalPrice += (reservation as any).cost);
 
     return totalPrice;
   }
