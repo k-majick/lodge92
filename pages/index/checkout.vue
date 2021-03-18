@@ -378,7 +378,7 @@ export default class Checkout extends Vue {
           tos_shown_and_accepted: true,
         }
       },
-      return_url: `${this.$config.appUrl}/${this.$tc('userAccountPath')}`,
+      return_url: `${this.$config.appUrl}/${this.$tc('userAccountPath')}?payment=confirmed`,
     }); // redirects away
   }
 
@@ -403,6 +403,7 @@ export default class Checkout extends Vue {
         if (res.paymentIntent.status === 'succeeded') {
           console.dir('success');
           console.dir(res);
+          this.$router.push({ path: this.$tc('userAccountPath'), query: { payment: 'confirmed' }});
           // Show a success message to your customer
           // There's a risk of the customer closing the window before callback
           // execution. Set up a webhook or plugin to listen for the

@@ -67,5 +67,9 @@
 
   &__btn {
     @include btn;
+
+    &--center {
+      margin: 0 auto;
+    }
   }
 }
