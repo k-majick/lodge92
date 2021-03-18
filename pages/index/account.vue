@@ -14,11 +14,21 @@
       <div class="col col-40">
         <h3>{{ $tc('userAccountBookings') }}</h3>
         <div class="main__panel">
-          <ul class="main__list">
+          <ul class="main__list" v-if="userBookings.length">
             <li v-for="booking in userBookings">
-              <span>{{ $dayjs(booking.bookingDays[booking.bookingDays.length - 1]).format('D MMMM YYYY') }} - {{ $dayjs(booking.bookingDays[0]).format('D MMMM YYYY') }}</span>
+              <span v-if="booking.bookingDays.length">
+                <span v-if="currentLocale === 'en'">{{ $dayjs(booking.bookingDays[0].date).format('MMMM D, YYYY') }}</span>
+                <span v-else>{{ $dayjs(booking.bookingDays[0].date).format('D MMMM YYYY') }} <span v-if="currentLocale === 'pl'">r.</span></span>
+                <span v-if="booking.bookingDays.length > 1"> &rarr;
+                  <span v-if="currentLocale === 'en'">{{ $dayjs(booking.bookingDays[booking.bookingDays.length - 1].date).format('MMMM D, YYYY') }}</span>
+                  <span v-else>{{ $dayjs(booking.bookingDays[booking.bookingDays.length - 1].date).format('D MMMM YYYY') }} <span v-if="currentLocale === 'pl'">r.</span></span>
+                </span>
+              </span>
             </li>
           </ul>
+          <span v-if="!userBookings.length">
+            {{ $tc('userAccountBookingsNo') }}
+          </span>
         </div>
       </div>
     </div>
@@ -61,7 +71,6 @@ export default class Account extends Vue {
 
   showUser() {
     console.dir(this.$strapi.user);
-
   }
 
   showMe() {

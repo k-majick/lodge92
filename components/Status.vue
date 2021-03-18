@@ -2,7 +2,15 @@
 <div class="status container" :class="{ 'status--active': isActive }">
   <div class="status__panel">
     <h3 class="status__title">{{ $tc('statusDateSelected') }}</h3>
-    <p><b>{{ $tc('statusDate') }}:</b> <span v-if="sortedSelectedDays.length">{{ $dayjs(sortedSelectedDays[0].date).format('D MMMM YYYY') }}<span v-if="sortedSelectedDays.length > 1"> - {{ $dayjs(sortedSelectedDays[sortedSelectedDays.length - 1].date).format('D MMMM YYYY') }}</span></span>
+    <p><b>{{ $tc('statusDate') }}:</b>
+      <span v-if="reservation.reservationDays.length">
+        <span v-if="currentLocale === 'en'">{{ $dayjs(reservation.reservationDays[0].date).format('MMMM D, YYYY') }}</span>
+        <span v-else>{{ $dayjs(reservation.reservationDays[0].date).format('D MMMM YYYY') }} <span v-if="currentLocale === 'pl'">r.</span></span>
+        <span v-if="reservation.reservationDays.length > 1"> &rarr;
+          <span v-if="currentLocale === 'en'">{{ $dayjs(reservation.reservationDays[reservation.reservationDays.length - 1].date).format('MMMM D, YYYY') }}</span>
+          <span v-else>{{ $dayjs(reservation.reservationDays[reservation.reservationDays.length - 1].date).format('D MMMM YYYY') }} <span v-if="currentLocale === 'pl'">r.</span></span>
+        </span>
+      </span>
     <p><b>{{ $tc('statusDaysNumber') }}:</b> {{ totalDays }}</p>
     <p><b>{{ $tc('statusCost') }}:</b> <span v-html="totalDays * price + '&nbsp;zł'"></span></p>
     <button class="status__btn" :class="{ 'status__btn--disabled' : !isActive }" @click="addToCart">{{ $tc('cartAdd') }}<span class="material-icons">add_shopping_cart</span></button>
@@ -18,7 +26,6 @@ import {
   Watch
 } from 'nuxt-property-decorator';
 import Modal from "@/components/Modal.vue";
-import dayjs from "dayjs";
 import Day from "@/types/Day";
 import Reservation from '@/types/Reservation';
 
@@ -31,7 +38,7 @@ export default class Status extends Vue {
   private totalDays = 0;
   private reservation: Reservation = {
     id: null,
-    reservationDays: null,
+    reservationDays: [],
     totalDays: null,
     cost: null,
   }
@@ -54,14 +61,14 @@ export default class Status extends Vue {
   setReservation() {
     this.reservation = {
       id: Math.round(Math.random() * 1000),
-      reservationDays: this.$store.getters['_days/selected'],
+      reservationDays: this.sortedSelectedDays,
       totalDays: this.totalDays,
       cost: this.totalDays * this.price,
     }
   }
 
   get sortedSelectedDays() {
-    return [...this.$store.getters['_days/selected']].sort((a: Day, b: Day) => (dayjs(a.date).isAfter(dayjs(b.date)) ? 1 : -1));
+    return [...this.$store.getters['_days/selected']].sort((a: Day, b: Day) => (this.$dayjs(a.date).isAfter(this.$dayjs(b.date)) ? 1 : -1));
   }
 
   addToCart() {

@@ -3,8 +3,14 @@
   <ul class="cart__items">
     <li v-for="cartItem in cartItems" class="cart__item">
       <div class="cart__details">
-        <p><b>{{ $tc('statusDate') }}:</b> {{ $dayjs(cartItem.reservationDays[cartItem.reservationDays.length - 1].date).format('D MMMM YYYY') }}<span v-if="cartItem.reservationDays.length > 1"> -
-            {{ $dayjs(cartItem.reservationDays[0].date).format('D MMMM YYYY') }}</span></p>
+        <p><b>{{ $tc('statusDate') }}:</b>
+          <span v-if="currentLocale === 'en'">{{ $dayjs(cartItem.reservationDays[0].date).format('MMMM D, YYYY') }}</span>
+          <span v-else>{{ $dayjs(cartItem.reservationDays[0].date).format('D MMMM YYYY') }} <span v-if="currentLocale === 'pl'">r.</span></span>
+          <span v-if="cartItem.reservationDays.length > 1"> &rarr;
+            <span v-if="currentLocale === 'en'">{{ $dayjs(cartItem.reservationDays[cartItem.reservationDays.length - 1].date).format('MMMM D, YYYY') }}</span>
+            <span v-else>{{ $dayjs(cartItem.reservationDays[cartItem.reservationDays.length - 1].date).format('D MMMM YYYY') }} <span v-if="currentLocale === 'pl'">r.</span></span>
+          </span>
+        </p>
         <p><b>{{ $tc('statusDaysNumber') }}:</b> <span v-html="cartItem.totalDays"></span></p>
       </div>
       <button class="cart__btn cart__btn--remove" type="button" @click="removeCartItem(cartItem.id)"></button>
@@ -20,9 +26,11 @@ import {
   Vue,
 } from 'nuxt-property-decorator';
 import Reservation from '@/types/Reservation';
+import Day from "@/types/Day";
 
 @Component
 export default class CartItems extends Vue {
+  currentLocale = this.$i18n.locale;
   cartItems = this.$store.getters['_cart/reservations'];
   totalPrice = this.$store.getters['_cart/totalPrice'];
 

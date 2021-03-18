@@ -4,12 +4,12 @@
     <h2>{{ $tc('checkout') }}</h2>
     <div class="row">
       <div class="col col-60">
-        <h3>Wybór metody płatności</h3>
+        <h3>{{ $tc('checkoutSelectPayment') }}</h3>
         <tabs class="checkout__tabs" @tabChanged="resetAlert">
           <p>{{ $tc('userLoggedAs') }}
             <nuxt-link class="text__link" :to="$tc('userAccountPath')">{{ userName }}</nuxt-link>.
           </p>
-          <tab class="tab" title="Przelew online">
+          <tab class="tab" :title="$tc('checkoutTransfer')">
             <form class="form form--checkout" @submit.prevent="submitTransfer" novalidate>
               <img class="form__img" src="@/assets/gfx/logo-p24-min.svg" width="120" height="40" alt="Przelewy24">
               <div class="form__group">
@@ -18,8 +18,18 @@
               <div class="form__group form__group--checkbox">
                 <input class="form__input" type="checkbox" id="p24-regulations" name="p24-regulations" ref="p24-regulations" v-model="regulationsAccepted">
                 <label class="form__label" for="p24-regulations">
-                  *Oświadczam, że zapoznałem się z <a class="text__link" href="https://www.przelewy24.pl/regulamin" target="_blank">regulaminem</a> i <a class="text__link" href="https://www.przelewy24.pl/obowiazekinformacyjny"
-                    target="_blank">obowiązkiem informacyjnym</a> serwisu Przelewy24.
+                  <span v-if="currentLocale === 'de'">
+                    *Ich erkläre, dass ich <a class="text__link" href="https://www.przelewy24.pl/regulamin" target="_blank">die Vorschriften</a> und <a class="text__link" href="https://www.przelewy24.pl/obowiazekinformacyjny"
+                      target="_blank">Informationspflichten</a> von Przelewy24 gelesen habe.
+                  </span>
+                  <span v-if="currentLocale === 'en'">
+                    *I declare that I have read <a class="text__link" href="https://www.przelewy24.pl/regulamin" target="_blank">the regulations</a> and <a class="text__link" href="https://www.przelewy24.pl/obowiazekinformacyjny"
+                      target="_blank">information requirements</a> of Przelewy24.
+                  </span>
+                  <span v-if="currentLocale === 'pl'">
+                    *Oświadczam, że zapoznałem się z <a class="text__link" href="https://www.przelewy24.pl/regulamin" target="_blank">regulaminem</a> i <a class="text__link" href="https://www.przelewy24.pl/obowiazekinformacyjny"
+                      target="_blank">obowiązkiem informacyjnym</a> serwisu Przelewy24.
+                  </span>
                 </label>
               </div>
               <div class="form__group form__group--alert" v-if="alert">
@@ -30,7 +40,7 @@
               </div>
             </form>
           </tab>
-          <tab class="tab" title="Karta">
+          <tab class="tab" :title="$tc('checkoutCard')">
             <form class="form form--checkout form--card" @submit.prevent="submitCard" novalidate>
               <div class="card__icons">
                 <div v-for="icon in cardIcons" class="card__icon" :class="icon.img"></div>
@@ -42,14 +52,14 @@
                 <span class="form__alert">{{ alert }}</span>
               </div>
               <div class="form__group form__group--submit">
-                <button class="main__btn">Pay {{ totalAmount }}</button>
+                <button class="main__btn">{{ $tc('checkoutPay') }} {{ totalAmount }}</button>
               </div>
             </form>
           </tab>
         </tabs>
       </div>
       <div class="col col-40">
-        <h3>Twoja rezerwacja</h3>
+        <h3>{{ $tc('checkoutUserReservations') }}</h3>
         <div class="checkout">
           <CartItems />
         </div>
@@ -80,8 +90,8 @@ import User from '@/types/User';
   }
 })
 export default class Checkout extends Vue {
-  public currentLocale = this.$i18n.locale;
-  public isLogged = this.$store.getters['_user/isLogged'];
+  private currentLocale = this.$i18n.locale;
+  private isLogged = this.$store.getters['_user/isLogged'];
   private reservations: Reservation[] = this.$store.getters['_cart/reservations'];
   private userEmail = this.$store.getters['_user/loggedUser'].email;
   private userName = this.$store.getters['_user/loggedUser'].username;
