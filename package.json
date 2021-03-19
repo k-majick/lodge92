@@ -42,6 +42,7 @@
     "nuxt-property-decorator": "^2.9.1",
     "sass-loader": "^10.0.2",
     "ts-jest": "^26.4.4",
+    "typescript": "^4.2.3",
     "vue-jest": "^3.0.7",
     "vuelidate": "^0.7.6",
     "vuex-module-decorators": "^1.0.1"
