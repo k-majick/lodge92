@@ -232,6 +232,7 @@ export default {
     html: true,
   },
   build: {
+    publicPath: '/nuxt/',
     extend: function(config, {
       isDev,
       isClient

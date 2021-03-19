@@ -1,5 +1,6 @@
 export default interface User {
   blocked: boolean,
+  bookings: [],
   confirmed: boolean,
   createdAt: string,
   email: string,

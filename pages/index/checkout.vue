@@ -6,8 +6,8 @@
       <div class="col col-60">
         <h3>{{ $tc('checkoutSelectPayment') }}</h3>
         <tabs class="checkout__tabs" @tabChanged="resetAlert">
-          <p>{{ $tc('userLoggedAs') }}
-            <nuxt-link class="text__link" :to="$tc('userAccountPath')">{{ userName }}</nuxt-link>.
+          <p v-if="user">{{ $tc('userLoggedAs') }}
+            <nuxt-link class="text__link" :to="$tc('userAccountPath')">{{ user.username }}</nuxt-link>.
           </p>
           <tab class="tab" :title="$tc('checkoutTransfer')">
             <form class="form form--checkout" @submit.prevent="submitTransfer" novalidate>
@@ -91,15 +91,13 @@ import User from '@/types/User';
 })
 export default class Checkout extends Vue {
   private currentLocale = this.$i18n.locale;
+  private user: User | null = (this as any).$strapi.user;
   private isLogged = this.$store.getters['_user/isLogged'];
   private reservations: Reservation[] = this.$store.getters['_cart/reservations'];
-  private userEmail = this.$store.getters['_user/loggedUser'].email;
-  private userName = this.$store.getters['_user/loggedUser'].username;
   // private userAddress = '';
   // private userAddressNo = '';
   // private userPostalCode = '';
   // private userCity = '';
-  private user: User | null = null;
   private card: any = null;
   private p24bank: any = null;
   private p24selected: string = '';
@@ -198,7 +196,6 @@ export default class Checkout extends Vue {
           },
           fontFamily: 'Nunito, sans-serif',
           fontSize: '16px',
-          padding: '10px 15px',
           ':-webkit-autofill': {
             color: '#441650',
           },
@@ -206,10 +203,6 @@ export default class Checkout extends Vue {
         complete: {
           color: '#ffffff',
         }
-      },
-      invalid: {
-        iconColor: '#ff0000',
-        color: '#ffffff',
       },
     }
     this.card = elements.create('card', cardOptions);
@@ -238,8 +231,8 @@ export default class Checkout extends Vue {
         bookingCost: reservation.cost!,
         bookingDays: reservation.reservationDays!.map(day => day.date),
         isPaid: false,
-        userEmail: this.userEmail,
-        userName: this.userName,
+        userEmail: this.user!.email,
+        userName: this.user!.username,
       });
     });
 
@@ -369,8 +362,8 @@ export default class Checkout extends Vue {
       payment_method: {
         p24: this.p24bank,
         billing_details: {
-          email: this.userEmail,
-          name: this.userName,
+          email: this.user!.email,
+          name: this.user!.username,
         },
       },
       payment_method_options: {
@@ -389,8 +382,8 @@ export default class Checkout extends Vue {
       payment_method: {
         card: this.card,
         billing_details: {
-          email: this.userEmail,
-          name: this.userName,
+          email: this.user!.email,
+          name: this.user!.username,
         }
       }
     }).then((res: any) => {
