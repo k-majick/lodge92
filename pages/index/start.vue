@@ -4,7 +4,7 @@
     <div class="main__logo" v-html="logo"></div>
     <h2 class="main__title">{{ start.hero[`title_${currentLocale}`] }}</h2>
     <div class="main__btns">
-      <nuxt-link v-for="navItem in navButtons" class="main__btn main__btn--icon" :class="`main__btn--${navItem.NavButtonClassName}`" :key="navItem.id" :to="navItem.NavButtonRoutes[0][`route_${currentLocale}`]">{{ navItem.NavButtonNames[0][`name_${currentLocale}`] }}</nuxt-link>
+      <nuxt-link v-for="btn in navButtons" class="main__btn main__btn--icon" :class="`main__btn--${btn.className}`" :key="btn.id" :to="localePath(`${btn.route}`)">{{ btn.names[0][`name_${currentLocale}`] }}</nuxt-link>
     </div>
   </div>
 </section>

@@ -91,7 +91,7 @@ export default class LoginForm extends Vue {
     const isLogged = this.$store.getters['_user/isLogged'];
 
     if (isLogged === false) {
-      this.$emit('goto', 'userPasswordRetrievePath');
+      this.$emit('goto', this.localePath('index-passwordLost'));
     } else {
       return;
     }

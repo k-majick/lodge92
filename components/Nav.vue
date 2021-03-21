@@ -2,23 +2,23 @@
 <nav class="nav" ref="nav">
   <ul class="nav__items">
     <li class="nav__item" v-for="navItem in navItems">
-      <nuxt-link class="nav__link" :key="navItem.id" :to="navItem.NavItemRoutes[0][`route_${currentLocale}`]">{{ navItem.NavItemNames[0][`name_${currentLocale}`] }}</nuxt-link>
+      <nuxt-link class="nav__link" :key="navItem.id" :to="localePath(`${navItem.route}`)">{{ navItem.names[0][`name_${currentLocale}`] }}</nuxt-link>
     </li>
     <li class="nav__item nav__item--lang" v-for="locale in this.$i18n.locales">
       <nuxt-link class="nav__link" :key="locale.code" :to="switchLocalePath(locale.code)">{{ locale.code }}</nuxt-link>
     </li>
     <li class="nav__item nav__item--user" :class="{ 'nav__item--logged': isLogged }">
       <button class="nav__link material-icons" v-if="!isLogged">account_circle</button>
-      <nuxt-link class="nav__link material-icons" v-if="isLogged" :to="$tc('userAccountPath')">account_circle</nuxt-link>
+      <nuxt-link class="nav__link material-icons" v-if="isLogged" :to="localePath('index-account')">account_circle</nuxt-link>
       <ul class="nav__submenu">
         <li class="nav__item" v-if="!isLogged">
           <button class="nav__link" @click.self="toggleModal(1, true)">{{ $tc('userLogging') }}</button>
         </li>
         <li class="nav__item" v-if="!isLogged">
-          <nuxt-link class="nav__link" :to="$tc('userRegisterPath')">{{ $tc('userRegistration') }}</nuxt-link>
+          <nuxt-link class="nav__link" :to="localePath('index-register')">{{ $tc('userRegistration') }}</nuxt-link>
         </li>
         <li class="nav__item" v-if="isLogged">
-          <nuxt-link class="nav__link" v-if="isLogged" :to="$tc('userAccountPath')">{{ $tc('userAccount') }}</nuxt-link>
+          <nuxt-link class="nav__link" v-if="isLogged" :to="localePath('index-account')">{{ $tc('userAccount') }}</nuxt-link>
         </li>
         <li class="nav__item" v-if="isLogged">
           <button class="nav__link" @click="logout">{{ $tc('userLogOut') }}</button>
@@ -29,12 +29,12 @@
     <li class="nav__item nav__item--cart" :class="{ 'nav__item--hasItems': hasItems }">
       <button class="nav__link material-icons" v-if="!hasItems">shopping_cart</button>
       <button class="nav__link material-icons" v-if="hasItems && !isLogged" @click.self="toggleModal(1, true)">shopping_cart</button>
-      <nuxt-link class="nav__link material-icons" :to="$tc('checkoutPath')" v-if="hasItems && isLogged">shopping_cart</nuxt-link>
+      <nuxt-link class="nav__link material-icons" :to="localePath('index-checkout')" v-if="hasItems && isLogged">shopping_cart</nuxt-link>
       <div class="nav__submenu nav__submenu--empty" v-if="!hasItems">{{ $tc('cartEmpty') }}</div>
       <div class="nav__submenu nav__submenu--cart" v-if="hasItems">
         <CartItems />
         <button class="nav__submenu--btn" type="submit" v-if="!isLogged" @click.self="toggleModal(1, true)">{{ $tc('checkoutGo') }}<span class="material-icons">keyboard_arrow_right</span></button>
-        <nuxt-link class="nav__submenu--btn" type="submit" v-if="isLogged" :to="$tc('checkoutPath')">{{ $tc('checkoutGo') }}<span class="material-icons">keyboard_arrow_right</span></nuxt-link>
+        <nuxt-link class="nav__submenu--btn" type="submit" v-if="isLogged" :to="localePath('index-checkout')">{{ $tc('checkoutGo') }}<span class="material-icons">keyboard_arrow_right</span></nuxt-link>
       </div>
       <span class="nav__link--status" v-if="cartItems.length > 0" v-html="cartItems.length"></span>
     </li>
@@ -51,7 +51,7 @@
           <div class="col col-50">
             <h4 class="modal__subtitle">{{ $tc('accountHaveNo') }}</h4>
             <p v-html="this.global.loginModal[0][`content_${currentLocale}`]"></p>
-            <button class="modal__btn" @click="goto('userRegisterPath')">{{ $tc('userRegistration') }}</button>
+            <button class="modal__btn" @click="goto(localePath('index-register'))">{{ $tc('userRegistration') }}</button>
           </div>
         </div>
       </div>
@@ -116,7 +116,7 @@ export default class Nav extends Vue {
 
   goto(path: string) {
     this.$router.push({
-      path: this.$tc(path)
+      path: path
     });
 
     this.toggleModal(1, true);

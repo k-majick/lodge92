@@ -106,6 +106,25 @@ export default {
     parsePages: false,
     lazy: true,
     langDir: 'assets/i18n/',
+    locales: [{
+        code: 'de',
+        name: 'Deutsch',
+        iso: 'de-DE',
+        file: 'de-DE.js',
+      },
+      {
+        code: 'en',
+        name: 'English',
+        iso: 'en-US',
+        file: 'en-US.js',
+      },
+      {
+        code: 'pl',
+        name: 'Polski',
+        iso: 'pl-PL',
+        file: 'pl-PL.js',
+      }
+    ],
     pages: {
       'index/checkout': {
         de: 'kasse',
@@ -153,25 +172,6 @@ export default {
         pl: 'zmien-haslo',
       },
     },
-    locales: [{
-        code: 'de',
-        name: 'Deutsch',
-        iso: 'de-DE',
-        file: 'de-DE.js',
-      },
-      {
-        code: 'en',
-        name: 'English',
-        iso: 'en-US',
-        file: 'en-US.js',
-      },
-      {
-        code: 'pl',
-        name: 'Polski',
-        iso: 'pl-PL',
-        file: 'pl-PL.js',
-      }
-    ]
   },
   auth: {
     watchLoggedIn: false,
