@@ -14,7 +14,7 @@
       <div class="col col-40">
         <h3>{{ $tc('userAccountBookings') }}</h3>
         <div class="main__panel">
-          <ul class="main__list" v-if="userBookings.length && userBookings.length">
+          <ul class="main__list" v-if="userBookings && userBookings.length">
             <li v-for="booking in userBookings">
               <span v-if="booking.bookingDays.length">
                 <span v-if="currentLocale === 'en'">{{ $dayjs(booking.bookingDays[0]).format('MMMM D, YYYY') }}</span>
