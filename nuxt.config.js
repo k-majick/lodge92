@@ -1,8 +1,8 @@
 const apiUrl = process.env.API_URL || "http://localhost:1337";
 
 export default {
-  target: 'server',
-  ssr: 'true',
+  target: 'static',
+  // ssr: 'true',
   head: {
     title: process.env.APP_TITLE,
     meta: [{
