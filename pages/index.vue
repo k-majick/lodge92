@@ -47,7 +47,6 @@ export default class App extends Vue {
   created() {
     this.price = (this as any).global.price;
     this.setDaysLocale();
-    this.$router.push(this.localePath('index-start'));
   }
 
   scrollListen() {
