@@ -2,12 +2,12 @@
   "name": "lodge92",
   "version": "1.0.1",
   "engines": {
-    "node": "15.x"
+    "node": "14.x"
   },
   "private": true,
   "scripts": {
     "dev": "nuxt --port 8888",
-    "build": "nuxt build",
+    "build": "nuxt generate",
     "start": "nuxt start",
     "generate": "nuxt generate",
     "test": "jest"
