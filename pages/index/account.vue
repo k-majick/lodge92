@@ -16,7 +16,7 @@
         <div class="main__panel">
           <ul class="main__list" v-if="userBookings && userBookings.length">
             <li v-for="booking in userBookings">
-              <span v-if="booking.bookingDays.length">
+              <span v-if="booking.bookingDays && booking.bookingDays.length">
                 <span v-if="currentLocale === 'en'">{{ $dayjs(booking.bookingDays[0]).format('MMMM D, YYYY') }}</span>
                 <span v-else>{{ $dayjs(booking.bookingDays[0]).format('D MMMM YYYY') }} <span v-if="currentLocale === 'pl'">r.</span></span>
                 <span v-if="booking.bookingDays.length > 1"> &rarr;
