@@ -98,7 +98,7 @@ export default {
     ]
   },
   stripe: {
-    publishableKey: 'pk_test_51I8B4AIE5xAywf5DEmphvTL0ByRuXdUF4yh2ShW5gtJH6BgpQhGF4mbNgxfpzE4XBnl7HFeyVx301PCvgkWKj0DL00Rm0PowlV',
+    publishableKey: 'pk_test_51IXUSBKx4wdbNXNf5I2pmIeQLedpOG7dZjySqxnK22VSDvk4i0LNfnFVIuYYtatrON3rrvJYhuAqXkFH4CQIx0uN00fymQpVvf',
   },
   i18n: {
     strategy: 'prefix_except_default',

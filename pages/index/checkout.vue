@@ -7,7 +7,7 @@
         <h3>{{ $tc('checkoutSelectPayment') }}</h3>
         <tabs class="checkout__tabs" @tabChanged="resetAlert">
           <p v-if="user">{{ $tc('userLoggedAs') }}
-            <nuxt-link class="text__link" :to="$tc('userAccountPath')">{{ user.username }}</nuxt-link>.
+            <nuxt-link class="text__link" :to="localePath('index-account')">{{ user.username }}</nuxt-link>.
           </p>
           <tab class="tab" :title="$tc('checkoutTransfer')">
             <form class="form form--checkout" @submit.prevent="submitTransfer" novalidate>
@@ -36,7 +36,7 @@
                 <span class="form__alert">{{ alert }}</span>
               </div>
               <div class="form__group form__group--submit">
-                <button class="main__btn">Pay {{ totalAmount }}</button>
+                <button class="main__btn" ref="submitP24Btn">{{ $tc('checkoutPay') }} {{ totalAmount }}</button>
               </div>
             </form>
           </tab>
@@ -52,7 +52,7 @@
                 <span class="form__alert">{{ alert }}</span>
               </div>
               <div class="form__group form__group--submit">
-                <button class="main__btn">{{ $tc('checkoutPay') }} {{ totalAmount }}</button>
+                <button class="main__btn" ref="submitCardBtn">{{ $tc('checkoutPay') }} {{ totalAmount }}</button>
               </div>
             </form>
           </tab>
@@ -216,11 +216,10 @@ export default class Checkout extends Vue {
     this.alert = '';
   }
 
-  @Watch('reservations')
   @Watch('isLogged')
   redirect() {
-    if (this.reservations.length < 1 || this.isLogged === false)
-      this.$router.push(this.$tc('reservationsPath'));
+    if (this.isLogged === false)
+      this.$router.push(this.localePath('index-reservations'));
   }
 
   @Watch('reservations')
@@ -307,6 +306,7 @@ export default class Checkout extends Vue {
       return;
 
     this.$nuxt.$loading.start();
+    (this.$refs.submitP24Bt as any).disabled = true;
     this.order.method = 'p24';
 
     try {
@@ -329,6 +329,7 @@ export default class Checkout extends Vue {
     }
 
     this.$nuxt.$loading.start();
+    (this.$refs.submitCardBtn as any).disabled = true;
 
     try {
       const res = await (this as any).$stripe.createToken(this.card);
@@ -371,7 +372,7 @@ export default class Checkout extends Vue {
           tos_shown_and_accepted: true,
         }
       },
-      return_url: `${this.$config.appUrl}/${this.$tc('userAccountPath')}?payment=confirmed`,
+      return_url: `${this.$config.appUrl}/${this.localePath('index-account')}?payment=confirmed`,
     }); // redirects away
   }
 
@@ -396,7 +397,7 @@ export default class Checkout extends Vue {
         if (res.paymentIntent.status === 'succeeded') {
           console.dir('success');
           console.dir(res);
-          this.$router.push({ path: this.$tc('userAccountPath'), query: { payment: 'confirmed' }});
+          this.$router.push({ path: this.localePath('index-account'), query: { payment: 'confirmed' }});
           // Show a success message to your customer
           // There's a risk of the customer closing the window before callback
           // execution. Set up a webhook or plugin to listen for the
