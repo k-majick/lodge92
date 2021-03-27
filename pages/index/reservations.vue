@@ -31,10 +31,10 @@ import Floors from "@/components/Floors.vue";
   },
 })
 export default class Reservations extends Vue {
-  currentLocale = this.$i18n.locale;
-  rooms = [];
-  bookings: any = '';
-  building: any = '';
+  private currentLocale = this.$i18n.locale;
+  private rooms = [];
+  private bookings: any = '';
+  private building: any = '';
 
   async asyncData({
     $strapi,

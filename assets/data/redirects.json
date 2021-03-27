@@ -4,11 +4,6 @@
     "auth": true
   },
   {
-    "from": "",
-    "to": "/start",
-    "auth": true
-  },
-  {
     "from": "/en/checkout",
     "to": "/en/start",
     "auth": false

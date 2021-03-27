@@ -20,9 +20,9 @@ import rawLogo from '@/assets/gfx/lodge92-logo.svg?raw';
 
 @Component
 export default class Start extends Vue {
-  currentLocale = this.$i18n.locale;
-  logo = rawLogo;
-  navButtons = [];
+  private currentLocale = this.$i18n.locale;
+  private logo = rawLogo;
+  private navButtons = [];
 
   async asyncData({
     $strapi,

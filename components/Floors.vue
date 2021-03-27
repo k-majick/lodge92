@@ -22,8 +22,8 @@ import {
   },
 })
 export default class Floors extends Vue {
-  floorPlan = rawFloors;
-  currentRoomName = '';
+  private floorPlan = rawFloors;
+  private currentRoomName = '';
 
   @Prop() rooms!: [];
   @Prop() locale!: string;

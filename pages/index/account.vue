@@ -2,16 +2,16 @@
 <section class="main__section">
   <div class="container">
     <h2>{{ $tc('userAccount') }}</h2>
-    <button class="material-icons" @click="showUser">account_circle</button>
+    <!-- <button class="material-icons" @click="showUser">account_circle</button> -->
     <div class="row">
-      <div class="col col-60">
+      <div class="col col-50">
         <h3>{{ $tc('userAccountData') }}</h3>
         <div class="main__panel" v-if="user">
           <p><b>{{ $tc('userName') }}:</b> {{ user.username }}</p>
           <p><b>{{ $tc('userEmail') }}:</b> {{ user.email }}</p>
         </div>
       </div>
-      <div class="col col-40">
+      <div class="col col-50">
         <h3>{{ $tc('userAccountBookings') }}</h3>
         <div class="main__panel">
           <ul class="main__list" v-if="userBookings && userBookings.length">
@@ -59,11 +59,11 @@ import ToggleModalMxn from "@/mixins/toggleModalMxn";
   mixins: [ToggleModalMxn]
 })
 export default class Account extends Vue {
+  public activeModal = 0;
+  public isOpenModal = false;
   private currentLocale = this.$i18n.locale;
   private user: User | null = (this as any).$strapi.user;
   private userBookings = [];
-  activeModal = 0;
-  isOpenModal = false;
 
   async asyncData({
     $strapi,

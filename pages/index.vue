@@ -1,8 +1,9 @@
 <template>
 <div id="app">
   <div class="main__bg"></div>
-  <Header :navItems="this.navItems" :global="this.global" />
-  <main class="main" ref="main">
+  <NavSide></NavSide>
+  <NavMain :global="this.global" />
+  <main class="main" :class="{ 'open': isNavOpen, 'mini': isNavMini }">
     <transition name="fade">
       <router-view></router-view>
     </transition>
@@ -17,21 +18,27 @@ import {
   Component,
   Vue
 } from 'vue-property-decorator';
-import Header from '@/components/Header.vue';
+import NavSide from '@/components/NavSide.vue';
+import NavMain from '@/components/NavMain.vue';
 import Footer from '@/components/Footer.vue';
 import Status from '@/components/Status.vue';
+import NavItem from '@/types/NavItem';
 
 @Component({
   components: {
-    Header,
+    NavSide,
+    NavMain,
     Footer,
-    Status
-  }
+    Status,
+  },
 })
 export default class App extends Vue {
-  isActive = false;
-  price = 0;
-  currentLocale = this.$i18n.locale;
+  private isActive = false;
+  private price = 0;
+  private currentLocale = this.$i18n.locale;
+  private navItems: NavItem[] = [];
+  private isNavOpen = this.$store.getters['_nav/isNavOpen'];
+  private isNavMini = this.$store.getters['_nav/isNavMini'];
 
   async asyncData({
     $strapi
@@ -42,6 +49,18 @@ export default class App extends Vue {
       navItems: await $strapi.find("nav-items"),
       global: await $strapi.find("global")
     };
+  }
+
+  mounted() {
+    this.$store.commit('_nav/setNavItems', this.navItems);
+
+    (this as any).unwatch = this.$store.watch(() => this.$store.getters['_nav/isNavOpen'], isNavOpen => {
+      this.isNavOpen = isNavOpen;
+    });
+
+    (this as any).unwatch2 = this.$store.watch(() => this.$store.getters['_nav/isNavMini'], isNavMini => {
+      this.isNavMini = isNavMini;
+    });
   }
 
   created() {
@@ -71,6 +90,11 @@ export default class App extends Vue {
       default:
         break;
     }
+  }
+
+  beforeDestroy() {
+    (this as any).unwatch();
+    (this as any).unwatch2();
   }
 
 }

@@ -1,8 +1,9 @@
+import colors from 'vuetify/es5/util/colors';
 const apiUrl = process.env.API_URL || "http://localhost:1337";
 
 export default {
-  target: 'static',
-  // ssr: 'true',
+  target: 'server',
+  ssr: 'true',
   head: {
     title: process.env.APP_TITLE,
     meta: [{
@@ -74,10 +75,6 @@ export default {
   ],
   plugins: [],
   components: true,
-  buildModules: [
-    "@nuxt/typescript-build",
-    "@nuxtjs/svg",
-  ],
   modules: [
     "@nuxtjs/auth",
     "@nuxtjs/axios",
@@ -87,6 +84,11 @@ export default {
     "@nuxtjs/style-resources",
     "nuxt-i18n",
     "nuxt-stripe-module",
+  ],
+  buildModules: [
+    "@nuxt/typescript-build",
+    "@nuxtjs/svg",
+    '@nuxtjs/color-mode'
   ],
   dayjs: {
     locales: ['de', 'en', 'pl'],

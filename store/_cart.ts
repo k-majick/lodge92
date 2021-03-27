@@ -38,4 +38,8 @@ export default class CartModule extends VuexModule {
     return totalPrice;
   }
 
+  get items() {
+    return this.cart;
+  }
+
 }

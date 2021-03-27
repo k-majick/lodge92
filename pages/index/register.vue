@@ -69,11 +69,11 @@ const alphaDiacritic = helpers.regex('alphaDiacritic', /^[a-zA-ZÀ-ž\s]*$/);
   }
 })
 export default class Register extends Vue {
-  name = '';
-  email = '';
-  password = '';
-  alert = '';
-  validationMessages: {
+  private name = '';
+  private email = '';
+  private password = '';
+  private alert = '';
+  private validationMessages: {
     [key: string]: any
   } = {
     name: {
@@ -131,7 +131,7 @@ export default class Register extends Vue {
       this.$nuxt.$loading.finish();
 
     } catch (e) {
-      
+
       switch (true) {
         case e.response.data.message[0].messages[0].id === 'Auth.form.error.email.taken':
           this.alert = this.$tc('userEmailTaken') as string;

@@ -1,13 +1,17 @@
 <template>
-<footer class="footer" ref="footer">
-  <div class="container">
+<footer class="footer">
+  <div class="footer__container">
     <div class="row">
-      <div class="col col-50">
-        <a class="material-icons" href="https://www.google.pl/maps/place/Kasztanowa+19,+76-212+Rowy/@54.6526526,17.0487501,17z/" target="_blank">location_on</a>&nbsp;ul. Kasztanowa 19, 76-212 Rowy<span v-if="currentLocale !== 'pl'">,
-          {{ $tc('globalPoland') }}</span>
+      <div class="col col-50 text--left">
+        <a class="footer__link" href="https://www.google.pl/maps/place/Kasztanowa+19,+76-212+Rowy/@54.6526526,17.0487501,17z/" target="_blank">
+          <span class="material-icons">location_on</span>
+          ul. Kasztanowa 19, 76-212 Rowy<span v-if="currentLocale !== 'pl'">, {{ $tc('globalPoland') }}</span>
+        </a>
       </div>
       <div class="col col-50 text--right">
-        &copy;{{ year }} Cyberleaf Studio
+        <a class="footer__link" href="http://cyberleaf.pl" target="_blank">
+          &copy;{{ year }} Cyberleaf Studio
+        </a>
       </div>
     </div>
   </div>

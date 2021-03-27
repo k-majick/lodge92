@@ -26,11 +26,12 @@
     },
     "types": [
       "@nuxt/types",
-      "@nuxtjs/dayjs",
       "@nuxtjs/auth-next",
+      "@nuxtjs/color-mode",
+      "@nuxtjs/dayjs",
       "@nuxtjs/strapi",
-      "@types/node",
       "@types/jest",
+      "@types/node",
       "nuxt-i18n"
     ]
   },

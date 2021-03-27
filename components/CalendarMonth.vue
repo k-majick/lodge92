@@ -32,9 +32,10 @@ export default class CalendarMonth extends Vue {
   @Provide() today = this.$dayjs().format("YYYY-MM-DD");
   @Prop() bookings!: [];
 
-  allDays: Array < Day > = [];
-  bookedDays: string[] = [];
-  selectedDay: Day = {
+  private currentLocale = this.$i18n.locale;
+  private allDays: Array < Day > = [];
+  private bookedDays: string[] = [];
+  private selectedDay: Day = {
     date: '',
     isCurrentMonth: false,
     isSelected: false,
@@ -43,7 +44,6 @@ export default class CalendarMonth extends Vue {
     isBooked: false,
     inCart: false,
   };
-  currentLocale = this.$i18n.locale;
 
   created() {
     this.allDays = [...this.days];

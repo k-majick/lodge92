@@ -15,7 +15,7 @@ import {
 
 @Component
 export default class Gallery extends Vue {
-  currentLocale = this.$i18n.locale;
+  private currentLocale = this.$i18n.locale;
 
   async asyncData({
     $strapi,

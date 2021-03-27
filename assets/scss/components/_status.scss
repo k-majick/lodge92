@@ -1,16 +1,34 @@
 .status {
-  @include trans(0.75);
+  @include trans(0.25);
   position: fixed !important;
   margin: 0;
   transform: translateX(-50%);
   z-index: 10;
   left: 50%;
+  width: 100%;
   top: auto;
   bottom: -100%;
   transition-timing-function: ease-in;
+  z-index: 99;
+  padding-left: 0;
+
+  &.open {
+    @include desktop {
+      padding-left: 270px;
+    }
+  }
+
+  &.open.mini {
+    @include desktop {
+      padding-left: 60px;
+    }
+  }
 
   p {
     margin: 5px 0;
+    @include mobile {
+      margin: 2.5px 0;
+    }
   }
 
   &--active {
@@ -25,11 +43,19 @@
     height: 100%;
     padding: 15px;
     min-height: 150px;
+    @include tablet {
+      padding: 15px 0;
+    }
+    @include mobile {
+      padding: 0;
+    }
   }
 
   &__title {
     margin-top: 0;
-    text-align: center;
+    @include mobile {
+      margin: 7.5px 0 5px;
+    }
   }
 
   &__date {
@@ -42,14 +68,23 @@
   }
 
   &__btn {
-    @include btn;
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-
+    @include btn-primary;
+    // position: absolute;
+    // right: 15px;
+    // top: 50%;
+    // transform: translateY(-50%);
     .material-icons {
       margin-left: 7.5px;
+    }
+  }
+
+  &__action {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    @include mobile {
+      align-items: center;
+      margin: 7.5px 0 15px !important;
     }
   }
 }

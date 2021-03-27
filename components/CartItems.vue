@@ -4,11 +4,11 @@
     <li v-for="cartItem in cartItems" class="cart__item">
       <div class="cart__details">
         <p><b>{{ $tc('statusDate') }}:</b>
-          <span v-if="currentLocale === 'en'">{{ $dayjs(cartItem.reservationDays[0].date).format('MMMM D, YYYY') }}</span>
-          <span v-else>{{ $dayjs(cartItem.reservationDays[0].date).format('D MMMM YYYY') }} <span v-if="currentLocale === 'pl'">r.</span></span>
+          <span class="cart__date" v-if="currentLocale === 'en'">{{ $dayjs(cartItem.reservationDays[0].date).format('MMMM D, YYYY') }}</span>
+          <span class="cart__date" v-else>{{ $dayjs(cartItem.reservationDays[0].date).format('D MMMM YYYY') }} <span v-if="currentLocale === 'pl'">r.</span></span>
           <span v-if="cartItem.reservationDays.length > 1"> &rarr;
-            <span v-if="currentLocale === 'en'">{{ $dayjs(cartItem.reservationDays[cartItem.reservationDays.length - 1].date).format('MMMM D, YYYY') }}</span>
-            <span v-else>{{ $dayjs(cartItem.reservationDays[cartItem.reservationDays.length - 1].date).format('D MMMM YYYY') }} <span v-if="currentLocale === 'pl'">r.</span></span>
+            <span class="cart__date" v-if="currentLocale === 'en'">{{ $dayjs(cartItem.reservationDays[cartItem.reservationDays.length - 1].date).format('MMMM D, YYYY') }}</span>
+            <span class="cart__date" v-else>{{ $dayjs(cartItem.reservationDays[cartItem.reservationDays.length - 1].date).format('D MMMM YYYY') }} <span v-if="currentLocale === 'pl'">r.</span></span>
           </span>
         </p>
         <p><b>{{ $tc('statusDaysNumber') }}:</b> <span v-html="cartItem.totalDays"></span></p>
@@ -30,14 +30,15 @@ import Day from "@/types/Day";
 
 @Component
 export default class CartItems extends Vue {
-  currentLocale = this.$i18n.locale;
-  cartItems = this.$store.getters['_cart/reservations'];
-  totalPrice = this.$store.getters['_cart/totalPrice'];
+  private currentLocale = this.$i18n.locale;
+  private cartItems = this.$store.getters['_cart/reservations'];
+  private totalPrice = this.$store.getters['_cart/totalPrice'];
 
   mounted() {
     (this as any).unsubscribe = this.$store.subscribe((mutation, state) => {
-      if (mutation.type === '_cart/reset') {
+      if (mutation.type === '_cart/reset' || mutation.type === '_cart/removeReservation') {
         this.cartItems = this.$store.getters['_cart/reservations'];
+        this.totalPrice = this.$store.getters['_cart/totalPrice'];
       }
     });
   }

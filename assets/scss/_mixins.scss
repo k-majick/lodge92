@@ -10,7 +10,7 @@
   }
 }
 @mixin desktop {
-  @media (min-width: $desktop-min) and (max-width: $desktop-max) {
+  @media (min-width: $desktop-min) {
     @content;
   }
 }
@@ -29,7 +29,7 @@
   padding-right: 15px;
   width: 100%;
   @include mobile {
-    max-width: 768px;
+    max-width: 480px;
   }
   @include tablet {
     max-width: 970px;
@@ -42,8 +42,13 @@
   display: flex;
   margin-right: -15px;
   margin-left: -15px;
+  @include mobile {
+    flex-flow: column;
+  }
 }
 @mixin mk-col($size: "") {
+  display: flex;
+  flex-flow: column;
   @if $size == "" {
     flex-basis: 0;
     flex-grow: 1;
@@ -84,16 +89,24 @@
   @include trans(0.25);
   cursor: pointer;
   background: transparent;
+  border: 0;
   color: $color-white;
-  padding: 5px;
-  border: 1px solid $color-white;
-  border-radius: 10px;
   height: 45px;
-  padding: 10px 15px;
+  min-width: 45px;
   display: flex;
   align-items: center;
   justify-content: center;
   width: fit-content;
+
+  &:focus {
+    outline: 0;
+  }
+}
+@mixin btn-primary {
+  @include btn;
+  border: 1px solid $color-white;
+  border-radius: 10px;
+  padding: 10px 15px;
 
   &:not(.material-icons) {
     font-family: $font-stack;
@@ -105,10 +118,6 @@
 
   &:hover {
     box-shadow: 0 0 10px $color-white;
-  }
-
-  &:focus {
-    outline: 0;
   }
 
   &.material-icons {

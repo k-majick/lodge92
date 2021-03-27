@@ -14,8 +14,7 @@ import {
 
 @Component
 export default class CalendarWeekdays extends Vue {
-
-  currentLocale = this.$i18n.locale;
+  private currentLocale = this.$i18n.locale;
 
   WEEKDAYS_DE = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
   WEEKDAYS_EN = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -23,7 +22,7 @@ export default class CalendarWeekdays extends Vue {
 
   get weekdays() {
     const l = this.currentLocale;
-    
+
     switch (true) {
       case l === 'de':
         return this.WEEKDAYS_DE;

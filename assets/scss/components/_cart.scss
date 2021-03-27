@@ -13,10 +13,8 @@
 
   &__item {
     border: 0;
-    padding: 0;
-    padding-right: 30px;
+    padding: 0 30px 0 0;
     font-size: 0.85em;
-    white-space: nowrap;
     display: inline-flex;
     justify-content: flex-start;
     position: relative;
@@ -76,5 +74,9 @@
         outline: 0;
       }
     }
+  }
+
+  &__date {
+    white-space: nowrap;
   }
 }

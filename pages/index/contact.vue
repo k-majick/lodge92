@@ -15,7 +15,7 @@ import {
 
 @Component
 export default class Contact extends Vue {
-  currentLocale = this.$i18n.locale;
+  private currentLocale = this.$i18n.locale;
 
   async asyncData({
     $strapi,

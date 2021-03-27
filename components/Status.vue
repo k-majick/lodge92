@@ -1,19 +1,27 @@
 <template>
-<div class="status container" :class="{ 'status--active': isActive }">
+<div class="status" :class="{ 'open': isNavOpen, 'mini': isNavMini,'status--active': isActive }">
   <div class="status__panel">
-    <h3 class="status__title">{{ $tc('statusDateSelected') }}</h3>
-    <p><b>{{ $tc('statusDate') }}:</b>
-      <span v-if="reservation.reservationDays.length">
-        <span v-if="currentLocale === 'en'">{{ $dayjs(reservation.reservationDays[0].date).format('MMMM D, YYYY') }}</span>
-        <span v-else>{{ $dayjs(reservation.reservationDays[0].date).format('D MMMM YYYY') }} <span v-if="currentLocale === 'pl'">r.</span></span>
-        <span v-if="reservation.reservationDays.length > 1"> &rarr;
-          <span v-if="currentLocale === 'en'">{{ $dayjs(reservation.reservationDays[reservation.reservationDays.length - 1].date).format('MMMM D, YYYY') }}</span>
-          <span v-else>{{ $dayjs(reservation.reservationDays[reservation.reservationDays.length - 1].date).format('D MMMM YYYY') }} <span v-if="currentLocale === 'pl'">r.</span></span>
-        </span>
-      </span>
-    <p><b>{{ $tc('statusDaysNumber') }}:</b> {{ totalDays }}</p>
-    <p><b>{{ $tc('statusCost') }}:</b> <span v-html="totalDays * price + '&nbsp;zł'"></span></p>
-    <button class="status__btn" :class="{ 'status__btn--disabled' : !isActive }" @click="addToCart">{{ $tc('cartAdd') }}<span class="material-icons">add_shopping_cart</span></button>
+    <div class="container">
+      <div class="row">
+        <div class="col col-50">
+          <h3 class="status__title">{{ $tc('statusDateSelected') }}</h3>
+          <p><b>{{ $tc('statusDate') }}:</b>
+            <span v-if="reservation.reservationDays.length">
+              <span v-if="currentLocale === 'en'">{{ $dayjs(reservation.reservationDays[0].date).format('MMMM D, YYYY') }}</span>
+              <span v-else>{{ $dayjs(reservation.reservationDays[0].date).format('D MMMM YYYY') }} <span v-if="currentLocale === 'pl'">r.</span></span>
+              <span v-if="reservation.reservationDays.length > 1"> &rarr;
+                <span v-if="currentLocale === 'en'">{{ $dayjs(reservation.reservationDays[reservation.reservationDays.length - 1].date).format('MMMM D, YYYY') }}</span>
+                <span v-else>{{ $dayjs(reservation.reservationDays[reservation.reservationDays.length - 1].date).format('D MMMM YYYY') }} <span v-if="currentLocale === 'pl'">r.</span></span>
+              </span>
+            </span>
+          <p><b>{{ $tc('statusDaysNumber') }}:</b> {{ totalDays }}</p>
+          <p><b>{{ $tc('statusCost') }}:</b> <span v-html="totalDays * price + '&nbsp;zł'"></span></p>
+        </div>
+        <div class="col col-50 status__action">
+          <button class="status__btn" :class="{ 'status__btn--disabled' : !isActive }" @click="addToCart">{{ $tc('cartAdd') }}<span class="material-icons">add_shopping_cart</span></button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 </template>
@@ -35,6 +43,8 @@ export default class Status extends Vue {
   private isActive = false;
   private isModalOpen = this.$store.getters['_modals/isLoginModalActive'];
   private isOpenModal = false;
+  private isNavOpen = this.$store.getters['_nav/isNavOpen'];
+  private isNavMini = this.$store.getters['_nav/isNavMini'];
   private totalDays = 0;
   private reservation: Reservation = {
     id: null,
@@ -54,6 +64,16 @@ export default class Status extends Vue {
         this.totalDays = this.$store.getters['_days/selected'].length;
         this.totalDays > 0 ? this.isActive = true : this.isActive = false;
       }
+    });
+  }
+
+  mounted() {
+    (this as any).unwatch = this.$store.watch(() => this.$store.getters['_nav/isNavOpen'], isNavOpen => {
+      this.isNavOpen = isNavOpen;
+    });
+
+    (this as any).unwatch2 = this.$store.watch(() => this.$store.getters['_nav/isNavMini'], isNavMini => {
+      this.isNavMini = isNavMini;
     });
   }
 
@@ -79,6 +99,8 @@ export default class Status extends Vue {
 
   beforeDestroy() {
     (this as any).unsubscribe();
+    (this as any).unwatch();
+    (this as any).unwatch2();
   }
 
 }

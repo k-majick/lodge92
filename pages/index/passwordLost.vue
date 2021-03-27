@@ -27,8 +27,8 @@ import {
 
 @Component
 export default class PasswordLost extends Vue {
-  email = '';
-  alert = '';
+  private email = '';
+  private alert = '';
 
   async processForm() {
     this.alert = '';

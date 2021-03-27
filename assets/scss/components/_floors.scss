@@ -7,6 +7,12 @@
   align-items: center;
   height: 100%;
   padding: 45px;
+  @include tablet {
+    padding: 15px;
+  }
+  @include mobile {
+    padding: 15px;
+  }
 
   &__plan {
     display: flex;

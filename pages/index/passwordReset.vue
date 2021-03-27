@@ -32,9 +32,9 @@ import {
 
 @Component
 export default class PasswordReset extends Vue {
-  newPassword = '';
-  passwordConfirm = '';
-  alert = '';
+  private newPassword = '';
+  private passwordConfirm = '';
+  private alert = '';
 
   async processForm() {
     this.alert = '';

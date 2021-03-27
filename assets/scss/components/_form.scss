@@ -90,7 +90,7 @@
   }
 
   &__btn {
-    @include btn;
+    @include btn-primary;
 
     &--link {
       border: 0;

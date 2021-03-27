@@ -5,9 +5,13 @@
   flex-flow: row wrap;
   position: relative;
   height: 100%;
+  padding-left: 0;
+  @include mobile {
+    padding: 7.5px 7.5px 7.5px 0;
+  }
 
   &__btn {
-    @include btn;
+    @include btn-primary;
   }
 
   &__indicator {

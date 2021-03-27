@@ -217,8 +217,9 @@ export default class Checkout extends Vue {
   }
 
   @Watch('isLogged')
+  @Watch('totalAmount')
   redirect() {
-    if (this.isLogged === false)
+    if (this.isLogged === false || parseInt(this.totalAmount) === 0)
       this.$router.push(this.localePath('index-reservations'));
   }
 
@@ -397,7 +398,12 @@ export default class Checkout extends Vue {
         if (res.paymentIntent.status === 'succeeded') {
           console.dir('success');
           console.dir(res);
-          this.$router.push({ path: this.localePath('index-account'), query: { payment: 'confirmed' }});
+          this.$router.push({
+            path: this.localePath('index-account'),
+            query: {
+              payment: 'confirmed'
+            }
+          });
           // Show a success message to your customer
           // There's a risk of the customer closing the window before callback
           // execution. Set up a webhook or plugin to listen for the

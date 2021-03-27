@@ -12,7 +12,7 @@ import {
 
 @Component
 export default class Loading extends Vue {
-  loading = false;
+  private loading = false;
 
   start() {
     this.loading = true;

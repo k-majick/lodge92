@@ -8,6 +8,11 @@
 
 .col {
   @include mk-col;
+  @include mobile {
+    & + & {
+      margin-top: 15px;
+    }
+  }
 
   &-50 {
     @include mk-col(50);
