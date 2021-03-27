@@ -1,4 +1,3 @@
-import colors from 'vuetify/es5/util/colors';
 const apiUrl = process.env.API_URL || "http://localhost:1337";
 
 export default {
