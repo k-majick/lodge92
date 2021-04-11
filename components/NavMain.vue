@@ -58,7 +58,7 @@
         <div class="row">
           <div class="col col-50">
             <h4 class="modal__subtitle" v-html="$tc('accountHave')"></h4>
-            <LoginForm @goto="goto" @closeModal="toggleModal(1, true)" :global="this.global" ref="loginForm"></LoginForm>
+            <FormLogin @goto="goto" @closeModal="toggleModal(1, true)" :global="this.global" ref="loginForm" />
           </div>
           <div class="col col-50">
             <h4 class="modal__subtitle">{{ $tc('accountHaveNo') }}</h4>
@@ -80,6 +80,7 @@ import {
   Vue,
   Watch,
 } from 'nuxt-property-decorator';
+import FormLogin from '@/components/FormLogin.vue';
 import Modal from "@/components/Modal.vue";
 import ToggleModalMxn from "@/mixins/toggleModalMxn";
 

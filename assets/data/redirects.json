@@ -1,81 +1,80 @@
 [{
     "from": "/",
-    "to": "/start",
-    "auth": true
+    "to": "/start"
   },
   {
     "from": "/en/checkout",
     "to": "/en/start",
-    "auth": false
+    "auth": true
   },
   {
     "from": "/de/kasse",
     "to": "/de/start",
-    "auth": false
+    "auth": true
   },
   {
     "from": "/kasa",
     "to": "/start",
-    "auth": false
+    "auth": true
   },
   {
     "from": "/en/account",
     "to": "/en/start",
-    "auth": false
+    "auth": true
   },
   {
     "from": "/de/konto",
     "to": "/de/start",
-    "auth": false
+    "auth": true
   },
   {
     "from": "/konto",
     "to": "/start",
-    "auth": false
+    "auth": true
   },
   {
     "from": "/en/register",
     "to": "/en/start",
-    "auth": true
+    "auth": false
   },
   {
     "from": "/de/registrierung",
     "to": "/de/start",
-    "auth": true
+    "auth": false
   },
   {
     "from": "/rejestracja",
     "to": "/start",
-    "auth": true
+    "auth": false
   },
   {
     "from": "/en/retrieve-password",
     "to": "/en/start",
-    "auth": true
+    "auth": false
   },
   {
     "from": "/de/passwort-abrufen",
     "to": "/de/start",
-    "auth": true
+    "auth": false
   },
   {
     "from": "/odzyskaj-haslo",
     "to": "/start",
-    "auth": true
+    "auth": false
   },
   {
     "from": "/en/reset-password",
     "to": "/en/start",
-    "auth": true
+    "auth": false
   },
   {
     "from": "/de/passwort-zuruecksetzen",
     "to": "/de/start",
-    "auth": true
+    "auth": false
   },
   {
     "from": "/zmien-haslo",
     "to": "/start",
-    "auth": true
+    "auth": false
   }
 ]

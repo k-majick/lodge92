@@ -67,10 +67,28 @@
     &--main {
       #{$self}__day {
         @include trans(0.25, box-shadow);
-        box-shadow: inset 0 0 10px $color-white;
+        // box-shadow: inset 0 0 10px $color-white;
         border: 1px solid transparentize($color-white, 0.5);
         cursor: pointer;
+        position: relative;
+        @supports (-moz-appearance:none) {
+          &:before {
+            @include trans(0.25);
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(to bottom, transparentize($color-white, 0.5) 0%, transparentize($color-white, 1) 100%);
+          }
+        }
+        @supports not (-moz-appearance:none) {
+          box-shadow: inset 0 0 7.5px $color-white;
+        }
 
+        &--blocked,
+        &--disabled,
         &--not-current {
           span {
             opacity: 0.5;
@@ -79,20 +97,43 @@
 
         &--blocked,
         &--disabled {
-          box-shadow: none;
           pointer-events: none;
+          @supports (-moz-appearance:none) {
+            &:before {
+              background: none;
+            }
+          }
+          @supports not (-moz-appearance:none) {
+            box-shadow: none;
+          }
         }
 
         &--booked {
-          box-shadow: inset 0 0 7.5px $color-red;
-          pointer-events: none;
           color: $color-red;
+          border-color: $color-red;
+          pointer-events: none;
+          @supports (-moz-appearance:none) {
+            &:before {
+              background: linear-gradient(to bottom, transparentize($color-red, 0.33) 0%, transparentize($color-red, 1) 100%);
+            }
+          }
+          @supports not (-moz-appearance:none) {
+            box-shadow: inset 0 0 7.5px $color-red;
+          }
         }
 
         &--inCart {
-          border-color: $color-pink !important;
-          box-shadow: inset 0 0 7.5px transparentize($color-white, 0.75);
+          border-color: $color-purple-deep !important;
           pointer-events: none;
+          color: $color-purple-deep;
+          @supports (-moz-appearance:none) {
+            &:before {
+              background: linear-gradient(to bottom, transparentize($color-purple-deep, 0.5) 0%, transparentize($color-purple-deep, 1) 100%);
+            }
+          }
+          @supports not (-moz-appearance:none) {
+            box-shadow: inset 0 0 7.5px $color-purple-deep;
+          }
         }
 
         &--today {
@@ -102,8 +143,15 @@
         &--selected {
           background-color: $color-white;
           color: $color-teal;
-          box-shadow: inset 0 0 7.5px $color-teal;
           border: 1px solid transparentize($color-teal, 0.5);
+          @supports (-moz-appearance:none) {
+            &:before {
+              background: linear-gradient(to bottom, transparentize($color-teal, 0.5) 0%, transparentize($color-teal, 1) 100%);
+            }
+          }
+          @supports not (-moz-appearance:none) {
+            box-shadow: inset 0 0 7.5px $color-teal;
+          }
 
           span {
             opacity: 1;

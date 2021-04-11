@@ -2,19 +2,7 @@
 <section class="main__section">
   <div class="container">
     <h2>{{ $tc('userPasswordRetrieve') }}</h2>
-    <form class="form form--password" @submit.prevent="processForm" ref="form" novalidate>
-      <div class="form__group form__group--txt">
-        <span class="form__alert"></span>
-        <input class="form__input" type="text" name="name" v-model="email">
-        <label class="form__label">{{ $tc('userEmail') }}</label>
-      </div>
-      <div class="form__group form__group--alert">
-        <span class="form__alert" v-if="alert" v-html="alert"></span>
-      </div>
-      <div class="form__group form__group--submit">
-        <button class="form__btn" type="submit" ref="submitBtn">{{ $tc('userSendBtn') }}</button>
-      </div>
-    </form>
+    <FormPasswordLost />
   </div>
 </section>
 </template>
@@ -22,52 +10,32 @@
 <script lang="ts">
 import {
   Component,
-  Vue
+  Vue,
+  Watch,
 } from 'nuxt-property-decorator';
+import FormPasswordLost from '@/components/FormPasswordLost.vue';
 
 @Component
 export default class PasswordLost extends Vue {
-  private email = '';
-  private alert = '';
+  private isLogged = this.$store.getters['_user/isLogged'];
 
-  async processForm() {
-    this.alert = '';
-    this.$nuxt.$loading.start();
-    (this.$refs.submitBtn as HTMLButtonElement).disabled = true;
-
-    const user = {
-      email: this.email
-    };
-
-    try {
-      let res = await this.$strapi.forgotPassword(user);
-
-      (res as any).ok === true ? this.alert = this.$tc('userPasswordResetConfirm') as string : this.alert = this.$tc('userErrorOther') as string;
-      this.$nuxt.$loading.finish();
-    } catch (e) {
-      switch (true) {
-        case e.response.data.message[0].messages[0].id === 'Auth.form.error.email.format':
-          this.alert = this.$tc('userEmailProvideCorrect') as string;
-          break;
-        case e.response.data.message[0].messages[0].id === 'Auth.form.error.user.not-exist':
-          this.alert = this.$tc('userEmailNotExist') as string;
-          break;
-        default:
-          this.alert = this.$tc('userErrorOther') as string;
-      }
-
-      (this.$refs.submitBtn as HTMLButtonElement).disabled = false;
-      this.$nuxt.$loading.finish();
-    }
+  mounted() {
+    (this as any).unwatch = this.$store.watch(() => this.$store.getters['_user/isLogged'], isLogged => this.isLogged = isLogged);
   }
 
-  reset() {
-    this.email = '';
+  @Watch('isLogged')
+  redirect() {
+    if (this.isLogged === true)
+      this.$router.push(this.localePath('index-reservations'));
+  }
+
+  beforeDestroy() {
+    (this as any).unwatch();
   }
 
 }
 </script>
 
-<style lang="scss" scoped>
-@import "../../assets/scss/components/_form";
+<style lang="scss">
+
 </style>

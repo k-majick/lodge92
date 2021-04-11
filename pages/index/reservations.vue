@@ -57,6 +57,6 @@ export default class Reservations extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 
 </style>

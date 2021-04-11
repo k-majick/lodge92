@@ -66,6 +66,7 @@ export default {
       "@/assets/scss/_mixins.scss",
       "@/assets/scss/_transitions.scss",
       "@/assets/scss/_grid.scss",
+      "@/assets/scss/_fixes.scss",
     ]
   },
   loading: "@/components/Loading.vue",
@@ -75,7 +76,7 @@ export default {
   plugins: [],
   components: true,
   modules: [
-    "@nuxtjs/auth",
+    "@nuxtjs/auth-next",
     "@nuxtjs/axios",
     "@nuxtjs/dayjs",
     "@nuxtjs/markdownit",
@@ -176,33 +177,33 @@ export default {
       },
     },
   },
-  auth: {
-    watchLoggedIn: false,
-    // redirect: {
-    //   login: '/start',
-    //   logout: '/start',
-    //   callback: '/login',
-    //   home: '/start'
-    // },
-    strategies: {
-      local: {
-        endpoints: {
-          login: {
-            url: 'auth/local',
-            method: 'post',
-            propertyName: 'jwt'
-          },
-          user: {
-            url: 'users/me',
-            method: 'get',
-            propertyName: false
-          },
-          logout: false
-        },
-        autoFetchUser: true
-      }
-    }
-  },
+  // auth: {
+  //   watchLoggedIn: true,
+  //   redirect: {
+  //     login: '/start',
+  //     logout: '/start',
+  //     callback: '/login',
+  //     home: '/start'
+  //   },
+  //   strategies: {
+  //     local: {
+  //       endpoints: {
+  //         login: {
+  //           url: 'auth/local',
+  //           method: 'post',
+  //           propertyName: 'jwt'
+  //         },
+  //         user: {
+  //           url: 'users/me',
+  //           method: 'get',
+  //           propertyName: false
+  //         },
+  //         logout: false
+  //       },
+  //       autoFetchUser: true
+  //     }
+  //   }
+  // },
   strapi: {
     url: apiUrl,
     entities: [{

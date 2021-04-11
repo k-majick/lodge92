@@ -28,7 +28,26 @@
         color: $color-white;
         padding: 10px;
         font-family: $font-stack;
+        resize: none;
+        scrollbar-color: transparentize($color-yellow, 0.5) transparent;
+        // scrollbar-width: thin;
+
+        &::-webkit-scrollbar {
+          width: 15px;
+          background-color: transparent;
+          padding: 5px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          border-radius: 10px;
+          -webkit-box-shadow: inset 0 0 6px $color-teal;
+          background-color: $color-white;
+        }
       }
+    }
+
+    &--area {
+      #{$self}__input {}
     }
 
     &--checkbox {
@@ -133,6 +152,7 @@
     }
   }
 
+  &--contact,
   &--password,
   &--register {
     @include panel;

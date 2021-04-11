@@ -1,0 +1,38 @@
+.slider {
+  position: relative;
+  padding-bottom: 60px;
+
+  > div:not(.slider__nav) {
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 60%;
+    filter: drop-shadow(0 0 7.5px transparentize($color-teal, 0.5));
+  }
+
+  &__slide {
+    img {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      object-position: center;
+    }
+  }
+
+  &__nav {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  &__next,
+  &__prev {
+    @include btn-primary;
+  }
+}

@@ -55,10 +55,15 @@
       top: 0;
       width: 100%;
       height: 100%;
-      backdrop-filter: blur(5px);
-      background-color: transparentize($color-teal, 0.5);
       position: absolute;
       z-index: 0;
+      @supports (backdrop-filter: blur(5px)) {
+        backdrop-filter: blur(5px);
+        background-color: transparentize($color-teal, 0.5);
+      }
+      @supports not (backdrop-filter: blur(5px)) {
+        background-color: transparentize($color-teal, 0.15);
+      }
     }
 
     #{$self}__items {
@@ -238,12 +243,18 @@
 
     &.active {
       color: $color-yellow !important;
-      text-shadow: 0 0 5px transparentize($color-white, 0.5);
+      @supports (-moz-appearance:none) {}
+      @supports not (-moz-appearance:none) {
+        text-shadow: 0 0 5px transparentize($color-white, 0.5);
+      }
     }
 
     &:hover {
       color: $color-yellow;
-      text-shadow: 0 0 5px transparentize($color-white, 0.5);
+      @supports (-moz-appearance:none) {}
+      @supports not (-moz-appearance:none) {
+        text-shadow: 0 0 5px transparentize($color-white, 0.5);
+      }
     }
 
     &--status {

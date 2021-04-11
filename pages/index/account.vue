@@ -2,7 +2,7 @@
 <section class="main__section">
   <div class="container">
     <h2>{{ $tc('userAccount') }}</h2>
-    <!-- <button class="material-icons" @click="showUser">account_circle</button> -->
+    <button class="material-icons" @click="showUser">account_circle</button>
     <div class="row">
       <div class="col col-50">
         <h3>{{ $tc('userAccountData') }}</h3>
@@ -56,11 +56,12 @@ import Modal from "@/components/Modal.vue";
 import ToggleModalMxn from "@/mixins/toggleModalMxn";
 
 @Component({
-  mixins: [ToggleModalMxn]
+  mixins: [ToggleModalMxn],
 })
 export default class Account extends Vue {
-  public activeModal = 0;
+  private isLogged = this.$store.getters['_user/isLogged'];
   public isOpenModal = false;
+  public activeModal = 0;
   private currentLocale = this.$i18n.locale;
   private user: User | null = (this as any).$strapi.user;
   private userBookings = [];
@@ -87,9 +88,23 @@ export default class Account extends Vue {
 
   }
 
+  mounted() {
+    (this as any).unwatch = this.$store.watch(() => this.$store.getters['_user/isLogged'], isLogged => this.isLogged = isLogged);
+  }
+
   showUser() {
     console.dir(this.$strapi.user);
     console.dir(this.$store.getters['_user/loggedUser']);
+  }
+
+  @Watch('isLogged')
+  redirect() {
+    if (this.isLogged === false)
+      this.$router.push(this.localePath('index-reservations'));
+  }
+
+  beforeDestroy() {
+    (this as any).unwatch();
   }
 
 }

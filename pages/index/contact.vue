@@ -2,6 +2,7 @@
 <section class="main__section">
   <div class="container">
     <h2>{{ $tc('contact') }}</h2>
+    <FormContact />
   </div>
 </section>
 </template>
@@ -12,6 +13,7 @@ import {
   Watch,
   Vue
 } from 'nuxt-property-decorator';
+import FormContact from '@/components/FormContact.vue';
 
 @Component
 export default class Contact extends Vue {
@@ -26,13 +28,14 @@ export default class Contact extends Vue {
   }) {
 
     return {
-      currentLocale: app.i18n.locale
+      currentLocale: app.i18n.locale,
+
     };
   }
 
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 
 </style>

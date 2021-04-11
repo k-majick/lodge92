@@ -54,6 +54,10 @@ export default class App extends Vue {
   mounted() {
     this.$store.commit('_nav/setNavItems', this.navItems);
 
+    const user = this.$strapi.user;
+    if (user)
+      this.$store.commit('_user/setUser', { user });
+
     (this as any).unwatch = this.$store.watch(() => this.$store.getters['_nav/isNavOpen'], isNavOpen => {
       this.isNavOpen = isNavOpen;
     });

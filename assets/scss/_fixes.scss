@@ -1,0 +1,47 @@
+body,
+html {
+  min-height: 100%;
+  height: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  font-family: $font-stack;
+  font-size: 100%;
+  background-color: $color-teal;
+  color: $color-white;
+  min-height: 100%;
+  @include mobile {
+    font-size: 90%;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  #__layout,
+  #__nuxt,
+  #app {
+    height: 100%;
+  }
+
+  #app {
+    display: grid;
+    grid-template-rows: 60px 100fr 45px;
+    @include mobile {
+      grid-template-rows: 60px 100fr 90px;
+    }
+  }
+}
+
+.grecaptcha-badge {
+  z-index: 10;
+  @include mobile {
+    bottom: 75px !important;
+  }
+}

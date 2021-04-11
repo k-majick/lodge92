@@ -49,6 +49,7 @@
 @mixin mk-col($size: "") {
   display: flex;
   flex-flow: column;
+
   @if $size == "" {
     flex-basis: 0;
     flex-grow: 1;
@@ -77,12 +78,21 @@
 }
 @mixin panel($color: "") {
   @include trans(0.25);
-  backdrop-filter: blur(5px);
+  @supports (backdrop-filter: blur(5px)) {
+    backdrop-filter: blur(5px);
 
-  @if $color != "" {
-    background-color: transparentize($color, 0.5);
-  } @else {
-    background-color: transparentize($color-teal, 0.5);
+    @if $color != "" {
+      background-color: transparentize($color, 0.5);
+    } @else {
+      background-color: transparentize($color-teal, 0.5);
+    }
+  }
+  @supports not (backdrop-filter: blur(5px)) {
+    @if $color != "" {
+      background-color: transparentize($color, 0.15);
+    } @else {
+      background-color: transparentize($color-teal, 0.15);
+    }
   }
 }
 @mixin btn {
@@ -117,7 +127,13 @@
   }
 
   &:hover {
-    box-shadow: 0 0 10px $color-white;
+    @supports (-moz-appearance:none) {
+      background-color: $color-white;
+      color: $color-teal;
+    }
+    @supports not (-moz-appearance:none) {
+      box-shadow: 0 0 10px $color-white;
+    }
   }
 
   &.material-icons {

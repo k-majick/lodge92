@@ -26,7 +26,7 @@ import {
 } from 'nuxt-property-decorator';
 
 @Component
-export default class LoginForm extends Vue {
+export default class FormLogin extends Vue {
   currentLocale = this.$i18n.locale;
   email = '';
   password = '';
@@ -88,13 +88,7 @@ export default class LoginForm extends Vue {
   }
 
   gotoRetrievePassword() {
-    const isLogged = this.$store.getters['_user/isLogged'];
-
-    if (isLogged === false) {
-      this.$emit('goto', this.localePath('index-passwordLost'));
-    } else {
-      return;
-    }
+    this.$emit('goto', this.localePath('index-passwordLost'));
   }
 
 }
