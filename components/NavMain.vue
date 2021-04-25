@@ -69,7 +69,6 @@
       </div>
     </Modal>
   </transition>
-
 </div>
 </template>
 
@@ -92,10 +91,10 @@ import ToggleModalMxn from "@/mixins/toggleModalMxn";
 })
 export default class NavMain extends Vue {
   public activeModal = 0;
+  private isOpenModal = false;
   private currentLocale = this.$i18n.locale;
   private isLogged = this.$store.getters['_user/isLogged'];
   private hasItems = false;
-  private isOpenModal = false;
   private isOk = true;
   private cartItems = this.$store.getters['_cart/reservations'];
   private totalPrice = this.$store.getters['_cart/totalPrice'];

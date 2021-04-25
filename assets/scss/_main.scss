@@ -24,8 +24,10 @@
   }
 
   &__bg {
+    top: 0;
+    left: 0;
     position: fixed;
-    height: 100%;
+    height: 100vh;
     width: 100%;
     background-image: url("~@/assets/gfx/lodge92_bg_s.jpg");
     background-position: center;
@@ -60,10 +62,11 @@
   }
 
   &__section {
-    position: relative;
+    // position: relative;
     z-index: 1;
     height: 100%;
     display: flex;
+    flex-flow: column;
     padding: 30px 0;
     @include mobile {
       padding: 30px 0 10vh;
@@ -71,12 +74,21 @@
 
     &--start {
       .container {
-        display: flex;
-        flex-flow: column;
-        align-items: center;
+        &:first-of-type,
+        &:last-of-type {
+          display: flex;
+          flex-flow: column;
+          align-items: center;
+        }
       }
 
       #{$self}__title {
+        text-align: center;
+        margin: 0;
+      }
+
+      #{$self}__text {
+        max-width: 720px;
         text-align: center;
       }
     }
@@ -84,11 +96,10 @@
 
   &__btns {
     display: flex;
-    margin: 60px 0 0;
+    justify-content: center;
     @include mobile {
-      padding: 30px 0;
       flex-flow: column;
-      margin: 0;
+      margin: 15px 0 0;
       align-items: center;
     }
   }
@@ -96,6 +107,7 @@
   &__btn {
     @include btn-primary;
     padding: 25px 15px;
+    margin: 0;
     font-size: 1.1em;
 
     & + & {
@@ -127,11 +139,17 @@
         content: "calendar_view_month";
       }
     }
+
+    &--info {
+      &:before {
+        content: "info";
+      }
+    }
   }
 
   &__logo {
-    max-width: 320px;
-    margin: 30px 0;
+    max-width: 270px;
+    margin: 0 0 15px;
 
     svg {
       width: 100%;
@@ -141,7 +159,7 @@
       max-width: 270px;
     }
     @include mobile {
-      max-width: 240px;
+      max-width: 200px;
     }
   }
 
@@ -174,18 +192,71 @@
   &__panel {
     @include panel;
     padding: 15px;
+    height: 100%;
     @include mobile {
       padding: 7.5px;
+    }
+
+    .tab {
+      padding: 0;
+    }
+
+    #{$self}__btn {
+      font-size: 1em;
+      margin: 0;
+      @include mobile {
+        margin: 0;
+      }
+    }
+
+    #{$self}__btn + #{$self}__btn {
+      margin-left: 7.5px;
+      @include mobile {
+        margin: 7.5px 0 0;
+      }
+    }
+
+    p {
+      margin: 0;
+
+      & + p {
+        margin-top: 15px;
+      }
     }
   }
 
   &__list {
     margin: 0;
     padding-left: 20px;
+
+    &--icons {
+      padding-left: 0;
+      list-style-type: none;
+      height: 100%;
+      padding: 30px 0 15px;
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+
+      #{$self}__item {
+        padding-left: 0;
+        display: flex;
+        align-items: center;
+        font-size: 0.9em;
+
+        span {
+          margin-right: 15px;
+        }
+      }
+    }
   }
 
-  &__listItem {
+  &__item {
     padding-left: 10px;
+
+    & + & {
+      padding-top: 7.5px;
+    }
   }
 }
 
@@ -231,8 +302,10 @@
   position: absolute;
   background-color: $color-purple-deep;
   white-space: nowrap;
+  display: none;
 
   &.show {
+    display: block;
     font-size: 0.85em;
     padding: 7.5px;
   }

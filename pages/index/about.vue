@@ -1,8 +1,8 @@
 <template>
 <section class="main__section">
   <div class="container">
-    <h2 class="main__title">{{ $tc('gallery') }}</h2>
-    <Slider :images="this.images" />
+    <h2 class="main__title">{{ $tc('about') }}</h2>
+
   </div>
 </section>
 </template>
@@ -16,7 +16,7 @@ import {
 import Slider from '@/components/Slider.vue';
 
 @Component
-export default class Gallery extends Vue {
+export default class About extends Vue {
   private currentLocale = this.$i18n.locale;
   private images = [];
 
@@ -34,9 +34,7 @@ export default class Gallery extends Vue {
     };
   }
 
-  created() {
-    this.images = (this as any).global.gallery.images;
-  }
+
 
 }
 </script>

@@ -1,9 +1,9 @@
 @import '~normalize-scss';
 @include normalize();
 
-$mobile-max: 767px;
+$mobile-max: 991px;
 
-$tablet-min: 768px;
+$tablet-min: 992px;
 $tablet-max: 1365px;
 
 $desktop-min: 1366px;

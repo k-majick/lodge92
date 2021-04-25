@@ -16,6 +16,10 @@ export const hoverTooltip = {
 
     el.appendChild(msgBox);
 
+    el.addEventListener('mouseenter', () => {
+      msgBox.classList.add('show');
+    });
+
     el.addEventListener('mousemove', e => {
       msgBox.style.top = `calc(${e.offsetY}px + 30px)`;
       msgBox.style.left = `calc(${e.offsetX}px + 30px)`;
@@ -25,6 +29,11 @@ export const hoverTooltip = {
       let target = document.elementFromPoint(x, y);
       let eventName = 'roomId';
       let currentTargetId = '';
+
+      if (binding.value) {
+        msgBox!.innerHTML = binding.value;
+        return;
+      }
 
       if (target!.tagName === 'path' && target!.hasAttribute('data-id')) {
         msgBox.classList.add('show');
@@ -59,6 +68,11 @@ export const hoverTooltip = {
         vnode.elm.dispatchEvent(new CustomEvent(eventName, { detail: currentTargetId }));
       }
 
+    });
+
+    el.addEventListener('mouseleave', () => {
+      msgBox.innerHTML = '';
+      msgBox.classList.remove('show');
     });
   },
 

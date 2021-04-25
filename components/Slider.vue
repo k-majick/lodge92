@@ -1,19 +1,17 @@
 <template>
-<div class="slider">
-  <div class="slider__nav">
-    <a class="slider__prev material-icons" @click.prevent="prevSlide" href="#">chevron_left</a>
-    <a class="slider__next material-icons" @click.prevent="nextSlide" href="#">chevron_right</a>
-  </div>
-  <transition-group name="fade" tag="div">
-    <div class="slider__slide" v-for="i in [currentIndex]" :key="i">
-      <picture>
-        <source media="(max-width: 767px)" :srcset="currentImg.mobile" />
-        <source media="(min-width: 768px)" :srcset="currentImg.desktop" />
-        <img />
-      </picture>
+<div>
+  <div class="slider">
+    <div class="slider__nav">
+      <a class="slider__prev material-icons" @click.prevent="prevSlide" href="#">chevron_left</a>
+      <a class="slider__next material-icons" @click.prevent="nextSlide" href="#">chevron_right</a>
     </div>
-  </transition-group>
 
+    <transition-group name="fade" tag="div">
+      <div class="slider__slide" v-for="i in [currentIndex]" :key="i" v-hover-tooltip="$tc('clickToEnlarge')">
+        <img :src="currentImg.mobile" @click="$emit('toggleModal', currentImg)" data-image />
+      </div>
+    </transition-group>
+  </div>
 </div>
 </template>
 
@@ -23,12 +21,23 @@ import {
   Vue,
   Prop
 } from 'nuxt-property-decorator';
+import Modal from "@/components/Modal.vue";
+import ToggleModalMxn from "@/mixins/toggleModalMxn";
+import {
+  hoverTooltip
+} from '../directives/hoverTooltip';
 
-@Component
+@Component({
+  components: {
+    Modal,
+  },
+  directives: {
+    hoverTooltip,
+  },
+  mixins: [ToggleModalMxn]
+})
 export default class Slider extends Vue {
-
   @Prop() images: any;
-
   currentIndex = 0;
 
   nextSlide() {

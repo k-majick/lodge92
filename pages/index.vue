@@ -51,12 +51,21 @@ export default class App extends Vue {
     };
   }
 
+  created() {
+
+    this.price = (this as any).global.price;
+    this.setDaysLocale();
+  }
+
   mounted() {
+    this.scrollListen();
     this.$store.commit('_nav/setNavItems', this.navItems);
 
     const user = this.$strapi.user;
     if (user)
-      this.$store.commit('_user/setUser', { user });
+      this.$store.commit('_user/setUser', {
+        user
+      });
 
     (this as any).unwatch = this.$store.watch(() => this.$store.getters['_nav/isNavOpen'], isNavOpen => {
       this.isNavOpen = isNavOpen;
@@ -67,15 +76,12 @@ export default class App extends Vue {
     });
   }
 
-  created() {
-    this.price = (this as any).global.price;
-    this.setDaysLocale();
+  scrollListen() {
+    window.addEventListener('scroll', this.scrollHandle);
   }
 
-  scrollListen() {
-    window.addEventListener('scroll', () => {
-      document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
-    });
+  scrollHandle() {
+    document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
   }
 
   setDaysLocale() {
@@ -97,6 +103,7 @@ export default class App extends Vue {
   }
 
   beforeDestroy() {
+    window.removeEventListener('scroll', this.scrollHandle);
     (this as any).unwatch();
     (this as any).unwatch2();
   }

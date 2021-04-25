@@ -24,6 +24,7 @@
     "nuxt": "^2.14.12",
     "nuxt-i18n": "^6.16.0",
     "nuxt-stripe-module": "^3.0.1",
+    "vue-slick-carousel": "^1.0.6",
     "vuelidate": "^0.7.6"
   },
   "devDependencies": {

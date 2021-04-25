@@ -3,8 +3,9 @@ import { Vue, Component } from 'nuxt-property-decorator';
 declare module 'vue/types/vue' {
   interface Vue {
     activeModal: number;
+    modalImage: any;
     openModal(id: number): boolean;
-    toggleModal(id: number, lock: boolean): void;
+    toggleModal(id: number, lock: boolean, src?: any): void;
     scrollLock(): void;
     scrollUnlock(): void;
   }
@@ -17,20 +18,18 @@ export default class ToggleModalMxn extends Vue {
     return this.activeModal === id;
   }
 
-  toggleModal(id: number, lock: boolean) {
+  toggleModal(id: number, lock: boolean, src?: any) {
     if (this.activeModal !== 0) {
       this.activeModal = 0;
-
-      if (lock === true)
-        this.scrollUnlock();
+      if (lock === true) this.scrollUnlock();
 
       return false;
     }
 
     this.activeModal = id;
 
-    if (lock === true)
-      this.scrollLock();
+    if (src) this.modalImage = src;
+    if (lock === true) this.scrollLock();
   }
 
   scrollLock() {

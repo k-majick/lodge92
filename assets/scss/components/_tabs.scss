@@ -1,4 +1,8 @@
 .tabs {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+
   &__list {
     padding: 0;
     margin: 0;
@@ -25,7 +29,7 @@
     }
 
     & + & {
-      margin-left: -1px; 
+      margin-left: -1px;
     }
 
     &:hover {

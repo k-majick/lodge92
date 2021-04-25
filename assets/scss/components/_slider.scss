@@ -1,23 +1,27 @@
 .slider {
+  padding: 0;
   position: relative;
   padding-bottom: 60px;
+  width: 100%;
 
   > div:not(.slider__nav) {
     position: relative;
-    overflow: hidden;
+
     padding-bottom: 60%;
     filter: drop-shadow(0 0 7.5px transparentize($color-teal, 0.5));
   }
 
   &__slide {
+    cursor: pointer;
+    overflow: hidden;
     img {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
       left: 0;
       width: 100%;
-      height: auto;
-      object-fit: contain;
+      height: 100%;
+      object-fit: cover;
       object-position: center;
     }
   }
@@ -26,6 +30,7 @@
     display: flex;
     position: absolute;
     bottom: 0;
+    left: 0;
     align-items: center;
     justify-content: center;
     width: 100%;
