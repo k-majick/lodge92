@@ -61,10 +61,10 @@
         <h3>Zobacz zdjęcia</h3>
         <tabs class="main__panel">
           <tab class="tab" :title="$tc('startHome')">
-            <Slider :images="this.images" @toggleModal="toggleModalImg" />
+            <Slider :images="this.images.house" @toggleModal="toggleModalImg" />
           </tab>
           <tab class="tab" :title="$tc('startHood')">
-            <Slider :images="this.images" @toggleModal="toggleModalImg" />
+            <Slider :images="this.images.hood" @toggleModal="toggleModalImg" />
           </tab>
         </tabs>
       </div>
