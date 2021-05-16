@@ -58,11 +58,13 @@
       @include desktop {
         display: none;
       }
+      @include mobile {
+        top: 50px;
+      }
     }
   }
 
   &__section {
-    // position: relative;
     z-index: 1;
     height: 100%;
     display: flex;

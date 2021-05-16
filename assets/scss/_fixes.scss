@@ -34,7 +34,7 @@ body {
     display: grid;
     grid-template-rows: 60px 100fr 45px;
     @include mobile {
-      grid-template-rows: 60px 100fr 90px;
+      grid-template-rows: 50px 100fr 90px;
     }
   }
 }
