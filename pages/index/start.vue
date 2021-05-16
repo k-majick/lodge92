@@ -4,7 +4,6 @@
     <div class="main__logo" v-html="logo"></div>
     <h2 class="main__title">{{ start.hero[`title_${currentLocale}`] }}</h2>
     <p class="main__text">{{ start.hero[`intro_${currentLocale}`] }}</p>
-
   </div>
   <div class="container">
     <div class="row">
@@ -14,16 +13,20 @@
           <tab class="tab" :title="$tc('startHome')">
             <ul class="main__list main__list--icons">
               <li class="main__item">
-                <span class="material-icons">pool</span>
-                ok. 15 min. spacerem przez las do mniej uczęszczanego fragmentu plaży, w tym plaży dla psów
+                <span class="material-icons">kitchen</span>
+                kuchnia
               </li>
               <li class="main__item">
-                <span class="material-icons">sailing</span>
-                ok. 15 min. spacerem do jeziora Gardno
+                <span class="material-icons">chair</span>
+                salon z kominkiem
               </li>
               <li class="main__item">
-                <span class="material-icons">villa</span>
-                ok. 15 min. spacerem do centrum miejscowości Rowy
+                <span class="material-icons">shower</span>
+                2 łazienki z toaletą i prysznicem
+              </li>
+              <li class="main__item">
+                <span class="material-icons">bed</span>
+                5 osobnych pokoi sypialnych
               </li>
               <li class="main__item">
                 <span class="material-icons">local_parking</span>
@@ -37,6 +40,18 @@
           </tab>
           <tab class="tab" :title="$tc('startHood')">
             <ul class="main__list main__list--icons">
+              <li class="main__item">
+                <span class="material-icons">villa</span>
+                ok. 15 min. spacerem do centrum miejscowości Rowy i&nbsp;głównej plaży
+              </li>
+              <li class="main__item">
+                <span class="material-icons">pool</span>
+                ok. 15 min. spacerem przez las do mniej uczęszczanego fragmentu plaży, w tym plaży dla psów
+              </li>
+              <li class="main__item">
+                <span class="material-icons">sailing</span>
+                ok. 15 min. spacerem do jeziora Gardno
+              </li>
               <li class="main__item">
                 <span class="material-icons">near_me</span>
                 ok. 20 km do Ustki
