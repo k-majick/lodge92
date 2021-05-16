@@ -199,7 +199,18 @@
 
       & + & {
         #{$self}__link {
-          border-left-color: $color-white;
+          position: relative;
+          &:before {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            content: '';
+            height: 30px;
+            display: block;
+            background-color: $color-white;
+          }
         }
       }
     }

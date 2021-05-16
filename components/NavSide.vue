@@ -58,6 +58,6 @@ export default class NavSide extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "../assets/scss/components/_nav";
 </style>
