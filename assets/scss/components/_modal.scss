@@ -6,13 +6,15 @@
   padding: 30px 15px;
   background-color: $color-teal;
   border-radius: 5px;
-  box-shadow: 0 0 15px transparentize($color-black, 0.5);
   transition: all 0.5s ease;
   display: flex;
   flex-flow: column;
   justify-content: center;
   position: relative;
   align-items: center;
+  @supports not (-moz-appearance:none) {
+    box-shadow: 0 0 15px transparentize($color-black, 0.5);
+  }
 
   &__mask {
     @include panel;
@@ -53,7 +55,9 @@
         height: 100%;
         max-height: 85vh;
         object-fit: contain;
-        filter: drop-shadow(0 0 5px transparentize($color-black, 0.5));
+        @supports not (-moz-appearance:none) {
+          filter: drop-shadow(0 0 5px transparentize($color-black, 0.5));
+        }
       }
     }
   }
@@ -76,10 +80,12 @@
     background: none;
     border: none;
     font-size: 2.75rem;
-    text-shadow: 0 0 1px $color-white;
     color: $color-white;
     line-height: 1;
     z-index: 1;
+    @supports not (-moz-appearance:none) {
+      text-shadow: 0 0 1px $color-white;
+    }
 
     &:focus {
       outline: 0;
@@ -103,17 +109,4 @@
       margin: 0 auto;
     }
   }
-  // &__pic {
-  //   display: flex;
-  //   padding-bottom: 50%;
-  //   position: relative;
-  // }
-  //
-  // &__img {
-  //   position: absolute;
-  //   width: auto;
-  //   height: auto;
-  //   object-fit: cover;
-  //   object-position: center;
-  // }
 }

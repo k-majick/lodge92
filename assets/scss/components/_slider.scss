@@ -6,9 +6,10 @@
 
   > div:not(.slider__nav) {
     position: relative;
-
     padding-bottom: 66.7%;
-    filter: drop-shadow(0 0 7.5px transparentize($color-teal, 0.5));
+    @supports not (-moz-appearance:none) {
+      filter: drop-shadow(0 0 7.5px transparentize($color-teal, 0.5));
+    }
   }
 
   &__slide {

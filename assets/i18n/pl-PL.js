@@ -33,6 +33,8 @@ export default {
   globalPoland: 'Polska',
   startHome: 'Dom',
   startHood: 'Okolica',
+  startSeeImages: 'Zobacz zdjęcia',
+  startBasicInfo: 'Podstawowe informacje',
   statusDate: 'Termin',
   statusDaysNumber: 'Liczba dni',
   statusDateSelected: 'Wybrany termin',

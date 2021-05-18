@@ -33,6 +33,8 @@ export default {
   globalPoland: 'Poland',
   startHome: 'House',
   startHood: 'Neighbourhood',
+  startSeeImages: 'See pictures',
+  startBasicInfo: 'Basic information',
   statusDate: 'Date',
   statusDaysNumber: 'Days count',
   statusDateSelected: 'Selected date',

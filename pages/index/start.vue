@@ -8,11 +8,15 @@
   <div class="container">
     <div class="row">
       <div class="col col-50">
-        <h3>Podstawowe informacje</h3>
+        <h3>{{ $tc('startBasicInfo') }}</h3>
         <tabs class="main__panel">
           <tab class="tab" :title="$tc('startHome')">
             <ul class="main__list main__list--icons">
-              <li class="main__item">
+              <li class="main__item" v-for="feat in start.house_features">
+                <span class="material-icons" v-html="feat.icon"></span>
+                {{ feat[`txt_${currentLocale}`] }}
+              </li>
+              <!-- <li class="main__item">
                 <span class="material-icons">kitchen</span>
                 kuchnia
               </li>
@@ -35,12 +39,16 @@
               <li class="main__item">
                 <span class="material-icons">pets</span>
                 zwierzęta mile widziane
-              </li>
+              </li> -->
             </ul>
           </tab>
           <tab class="tab" :title="$tc('startHood')">
             <ul class="main__list main__list--icons">
-              <li class="main__item">
+              <li class="main__item" v-for="feat in start.hood_features">
+                <span class="material-icons" v-html="feat.icon"></span>
+                {{ feat[`txt_${currentLocale}`] }}
+              </li>
+              <!-- <li class="main__item">
                 <span class="material-icons">villa</span>
                 ok. 15 min. spacerem do centrum miejscowości Rowy i&nbsp;głównej plaży
               </li>
@@ -63,7 +71,7 @@
               <li class="main__item">
                 <span class="material-icons">near_me</span>
                 ok. 35 km do Słowińskiego Parku Narodowego i&nbsp;wędrujących wydm
-              </li>
+              </li> -->
             </ul>
           </tab>
           <div class="main__btns">
@@ -73,7 +81,7 @@
         </tabs>
       </div>
       <div class="col col-50">
-        <h3>Zobacz zdjęcia</h3>
+        <h3>{{ $tc('startSeeImages') }}</h3>
         <tabs class="main__panel">
           <tab class="tab" :title="$tc('startHome')">
             <Slider :images="this.images.house" @toggleModal="toggleModalImg" />
