@@ -16,30 +16,6 @@
                 <span class="material-icons" v-html="feat.icon"></span>
                 {{ feat[`txt_${currentLocale}`] }}
               </li>
-              <!-- <li class="main__item">
-                <span class="material-icons">kitchen</span>
-                kuchnia
-              </li>
-              <li class="main__item">
-                <span class="material-icons">chair</span>
-                salon z kominkiem
-              </li>
-              <li class="main__item">
-                <span class="material-icons">shower</span>
-                2 łazienki z toaletą i prysznicem
-              </li>
-              <li class="main__item">
-                <span class="material-icons">bed</span>
-                5 osobnych pokoi sypialnych
-              </li>
-              <li class="main__item">
-                <span class="material-icons">local_parking</span>
-                możliwość zaparkowania 2 samochodów na terenie posesji
-              </li>
-              <li class="main__item">
-                <span class="material-icons">pets</span>
-                zwierzęta mile widziane
-              </li> -->
             </ul>
           </tab>
           <tab class="tab" :title="$tc('startHood')">
@@ -48,30 +24,6 @@
                 <span class="material-icons" v-html="feat.icon"></span>
                 {{ feat[`txt_${currentLocale}`] }}
               </li>
-              <!-- <li class="main__item">
-                <span class="material-icons">villa</span>
-                ok. 15 min. spacerem do centrum miejscowości Rowy i&nbsp;głównej plaży
-              </li>
-              <li class="main__item">
-                <span class="material-icons">pool</span>
-                ok. 15 min. spacerem przez las do mniej uczęszczanego fragmentu plaży, w tym plaży dla psów
-              </li>
-              <li class="main__item">
-                <span class="material-icons">sailing</span>
-                ok. 15 min. spacerem do jeziora Gardno
-              </li>
-              <li class="main__item">
-                <span class="material-icons">near_me</span>
-                ok. 20 km do Ustki
-              </li>
-              <li class="main__item">
-                <span class="material-icons">near_me</span>
-                ok. 30 km do Słupska
-              </li>
-              <li class="main__item">
-                <span class="material-icons">near_me</span>
-                ok. 35 km do Słowińskiego Parku Narodowego i&nbsp;wędrujących wydm
-              </li> -->
             </ul>
           </tab>
           <div class="main__btns">
