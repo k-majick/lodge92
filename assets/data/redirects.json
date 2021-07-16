@@ -1,8 +1,4 @@
 [{
-    "from": "/",
-    "to": "/start"
-  },
-  {
     "from": "/en/checkout",
     "to": "/en/start",
     "auth": true

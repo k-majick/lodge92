@@ -52,12 +52,17 @@ export default class App extends Vue {
   }
 
   created() {
-
     this.price = (this as any).global.price;
     this.setDaysLocale();
   }
 
   mounted() {
+
+    console.dir(this.$route.path)
+    if (this.$route.path !== '/') this.$router.push({
+      path: '/skills'
+    });
+
     this.scrollListen();
     this.$store.commit('_nav/setNavItems', this.navItems);
 
