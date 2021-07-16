@@ -57,9 +57,7 @@ export default class App extends Vue {
   }
 
   mounted() {
-
-    console.dir(this.$route.path)
-    if (this.$route.path !== '/') this.$router.push({
+    if (this.$route.path === '/') this.$router.push({
       path: '/skills'
     });
 
