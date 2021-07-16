@@ -57,10 +57,6 @@ export default class App extends Vue {
   }
 
   mounted() {
-    if (this.$route.path === '/') this.$router.push({
-      path: '/skills'
-    });
-
     this.scrollListen();
     this.$store.commit('_nav/setNavItems', this.navItems);
 
